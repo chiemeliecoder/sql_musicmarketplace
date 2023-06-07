@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `purchase`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `purchase` (
-  `idpurchase` int NOT NULL,
-  `userid` int DEFAULT NULL,
-  `trackid` int DEFAULT NULL,
-  `date` date DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`idpurchase`),
+  `id` int NOT NULL,
+  `userid` int NOT NULL,
+  `trackid` int NOT NULL,
+  `date` date NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `userid_idx` (`userid`),
   KEY `trackid_idx` (`trackid`),
-  CONSTRAINT `purchaseuserid` FOREIGN KEY (`userid`) REFERENCES `user` (`iduser`),
-  CONSTRAINT `trackid` FOREIGN KEY (`trackid`) REFERENCES `track` (`idtrack`)
+  CONSTRAINT `purchaseuserid` FOREIGN KEY (`userid`) REFERENCES `user` (`id`),
+  CONSTRAINT `trackid` FOREIGN KEY (`trackid`) REFERENCES `track` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03  2:19:02
+-- Dump completed on 2023-06-07  2:29:26

@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `track`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `track` (
-  `idtrack` int NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `duration` time DEFAULT NULL,
-  `albumid` int DEFAULT NULL,
-  PRIMARY KEY (`idtrack`),
+  `id` int NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `duration` time NOT NULL,
+  `albumid` int NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `albumid_idx` (`albumid`),
-  CONSTRAINT `albumid` FOREIGN KEY (`albumid`) REFERENCES `album` (`idalbum`)
+  CONSTRAINT `albumid` FOREIGN KEY (`albumid`) REFERENCES `album` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03  2:19:02
+-- Dump completed on 2023-06-07  2:29:26

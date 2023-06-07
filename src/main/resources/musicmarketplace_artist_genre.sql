@@ -16,32 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `artistgenre`
+-- Table structure for table `artist_genre`
 --
 
-DROP TABLE IF EXISTS `artistgenre`;
+DROP TABLE IF EXISTS `artist_genre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `artistgenre` (
-  `idartistgenre` int NOT NULL,
-  `artistid` int DEFAULT NULL COMMENT 'Artist_Genre table (Many-to-Many relationship between Artist and Genre)',
-  `genreid` int DEFAULT NULL,
-  PRIMARY KEY (`idartistgenre`),
+CREATE TABLE `artist_genre` (
+  `id` int NOT NULL,
+  `artistid` int NOT NULL COMMENT 'Artist_Genre table (Many-to-Many relationship between Artist and Genre)',
+  `genreid` int NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `genreartistid_idx` (`artistid`),
   KEY `artistgenreid_idx` (`genreid`),
-  CONSTRAINT `artistgenreid` FOREIGN KEY (`genreid`) REFERENCES `genre` (`idgenre`),
-  CONSTRAINT `genreartistid` FOREIGN KEY (`artistid`) REFERENCES `artist` (`idartist`)
+  CONSTRAINT `artistgenreid` FOREIGN KEY (`genreid`) REFERENCES `genre` (`id`),
+  CONSTRAINT `genreartistid` FOREIGN KEY (`artistid`) REFERENCES `artist` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `artistgenre`
+-- Dumping data for table `artist_genre`
 --
 
-LOCK TABLES `artistgenre` WRITE;
-/*!40000 ALTER TABLE `artistgenre` DISABLE KEYS */;
-INSERT INTO `artistgenre` VALUES (1,1,1),(2,2,2);
-/*!40000 ALTER TABLE `artistgenre` ENABLE KEYS */;
+LOCK TABLES `artist_genre` WRITE;
+/*!40000 ALTER TABLE `artist_genre` DISABLE KEYS */;
+INSERT INTO `artist_genre` VALUES (1,1,1),(2,2,2);
+/*!40000 ALTER TABLE `artist_genre` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03  2:19:03
+-- Dump completed on 2023-06-07  2:29:28

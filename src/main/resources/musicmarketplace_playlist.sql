@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `playlist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `playlist` (
-  `idplaylist` int NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `userid` int DEFAULT NULL,
-  PRIMARY KEY (`idplaylist`),
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `userid` int NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `userid_idx` (`userid`),
-  CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `user` (`iduser`)
+  CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03  2:19:03
+-- Dump completed on 2023-06-07  2:29:27

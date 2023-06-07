@@ -16,32 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `playlisttrack`
+-- Table structure for table `playlist_track`
 --
 
-DROP TABLE IF EXISTS `playlisttrack`;
+DROP TABLE IF EXISTS `playlist_track`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `playlisttrack` (
-  `idplaylisttrack` int NOT NULL,
-  `idplaylist` int DEFAULT NULL COMMENT 'Playlist_Track table (Many-to-Many relationship between Playlist and Track)',
-  `idtrack` int DEFAULT NULL,
-  PRIMARY KEY (`idplaylisttrack`),
+CREATE TABLE `playlist_track` (
+  `id` int NOT NULL,
+  `idplaylist` int NOT NULL COMMENT 'Playlist_Track table (Many-to-Many relationship between Playlist and Track)',
+  `idtrack` int NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `playlisttrackid_idx` (`idplaylist`),
   KEY `trackplaylistid_idx` (`idtrack`),
-  CONSTRAINT `playlisttrackid` FOREIGN KEY (`idplaylist`) REFERENCES `playlist` (`idplaylist`),
-  CONSTRAINT `trackplaylistid` FOREIGN KEY (`idtrack`) REFERENCES `track` (`idtrack`)
+  CONSTRAINT `playlisttrackid` FOREIGN KEY (`idplaylist`) REFERENCES `playlist` (`id`),
+  CONSTRAINT `trackplaylistid` FOREIGN KEY (`idtrack`) REFERENCES `track` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `playlisttrack`
+-- Dumping data for table `playlist_track`
 --
 
-LOCK TABLES `playlisttrack` WRITE;
-/*!40000 ALTER TABLE `playlisttrack` DISABLE KEYS */;
-INSERT INTO `playlisttrack` VALUES (1,1,1),(2,2,2);
-/*!40000 ALTER TABLE `playlisttrack` ENABLE KEYS */;
+LOCK TABLES `playlist_track` WRITE;
+/*!40000 ALTER TABLE `playlist_track` DISABLE KEYS */;
+INSERT INTO `playlist_track` VALUES (1,1,1),(2,2,2);
+/*!40000 ALTER TABLE `playlist_track` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03  2:19:02
+-- Dump completed on 2023-06-07  2:29:26
