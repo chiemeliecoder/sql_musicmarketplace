@@ -10,6 +10,15 @@ public class ArtistAchievements {
 
   private Date awardDate;
 
+  public ArtistAchievements() {
+  }
+
+  public ArtistAchievements(int id, String title, Date awardDate) {
+    this.id = id;
+    this.title = title;
+    this.awardDate = awardDate;
+  }
+
   public int getId() {
     return id;
   }
