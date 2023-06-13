@@ -5,6 +5,7 @@ import com.laba.solvd.databases.interfacedao.IAlbumDAO;
 import com.laba.solvd.databases.interfacedao.IArtistDAO;
 import com.laba.solvd.databases.model.ArtistAchievements;
 import com.laba.solvd.databases.model.Artists;
+import com.laba.solvd.databases.model.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -56,6 +59,21 @@ public class ArtistDAO implements IArtistDAO {
 
   @Override
   public void create(Artists entity) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artists (id, name) VALUES VALUES (?, ?)",
+        Statement.RETURN_GENERATED_KEYS)){
+      preparedStatement.setInt(1, entity.getId());
+      preparedStatement.setString(2, entity.getArtistName());
+
+      preparedStatement.executeUpdate();
+      ResultSet resultSet = preparedStatement.getGeneratedKeys();
+      while (resultSet.next()){}
+
+    }catch(SQLException e){
+      throw new RuntimeException("unable to create user", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
 
   }
 
@@ -81,7 +99,24 @@ public class ArtistDAO implements IArtistDAO {
 
   @Override
   public List<Artists> getAll() {
-    return null;
+    List<Artists> artists = new ArrayList<>();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ARTISTS")){
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Artists artist1 = new Artists();
+        artist1.setId(resultSet.getInt("id"));
+        artist1.setArtistName(resultSet.getString("username"));
+
+        artists.add(artist1);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return artists;
   }
 
   public static void main(String args[]) throws SQLException {

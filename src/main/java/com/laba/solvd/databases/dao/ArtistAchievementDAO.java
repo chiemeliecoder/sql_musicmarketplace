@@ -86,30 +86,29 @@ public class ArtistAchievementDAO implements IArtistAchievement {
 
   @Override
   public List<ArtistAchievements> getAllArtistAchievements() {
-    List<Albums> albums = new ArrayList<>();
+    List<ArtistAchievements> artistAchievements = new ArrayList<>();
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ALBUMS")){
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM artist_achievements")){
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()){
-        Albums albums1 = new Albums();
-        albums1.setId(resultSet.getInt("id"));
-        albums1.setAlbumName(resultSet.getString("title"));
-        albums1.setAlbumDate(resultSet.getDate("date"));
+        ArtistAchievements artistAchievements1 = new ArtistAchievements();
+        artistAchievements1.setId(resultSet.getInt("id"));
+        artistAchievements1.setTitle((resultSet.getString("title")));
+        artistAchievements1.setAwardDate(resultSet.getDate("date"));
         Artists art = new Artists();
         art.setId(1);
-        albums1.setArtist(art);
+        artistAchievements1.setArtist(art);
 
 
-        albums.add(albums1);
+        artistAchievements.add(artistAchievements1);
       }
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }finally{
       CONNECTION_POOL.releaseConnectionToPool(connection);
     }
-    return albums;
-    return null;
+    return artistAchievements;
   }
 
   public static void main(String args[]) throws SQLException{

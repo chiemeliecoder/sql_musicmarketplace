@@ -4,12 +4,13 @@ import com.laba.solvd.databases.dao.AlbumDAO;
 import com.laba.solvd.databases.dao.ArtistDAO;
 import com.laba.solvd.databases.dao.PlaylistDAO;
 import com.laba.solvd.databases.dao.UserDAO;
-import com.laba.solvd.databases.model.Playlists;
 import com.laba.solvd.databases.model.User;
 import java.util.List;
-import java.util.stream.Collectors;
+import org.apache.log4j.Logger;
 
 public class MusicService implements IMusicService {
+
+  private static final Logger logger = Logger.getLogger(MusicService.class);
 
   private UserDAO userDAO;
   private AlbumDAO albumDAO;
@@ -32,7 +33,9 @@ public class MusicService implements IMusicService {
 
   @Override
   public void performOperation() {
-    System.out.println("Performing a music operation...");
+
+    logger.info("Performing a music operation...");
+
   }
 
   @Override
@@ -78,3 +81,5 @@ public class MusicService implements IMusicService {
     return userDAO.getAllUsers();
   }
 }
+
+
