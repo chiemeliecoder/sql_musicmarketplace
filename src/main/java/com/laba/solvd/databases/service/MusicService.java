@@ -58,12 +58,14 @@ public class MusicService implements IMusicService {
 
   @Override
   public void skipToNextSong() {
-    System.out.println("Skipping to the next song");
+
+    logger.info("Skipping to the next song");
   }
 
   @Override
   public void skipToPreviousSong() {
-    System.out.println("Skipping to the previous song");
+
+    logger.info("Skipping to the previous song");
   }
 
   @Override
