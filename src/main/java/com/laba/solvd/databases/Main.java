@@ -52,7 +52,7 @@ public class Main {
     List<User> userList = musicService.getAllUsers();
     System.out.println(userList);
     System.out.println(firstUser);
-    System.out.println("check:" + musicService.performOperation());
+    
 
   }
 
