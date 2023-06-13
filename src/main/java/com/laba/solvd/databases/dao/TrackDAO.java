@@ -3,6 +3,7 @@ package com.laba.solvd.databases.dao;
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.ITrackDAO;
 import com.laba.solvd.databases.model.Tracks;
+import java.sql.SQLException;
 import java.util.List;
 
 public class TrackDAO implements ITrackDAO {
@@ -42,5 +43,9 @@ public class TrackDAO implements ITrackDAO {
   @Override
   public Tracks getTrackById(int id) {
     return null;
+  }
+
+  public static void main(String args[]) throws SQLException {
+
   }
 }

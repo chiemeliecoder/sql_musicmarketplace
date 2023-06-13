@@ -25,4 +25,8 @@ public class UserProfileDAO implements IUserProfileDAO {
   public List<UserProfile> getAllUsersProfiles() {
     return null;
   }
+
+  public static void main(String args[]) throws SQLException{
+
+  }
 }
