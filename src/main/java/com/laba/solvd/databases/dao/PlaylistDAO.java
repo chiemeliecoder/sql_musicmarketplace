@@ -41,6 +41,6 @@ public class PlaylistDAO implements IPlaylistDAO {
   }
 
   public static void main(String args[]) throws SQLException {
-    
+
   }
 }

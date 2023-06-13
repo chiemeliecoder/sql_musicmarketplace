@@ -1,8 +1,10 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
+import com.laba.solvd.databases.interfacedao.IArtistGenreDAO;
 import com.laba.solvd.databases.model.ArtistGenre;
 import com.laba.solvd.databases.model.Artists;
+import com.laba.solvd.databases.model.Genre;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,9 +14,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
-public class ArtistGenreDAO {
+public class ArtistGenreDAO implements IArtistGenreDAO {
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   public ArtistGenre getArtistGenreById(int id) throws SQLException {
@@ -47,6 +50,17 @@ public class ArtistGenreDAO {
 
     return artistGenre;
 
+  }
+
+
+  @Override
+  public void addGenreToArtist(Artists artist, Genre genre) {
+
+  }
+
+  @Override
+  public List<Genre> getGenresOfArtist(Artists artist) {
+    return null;
   }
 
   public static void main(String args[]) throws SQLException {

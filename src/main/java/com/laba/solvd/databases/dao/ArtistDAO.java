@@ -1,6 +1,8 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
+import com.laba.solvd.databases.interfacedao.IAlbumDAO;
+import com.laba.solvd.databases.interfacedao.IArtistDAO;
 import com.laba.solvd.databases.model.ArtistAchievements;
 import com.laba.solvd.databases.model.Artists;
 import java.io.FileInputStream;
@@ -13,9 +15,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
-public class ArtistDAO {
+public class ArtistDAO implements IArtistDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
@@ -51,10 +54,42 @@ public class ArtistDAO {
 
   }
 
+  @Override
+  public void create(Artists entity) {
+
+  }
+
+  /**
+   * Retrieve an object that was previously persisted to the database using
+   *
+   * @param id
+   */
+  @Override
+  public Artists read(int id) {
+    return null;
+  }
+
+  @Override
+  public void update(Artists entity) {
+
+  }
+
+  @Override
+  public void delete(int id) {
+
+  }
+
+  @Override
+  public List<Artists> getAll() {
+    return null;
+  }
+
   public static void main(String args[]) throws SQLException {
     Artists artist = new ArtistDAO().getArtistById(1);
     System.out.println("Artist ID: " + artist.getId());
     System.out.println("ArtistName: " + artist.getArtistName());
 
   }
+
+
 }
