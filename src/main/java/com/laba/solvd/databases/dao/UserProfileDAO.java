@@ -67,6 +67,9 @@ public class UserProfileDAO implements IUserProfileDAO {
       preparedStatement.setString(2, user.getBio());
       preparedStatement.setString(3, user.getProfileimage());
       preparedStatement.setString(4, user.getLocation());
+      User users = new User();
+      users.getId();
+      preparedStatement.setInt(5,users.getId());
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
