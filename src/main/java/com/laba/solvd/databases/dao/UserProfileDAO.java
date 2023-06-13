@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -85,8 +86,25 @@ public class UserProfileDAO implements IUserProfileDAO {
 
   @Override
   public List<UserProfile> getAllUsersProfiles() {
+    List<UserProfile> userProfiles = new ArrayList<>();
 
-    return null;
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM USER")){
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        UserProfile user = new UserProfile();
+        user.setId(resultSet.getInt("id"));
+        user.setBio(resultSet.getString("bio"));
+
+        userProfiles.add(user);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return userProfiles;
+
   }
 
   public static void main(String args[]) throws SQLException{
