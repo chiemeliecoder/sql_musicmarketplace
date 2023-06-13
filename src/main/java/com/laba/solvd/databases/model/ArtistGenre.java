@@ -65,4 +65,13 @@ public class ArtistGenre {
   public int hashCode() {
     return Objects.hash(getId(), getArtist(), getGenre());
   }
+
+  @Override
+  public String toString() {
+    return "ArtistGenre{" +
+        "id=" + id +
+        ", artist=" + artist +
+        ", genre=" + genre +
+        '}';
+  }
 }

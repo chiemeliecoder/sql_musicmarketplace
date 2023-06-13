@@ -59,4 +59,13 @@ public class Wishlists {
   public int hashCode() {
     return Objects.hash(getId(), getUser(), getAlbum());
   }
+
+  @Override
+  public String toString() {
+    return "Wishlists{" +
+        "id=" + id +
+        ", user=" + user +
+        ", album=" + album +
+        '}';
+  }
 }

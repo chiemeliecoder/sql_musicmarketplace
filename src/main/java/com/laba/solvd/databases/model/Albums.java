@@ -1,6 +1,7 @@
 package com.laba.solvd.databases.model;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ public class Albums {
   private String albumName;
 
   private Date albumDate;
+
 
   private Artists artist;
   private List<Tracks> tracks;
@@ -54,6 +56,14 @@ public class Albums {
     this.albumDate = albumDate;
   }
 
+  public Artists getArtist() {
+    return artist;
+  }
+
+  public void setArtist(Artists artist) {
+    this.artist = artist;
+  }
+
   //equals and hashcode
 
 
@@ -75,5 +85,16 @@ public class Albums {
   @Override
   public int hashCode() {
     return Objects.hash(getId(), getAlbumName(), getAlbumDate(), artist, tracks);
+  }
+
+  @Override
+  public String toString() {
+    return "Albums{" +
+        "id=" + id +
+        ", albumName='" + albumName + '\'' +
+        ", albumDate=" + albumDate +
+        ", artist=" + artist +
+        ", tracks=" + tracks +
+        '}';
   }
 }

@@ -72,4 +72,14 @@ public class Tracks {
   public int hashCode() {
     return Objects.hash(getId(), getTitle(), getDuration(), getAlbum());
   }
+
+  @Override
+  public String toString() {
+    return "Tracks{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", duration=" + duration +
+        ", album=" + album +
+        '}';
+  }
 }

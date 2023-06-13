@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 
-public abstract class AbstractGenericDAO<T, ID> implements IGenericDAO<T, ID>  {
+public abstract class AbstractGenericDAO<T, ID>  {
 
   protected DataSource dataSource;
 

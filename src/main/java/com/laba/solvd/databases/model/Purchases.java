@@ -86,4 +86,15 @@ public class Purchases {
   public int hashCode() {
     return Objects.hash(getId(), getPurchaseDate(), getPrice(), getUser(), getTrack());
   }
+
+  @Override
+  public String toString() {
+    return "Purchases{" +
+        "id=" + id +
+        ", purchaseDate=" + purchaseDate +
+        ", price=" + price +
+        ", user=" + user +
+        ", track=" + track +
+        '}';
+  }
 }

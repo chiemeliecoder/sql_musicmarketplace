@@ -48,4 +48,12 @@ public class Genre {
   public int hashCode() {
     return Objects.hash(getId(), getGenreName());
   }
+
+  @Override
+  public String toString() {
+    return "Genre{" +
+        "id=" + id +
+        ", genreName='" + genreName + '\'' +
+        '}';
+  }
 }

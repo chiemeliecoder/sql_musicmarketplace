@@ -72,4 +72,14 @@ public class Playlists {
   public void setTracks(List<Tracks> tracks) {
     this.tracks = tracks;
   }
+
+  @Override
+  public String toString() {
+    return "Playlists{" +
+        "id=" + id +
+        ", playlistName='" + playlistName + '\'' +
+        ", user=" + user +
+        ", tracks=" + tracks +
+        '}';
+  }
 }

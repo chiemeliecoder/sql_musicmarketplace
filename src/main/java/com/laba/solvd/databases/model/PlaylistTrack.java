@@ -65,4 +65,13 @@ public class PlaylistTrack {
   public int hashCode() {
     return Objects.hash(getId(), getPlaylist(), getTrack());
   }
+
+  @Override
+  public String toString() {
+    return "PlaylistTrack{" +
+        "id=" + id +
+        ", playlist=" + playlist +
+        ", track=" + track +
+        '}';
+  }
 }

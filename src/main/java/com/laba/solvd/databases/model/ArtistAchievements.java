@@ -1,6 +1,7 @@
 package com.laba.solvd.databases.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class ArtistAchievements {
 
@@ -41,5 +42,32 @@ public class ArtistAchievements {
 
   public void setAwardDate(Date awardDate) {
     this.awardDate = awardDate;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ArtistAchievements)) {
+      return false;
+    }
+    ArtistAchievements that = (ArtistAchievements) o;
+    return getId() == that.getId() && getTitle().equals(that.getTitle()) && getAwardDate()
+        .equals(that.getAwardDate());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getTitle(), getAwardDate());
+  }
+
+  @Override
+  public String toString() {
+    return "ArtistAchievements{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", awardDate=" + awardDate +
+        '}';
   }
 }

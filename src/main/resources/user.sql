@@ -1,5 +1,5 @@
 SELECT * FROM musicmarketplace.user;
-INSERT INTO user (id, username, email, password, id_artist) VALUES (3, 'JaneDoe', 'janedoe@example.com', 'password123',3);
+INSERT INTO user (id, username, email, password) VALUES (3, 'JaneDoe', 'janedoe@example.com', 'password123');
 UPDATE user SET username = 'JaneDoe' WHERE (id = 3);
 DELETE FROM user WHERE (id = 3);
 ALTER TABLE user ADD COLUMN age INT;

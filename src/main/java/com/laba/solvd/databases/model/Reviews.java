@@ -84,4 +84,15 @@ public class Reviews {
   public int hashCode() {
     return Objects.hash(getId(), getRatings(), getComments(), getUser(), getAlbum());
   }
+
+  @Override
+  public String toString() {
+    return "Reviews{" +
+        "id=" + id +
+        ", ratings=" + ratings +
+        ", comments='" + comments + '\'' +
+        ", user=" + user +
+        ", album=" + album +
+        '}';
+  }
 }

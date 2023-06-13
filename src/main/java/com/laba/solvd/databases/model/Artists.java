@@ -85,4 +85,15 @@ public class Artists {
   public int hashCode() {
     return Objects.hash(getId(), getArtistName(), getAlbums(), getGenres(), getAchievements());
   }
+
+  @Override
+  public String toString() {
+    return "Artists{" +
+        "id=" + id +
+        ", artistName='" + artistName + '\'' +
+        ", albums=" + albums +
+        ", genres=" + genres +
+        ", achievements=" + achievements +
+        '}';
+  }
 }

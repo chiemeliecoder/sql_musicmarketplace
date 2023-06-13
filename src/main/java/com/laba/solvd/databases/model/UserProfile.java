@@ -84,4 +84,15 @@ public class UserProfile {
   public int hashCode() {
     return Objects.hash(getId(), getBio(), getProfileimage(), getLocation(), getUser_id());
   }
+
+  @Override
+  public String toString() {
+    return "UserProfile{" +
+        "id=" + id +
+        ", bio='" + bio + '\'' +
+        ", profileimage='" + profileimage + '\'' +
+        ", location='" + location + '\'' +
+        ", user_id=" + user_id +
+        '}';
+  }
 }

@@ -127,5 +127,17 @@ public class User {
             getReviewsList(), getWishlistsList());
   }
 
-
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", email='" + email + '\'' +
+        ", password='" + password + '\'' +
+        ", purchasesList=" + purchasesList +
+        ", playlistsList=" + playlistsList +
+        ", reviewsList=" + reviewsList +
+        ", wishlistsList=" + wishlistsList +
+        '}';
+  }
 }
