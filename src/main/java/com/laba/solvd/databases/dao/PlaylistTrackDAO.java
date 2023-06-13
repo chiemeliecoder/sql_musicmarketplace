@@ -1,11 +1,14 @@
 package com.laba.solvd.databases.dao;
 
+import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IPlaylistTrackDAO;
 import com.laba.solvd.databases.model.Playlists;
 import com.laba.solvd.databases.model.Tracks;
 import java.util.List;
 
 public class PlaylistTrackDAO implements IPlaylistTrackDAO {
+
+  private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   @Override
   public void addTrackToPlaylist(Playlists playlist, Tracks track) {

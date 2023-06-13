@@ -1,5 +1,7 @@
 package com.laba.solvd.databases.dao;
 
+import com.laba.solvd.databases.configurations.ConnectionPool;
+import com.laba.solvd.databases.interfacedao.IWishlistDAO;
 import com.laba.solvd.databases.model.ArtistGenre;
 import com.laba.solvd.databases.model.Wishlists;
 import java.io.FileInputStream;
@@ -11,9 +13,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
-public class WishlistDAO {
+public class WishlistDAO implements IWishlistDAO {
+
+  private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   public Wishlists getWishlistById(int id) throws SQLException {
 
@@ -53,4 +58,33 @@ public class WishlistDAO {
 
   }
 
+  @Override
+  public void create(Wishlists entity) {
+
+  }
+
+  /**
+   * Retrieve an object that was previously persisted to the database using
+   *
+   * @param id
+   */
+  @Override
+  public Wishlists read(int id) {
+    return null;
+  }
+
+  @Override
+  public void update(Wishlists entity) {
+
+  }
+
+  @Override
+  public void delete(int id) {
+
+  }
+
+  @Override
+  public List<Wishlists> getAll() {
+    return null;
+  }
 }

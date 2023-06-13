@@ -1,10 +1,13 @@
 package com.laba.solvd.databases.dao;
 
+import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.ITrackDAO;
 import com.laba.solvd.databases.model.Tracks;
 import java.util.List;
 
 public class TrackDAO implements ITrackDAO {
+
+  private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   @Override
   public void create(Tracks entity) {
