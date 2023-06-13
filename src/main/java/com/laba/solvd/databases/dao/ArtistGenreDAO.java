@@ -1,5 +1,6 @@
 package com.laba.solvd.databases.dao;
 
+import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.model.ArtistGenre;
 import com.laba.solvd.databases.model.Artists;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ArtistGenreDAO {
+  private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   public ArtistGenre getArtistGenreById(int id) throws SQLException {
 

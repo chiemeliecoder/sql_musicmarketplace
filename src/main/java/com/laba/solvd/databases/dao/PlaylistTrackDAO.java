@@ -1,5 +1,19 @@
 package com.laba.solvd.databases.dao;
 
-public class PlaylistTrackDAO {
+import com.laba.solvd.databases.interfacedao.IPlaylistTrackDAO;
+import com.laba.solvd.databases.model.Playlists;
+import com.laba.solvd.databases.model.Tracks;
+import java.util.List;
 
+public class PlaylistTrackDAO implements IPlaylistTrackDAO {
+
+  @Override
+  public void addTrackToPlaylist(Playlists playlist, Tracks track) {
+
+  }
+
+  @Override
+  public List<Tracks> getTracksInPlaylist(Playlists playlist) {
+    return null;
+  }
 }
