@@ -89,7 +89,7 @@ public class UserProfileDAO implements IUserProfileDAO {
     List<UserProfile> userProfiles = new ArrayList<>();
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM USER")){
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_profile")){
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()){
         UserProfile user = new UserProfile();
