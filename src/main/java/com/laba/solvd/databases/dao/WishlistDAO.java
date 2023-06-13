@@ -52,12 +52,6 @@ public class WishlistDAO implements IWishlistDAO {
 
   }
 
-  public static void main(String args[]) throws SQLException {
-    Wishlists wishlists = new WishlistDAO().getWishlistById(1);
-    System.out.println("Wishlist ID: " + wishlists.getId());
-
-  }
-
   @Override
   public void create(Wishlists entity) {
 
@@ -87,4 +81,12 @@ public class WishlistDAO implements IWishlistDAO {
   public List<Wishlists> getAll() {
     return null;
   }
+
+  public static void main(String args[]) throws SQLException {
+    Wishlists wishlists = new WishlistDAO().getWishlistById(1);
+    System.out.println("Wishlist ID: " + wishlists.getId());
+
+  }
+
+
 }

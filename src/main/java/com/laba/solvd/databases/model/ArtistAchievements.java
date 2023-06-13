@@ -1,6 +1,6 @@
 package com.laba.solvd.databases.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class ArtistAchievements {
@@ -11,13 +11,17 @@ public class ArtistAchievements {
 
   private Date awardDate;
 
+  private Artists artist;
+
   public ArtistAchievements() {
   }
 
-  public ArtistAchievements(int id, String title, Date awardDate) {
+  public ArtistAchievements(int id, String title, Date awardDate,
+      Artists artist) {
     this.id = id;
     this.title = title;
     this.awardDate = awardDate;
+    this.artist = artist;
   }
 
   public int getId() {
@@ -44,6 +48,14 @@ public class ArtistAchievements {
     this.awardDate = awardDate;
   }
 
+  public Artists getArtist() {
+    return artist;
+  }
+
+  public void setArtist(Artists artist) {
+    this.artist = artist;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -54,12 +66,12 @@ public class ArtistAchievements {
     }
     ArtistAchievements that = (ArtistAchievements) o;
     return getId() == that.getId() && getTitle().equals(that.getTitle()) && getAwardDate()
-        .equals(that.getAwardDate());
+        .equals(that.getAwardDate()) && getArtist().equals(that.getArtist());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getTitle(), getAwardDate());
+    return Objects.hash(getId(), getTitle(), getAwardDate(), getArtist());
   }
 
   @Override
@@ -68,6 +80,7 @@ public class ArtistAchievements {
         "id=" + id +
         ", title='" + title + '\'' +
         ", awardDate=" + awardDate +
+        ", artist=" + artist +
         '}';
   }
 }
