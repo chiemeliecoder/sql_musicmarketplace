@@ -1,17 +1,22 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IPlaylistDAO;
-import com.laba.solvd.databases.model.Playlists;
+import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.model.Playlist;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PlaylistDAO implements IPlaylistDAO {
+public class PlaylistDAO implements IGenericDAO<Playlist> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   @Override
-  public void create(Playlists entity) {
+  public Playlist getById(int id) throws SQLException {
+    return null;
+  }
+
+  @Override
+  public void create(Playlist entity) {
 
   }
 
@@ -21,12 +26,12 @@ public class PlaylistDAO implements IPlaylistDAO {
    * @param id
    */
   @Override
-  public Playlists read(int id) {
+  public Playlist read(int id) {
     return null;
   }
 
   @Override
-  public void update(Playlists entity) {
+  public void update(Playlist entity) {
 
   }
 
@@ -36,7 +41,7 @@ public class PlaylistDAO implements IPlaylistDAO {
   }
 
   @Override
-  public List<Playlists> getAll() {
+  public List<Playlist> getAll() {
     return null;
   }
 

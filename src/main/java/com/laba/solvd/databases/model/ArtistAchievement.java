@@ -3,7 +3,7 @@ package com.laba.solvd.databases.model;
 import java.sql.Date;
 import java.util.Objects;
 
-public class ArtistAchievements {
+public class ArtistAchievement {
 
   private int id;
 
@@ -13,10 +13,10 @@ public class ArtistAchievements {
 
   private Artists artist;
 
-  public ArtistAchievements() {
+  public ArtistAchievement() {
   }
 
-  public ArtistAchievements(int id, String title, Date awardDate,
+  public ArtistAchievement(int id, String title, Date awardDate,
       Artists artist) {
     this.id = id;
     this.title = title;
@@ -61,10 +61,10 @@ public class ArtistAchievements {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ArtistAchievements)) {
+    if (!(o instanceof ArtistAchievement)) {
       return false;
     }
-    ArtistAchievements that = (ArtistAchievements) o;
+    ArtistAchievement that = (ArtistAchievement) o;
     return getId() == that.getId() && getTitle().equals(that.getTitle()) && getAwardDate()
         .equals(that.getAwardDate()) && getArtist().equals(that.getArtist());
   }
@@ -76,7 +76,7 @@ public class ArtistAchievements {
 
   @Override
   public String toString() {
-    return "ArtistAchievements{" +
+    return "ArtistAchievement{" +
         "id=" + id +
         ", title='" + title + '\'' +
         ", awardDate=" + awardDate +

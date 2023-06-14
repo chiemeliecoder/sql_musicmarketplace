@@ -1,10 +1,9 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IAlbumDAO;
-import com.laba.solvd.databases.model.Albums;
+import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.Artists;
-import com.laba.solvd.databases.model.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,13 +20,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
-public class AlbumDAO implements IAlbumDAO{
+public class AlbumDAO implements IGenericDAO<Album> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-  public Albums getAlbumById(int id) throws SQLException {
+  public Album getById(int id) throws SQLException {
 
-    Albums albums = new Albums();
+    Album albums = new Album();
     Properties properties = new Properties();
     try(InputStream input = new FileInputStream("src/main/resources/db.properties")){
       properties.load(input);
@@ -59,18 +58,18 @@ public class AlbumDAO implements IAlbumDAO{
 
 
   @Override
-  public void create(Albums albums) {
+  public void create(Album album) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into Albums (id, title, date, artistid) VALUES  (?, ?, ?,?)",
         Statement.RETURN_GENERATED_KEYS)){
-      preparedStatement.setInt(1, albums.getId());
-      preparedStatement.setString(2, albums.getAlbumName());
-      //preparedStatement.setDate(3, (Date) albums.getAlbumDate());
+      preparedStatement.setInt(1, album.getId());
+      preparedStatement.setString(2, album.getAlbumName());
+      //preparedStatement.setDate(3, (Date) album.getAlbumDate());
       java.util.Date utilDate = new java.util.Date();
       java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
       preparedStatement.setDate(3, sqlDate);
-      preparedStatement.setInt(4,albums.getArtist().getId());
+      preparedStatement.setInt(4, album.getArtist().getId());
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
       while (resultSet.next()){}
@@ -89,12 +88,12 @@ public class AlbumDAO implements IAlbumDAO{
    * @param id
    */
   @Override
-  public Albums read(int id) {
+  public Album read(int id) {
     return null;
   }
 
   @Override
-  public void update(Albums entity) {
+  public void update(Album entity) {
 
   }
 
@@ -104,14 +103,14 @@ public class AlbumDAO implements IAlbumDAO{
   }
 
   @Override
-  public List<Albums> getAll() {
-    List<Albums> albums = new ArrayList<>();
+  public List<Album> getAll() {
+    List<Album> albums = new ArrayList<>();
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ALBUMS")){
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()){
-        Albums albums1 = new Albums();
+        Album albums1 = new Album();
         albums1.setId(resultSet.getInt("id"));
         albums1.setAlbumName(resultSet.getString("title"));
         albums1.setAlbumDate(resultSet.getDate("date"));
@@ -132,7 +131,7 @@ public class AlbumDAO implements IAlbumDAO{
 
 
   public static void main(String args[]) throws SQLException{
-    Albums album = new AlbumDAO().getAlbumById(1);
+    Album album = new AlbumDAO().getById(1);
     System.out.println("Album ID: " + album.getId());
     System.out.println("Albumname: " + album.getAlbumName());
     System.out.println("AlbumDate:" + album.getAlbumDate());
@@ -144,7 +143,7 @@ public class AlbumDAO implements IAlbumDAO{
 
     AlbumDAO albumDAO = new AlbumDAO();
 
-    Albums newAlbum = new Albums();
+    Album newAlbum = new Album();
     newAlbum.setId(4);
     newAlbum.setAlbumName("Lady");
     newAlbum.setAlbumDate(sqlDate);
@@ -156,9 +155,9 @@ public class AlbumDAO implements IAlbumDAO{
 
     albumDAO.create(newAlbum);
 
-    List<Albums> albumsList = new AlbumDAO().getAll();
+    List<Album> albumsList = new AlbumDAO().getAll();
 
-    for (Albums a : albumsList) {
+    for (Album a : albumsList) {
       System.out.println("User ID: " + a.getId());
       System.out.println("Username: " + a.getAlbumName());
       System.out.println("Albumdate: " + a.getAlbumDate());

@@ -1,17 +1,13 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IAlbumDAO;
-import com.laba.solvd.databases.interfacedao.IArtistDAO;
-import com.laba.solvd.databases.model.ArtistAchievements;
+import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import com.laba.solvd.databases.model.Artists;
-import com.laba.solvd.databases.model.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class ArtistDAO implements IArtistDAO {
+public class ArtistDAO implements IGenericDAO<Artists> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-  public Artists getArtistById(int id) throws SQLException {
+  public Artists getById(int id) throws SQLException {
 
     Artists artist = new Artists();
     Properties properties = new Properties();
@@ -120,7 +116,7 @@ public class ArtistDAO implements IArtistDAO {
   }
 
   public static void main(String args[]) throws SQLException {
-    Artists artist = new ArtistDAO().getArtistById(1);
+    Artists artist = new ArtistDAO().getById(1);
     System.out.println("Artist ID: " + artist.getId());
     System.out.println("ArtistName: " + artist.getArtistName());
 

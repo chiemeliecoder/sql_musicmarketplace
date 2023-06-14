@@ -3,20 +3,20 @@ package com.laba.solvd.databases.model;
 import java.util.List;
 import java.util.Objects;
 
-public class Playlists {
+public class Playlist {
 
   private int id;
 
   private String playlistName;
 
   private User user;
-  private List<Tracks> tracks;
+  private List<Track> tracks;
 
-  public Playlists() {
+  public Playlist() {
   }
 
-  public Playlists(int id, String playlistName, User user,
-      List<Tracks> tracks) {
+  public Playlist(int id, String playlistName, User user,
+      List<Track> tracks) {
     this.id = id;
     this.playlistName = playlistName;
     this.user = user;
@@ -47,7 +47,7 @@ public class Playlists {
     this.user = user;
   }
 
-  public List<Tracks> getTracks() {
+  public List<Track> getTracks() {
     return tracks;
   }
 
@@ -56,12 +56,12 @@ public class Playlists {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Playlists)) {
+    if (!(o instanceof Playlist)) {
       return false;
     }
-    Playlists playlists = (Playlists) o;
-    return getId() == playlists.getId() && getPlaylistName().equals(playlists.getPlaylistName())
-        && getUser().equals(playlists.getUser()) && getTracks().equals(playlists.getTracks());
+    Playlist playlist = (Playlist) o;
+    return getId() == playlist.getId() && getPlaylistName().equals(playlist.getPlaylistName())
+        && getUser().equals(playlist.getUser()) && getTracks().equals(playlist.getTracks());
   }
 
   @Override
@@ -69,13 +69,13 @@ public class Playlists {
     return Objects.hash(getId(), getPlaylistName(), getUser(), getTracks());
   }
 
-  public void setTracks(List<Tracks> tracks) {
+  public void setTracks(List<Track> tracks) {
     this.tracks = tracks;
   }
 
   @Override
   public String toString() {
-    return "Playlists{" +
+    return "Playlist{" +
         "id=" + id +
         ", playlistName='" + playlistName + '\'' +
         ", user=" + user +

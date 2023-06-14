@@ -1,17 +1,23 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.ITrackDAO;
-import com.laba.solvd.databases.model.Tracks;
+import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.model.Track;
 import java.sql.SQLException;
 import java.util.List;
 
-public class TrackDAO implements ITrackDAO {
+public class TrackDAO implements IGenericDAO<Track> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
+
+  public Track getById(int id) throws SQLException {
+    Track track = new Track();
+    return track;
+  }
+
   @Override
-  public void create(Tracks entity) {
+  public void create(Track entity) {
 
   }
 
@@ -21,12 +27,12 @@ public class TrackDAO implements ITrackDAO {
    * @param id
    */
   @Override
-  public Tracks read(int id) {
+  public Track read(int id) {
     return null;
   }
 
   @Override
-  public void update(Tracks entity) {
+  public void update(Track entity) {
 
   }
 
@@ -36,14 +42,11 @@ public class TrackDAO implements ITrackDAO {
   }
 
   @Override
-  public List<Tracks> getAll() {
+  public List<Track> getAll() {
     return null;
   }
 
-  @Override
-  public Tracks getTrackById(int id) {
-    return null;
-  }
+
 
   public static void main(String args[]) throws SQLException {
 

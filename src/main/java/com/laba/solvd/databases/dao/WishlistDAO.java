@@ -1,9 +1,8 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IWishlistDAO;
-import com.laba.solvd.databases.model.ArtistGenre;
-import com.laba.solvd.databases.model.Wishlists;
+import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.model.Wishlist;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,13 +15,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-public class WishlistDAO implements IWishlistDAO {
+public class WishlistDAO implements IGenericDAO<Wishlist> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-  public Wishlists getWishlistById(int id) throws SQLException {
+  public Wishlist getById(int id) throws SQLException {
 
-    Wishlists wishlists = new Wishlists();
+    Wishlist wishlist = new Wishlist();
 
     Properties properties = new Properties();
 
@@ -44,16 +43,16 @@ public class WishlistDAO implements IWishlistDAO {
       ResultSet resultSet = preparedStatement.executeQuery();
 
       while (resultSet.next()){
-        wishlists.setId(resultSet.getInt("id"));
+        wishlist.setId(resultSet.getInt("id"));
       }
     }
 
-    return wishlists;
+    return wishlist;
 
   }
 
   @Override
-  public void create(Wishlists entity) {
+  public void create(Wishlist entity) {
 
   }
 
@@ -63,12 +62,12 @@ public class WishlistDAO implements IWishlistDAO {
    * @param id
    */
   @Override
-  public Wishlists read(int id) {
+  public Wishlist read(int id) {
     return null;
   }
 
   @Override
-  public void update(Wishlists entity) {
+  public void update(Wishlist entity) {
 
   }
 
@@ -78,13 +77,13 @@ public class WishlistDAO implements IWishlistDAO {
   }
 
   @Override
-  public List<Wishlists> getAll() {
+  public List<Wishlist> getAll() {
     return null;
   }
 
   public static void main(String args[]) throws SQLException {
-    Wishlists wishlists = new WishlistDAO().getWishlistById(1);
-    System.out.println("Wishlist ID: " + wishlists.getId());
+    Wishlist wishlist = new WishlistDAO().getById(1);
+    System.out.println("Wishlist ID: " + wishlist.getId());
 
   }
 

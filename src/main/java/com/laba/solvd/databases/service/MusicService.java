@@ -34,39 +34,10 @@ public class MusicService implements IMusicService {
   @Override
   public void performOperation() {
 
-    logger.info("Performing a music operation...");
+    logger.info("loading musicmarketplace...");
 
   }
 
-  @Override
-  public void playSong(String songId) {
-    System.out.println("Playing song with ID: " + songId);
-
-  }
-
-  @Override
-  public void pauseSong(String songId) {
-    System.out.println("Pausing song with ID: " + songId);
-
-  }
-
-  @Override
-  public void stopSong(String songId) {
-    System.out.println("Stopping song with ID: " + songId);
-
-  }
-
-  @Override
-  public void skipToNextSong() {
-
-    logger.info("Skipping to the next song");
-  }
-
-  @Override
-  public void skipToPreviousSong() {
-
-    logger.info("Skipping to the previous song");
-  }
 
   @Override
   public User create(User user) {

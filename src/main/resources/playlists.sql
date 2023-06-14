@@ -1,13 +1,13 @@
-SELECT * FROM musicmarketplace.playlists;
-INSERT INTO playlists (id, name, userid) VALUES (1, 'My Favorites', 1);
-UPDATE playlists SET name = 'Big Hits' WHERE (id = 1);
-DELETE FROM playlists WHERE (id = 1);
+SELECT * FROM musicmarketplace.playlist;
+INSERT INTO playlist (id, name, userid) VALUES (1, 'My Favorites', 1);
+UPDATE playlist SET name = 'Big Hits' WHERE (id = 1);
+DELETE FROM playlist WHERE (id = 1);
 -- Right Join
 SELECT *
-FROM musicmarketplace.playlists
-RIGHT JOIN musicmarketplace.tracks ON musicmarketplace.playlists.id = musicmarketplace.tracks.id;
+FROM musicmarketplace.playlist
+RIGHT JOIN musicmarketplace.track ON musicmarketplace.playlist.id = musicmarketplace.track.id;
 
--- Determine the number of playlists created by each user:
-SELECT musicmarketplace.playlists.userid, COUNT(musicmarketplace.playlists.id) AS playlist_count
-FROM musicmarketplace.playlists
-GROUP BY musicmarketplace.playlists.userid;
+-- Determine the number of playlist created by each user:
+SELECT musicmarketplace.playlist.userid, COUNT(musicmarketplace.playlist.id) AS playlist_count
+FROM musicmarketplace.playlist
+GROUP BY musicmarketplace.playlist.userid;

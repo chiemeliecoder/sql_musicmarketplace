@@ -2,8 +2,6 @@ package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IGenreDAO;
-import com.laba.solvd.databases.model.Albums;
-import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.Genre;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

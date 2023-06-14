@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public class Purchases {
+public class Purchase {
 
   private int id;
 
@@ -13,14 +13,14 @@ public class Purchases {
   private BigDecimal price;
 
   private User user;
-  private Tracks track;
+  private Track track;
 
-  public Purchases() {
+  public Purchase() {
   }
 
 
-  public Purchases(int id, Date purchaseDate, BigDecimal price,
-      User user, Tracks track) {
+  public Purchase(int id, Date purchaseDate, BigDecimal price,
+      User user, Track track) {
     this.id = id;
     this.purchaseDate = purchaseDate;
     this.price = price;
@@ -60,11 +60,11 @@ public class Purchases {
     this.user = user;
   }
 
-  public Tracks getTrack() {
+  public Track getTrack() {
     return track;
   }
 
-  public void setTrack(Tracks track) {
+  public void setTrack(Track track) {
     this.track = track;
   }
 
@@ -73,13 +73,13 @@ public class Purchases {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Purchases)) {
+    if (!(o instanceof Purchase)) {
       return false;
     }
-    Purchases purchases = (Purchases) o;
-    return getId() == purchases.getId() && getPurchaseDate().equals(purchases.getPurchaseDate())
-        && getPrice().equals(purchases.getPrice()) && getUser().equals(purchases.getUser())
-        && getTrack().equals(purchases.getTrack());
+    Purchase purchase = (Purchase) o;
+    return getId() == purchase.getId() && getPurchaseDate().equals(purchase.getPurchaseDate())
+        && getPrice().equals(purchase.getPrice()) && getUser().equals(purchase.getUser())
+        && getTrack().equals(purchase.getTrack());
   }
 
   @Override
@@ -89,7 +89,7 @@ public class Purchases {
 
   @Override
   public String toString() {
-    return "Purchases{" +
+    return "Purchase{" +
         "id=" + id +
         ", purchaseDate=" + purchaseDate +
         ", price=" + price +

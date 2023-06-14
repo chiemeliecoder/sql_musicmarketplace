@@ -3,7 +3,7 @@ package com.laba.solvd.databases.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Reviews {
+public class Review {
 
   private int id;
 
@@ -12,13 +12,13 @@ public class Reviews {
   private String comments;
 
   private User user;
-  private Albums album;
+  private Album album;
 
-  public Reviews() {
+  public Review() {
   }
 
-  public Reviews(int id, BigDecimal ratings, String comments,
-      User user, Albums album) {
+  public Review(int id, BigDecimal ratings, String comments,
+      User user, Album album) {
     this.id = id;
     this.ratings = ratings;
     this.comments = comments;
@@ -58,11 +58,11 @@ public class Reviews {
     this.user = user;
   }
 
-  public Albums getAlbum() {
+  public Album getAlbum() {
     return album;
   }
 
-  public void setAlbum(Albums album) {
+  public void setAlbum(Album album) {
     this.album = album;
   }
 
@@ -71,13 +71,13 @@ public class Reviews {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Reviews)) {
+    if (!(o instanceof Review)) {
       return false;
     }
-    Reviews reviews = (Reviews) o;
-    return getId() == reviews.getId() && getRatings().equals(reviews.getRatings()) && getComments()
-        .equals(reviews.getComments()) && getUser().equals(reviews.getUser()) && getAlbum()
-        .equals(reviews.getAlbum());
+    Review review = (Review) o;
+    return getId() == review.getId() && getRatings().equals(review.getRatings()) && getComments()
+        .equals(review.getComments()) && getUser().equals(review.getUser()) && getAlbum()
+        .equals(review.getAlbum());
   }
 
   @Override
@@ -87,7 +87,7 @@ public class Reviews {
 
   @Override
   public String toString() {
-    return "Reviews{" +
+    return "Review{" +
         "id=" + id +
         ", ratings=" + ratings +
         ", comments='" + comments + '\'' +

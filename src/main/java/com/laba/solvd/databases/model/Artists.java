@@ -9,16 +9,16 @@ public class Artists {
 
   private String artistName;
 
-  private List<Albums> albums;
+  private List<Album> albums;
   private List<Genre> genres;
-  private List<ArtistAchievements> achievements;
+  private List<ArtistAchievement> achievements;
 
   public Artists() {
   }
 
   public Artists(int id, String artistName,
-      List<Albums> albums, List<Genre> genres,
-      List<ArtistAchievements> achievements) {
+      List<Album> albums, List<Genre> genres,
+      List<ArtistAchievement> achievements) {
     this.id = id;
     this.artistName = artistName;
     this.albums = albums;
@@ -42,11 +42,11 @@ public class Artists {
     this.artistName = artistName;
   }
 
-  public List<Albums> getAlbums() {
+  public List<Album> getAlbums() {
     return albums;
   }
 
-  public void setAlbums(List<Albums> albums) {
+  public void setAlbums(List<Album> albums) {
     this.albums = albums;
   }
 
@@ -58,12 +58,12 @@ public class Artists {
     this.genres = genres;
   }
 
-  public List<ArtistAchievements> getAchievements() {
+  public List<ArtistAchievement> getAchievements() {
     return achievements;
   }
 
   public void setAchievements(
-      List<ArtistAchievements> achievements) {
+      List<ArtistAchievement> achievements) {
     this.achievements = achievements;
   }
 

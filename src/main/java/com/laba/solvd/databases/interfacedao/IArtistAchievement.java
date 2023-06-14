@@ -1,11 +1,11 @@
 package com.laba.solvd.databases.interfacedao;
 
-import com.laba.solvd.databases.model.ArtistAchievements;
+import com.laba.solvd.databases.model.ArtistAchievement;
 import java.util.List;
 
 public interface IArtistAchievement {
-  void createArtistAchievement(ArtistAchievements achievement);
+  void createArtistAchievement(ArtistAchievement achievement);
 
-  List<ArtistAchievements> getAllArtistAchievements();
+  List<ArtistAchievement> getAllArtistAchievements();
 
 }

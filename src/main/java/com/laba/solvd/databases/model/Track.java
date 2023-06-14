@@ -3,7 +3,7 @@ package com.laba.solvd.databases.model;
 import java.sql.Time;
 import java.util.Objects;
 
-public class Tracks {
+public class Track {
 
   private int id;
 
@@ -11,12 +11,12 @@ public class Tracks {
 
   private Time duration;
 
-  private Albums album;
+  private Album album;
 
-  public Tracks() {
+  public Track() {
   }
 
-  public Tracks(int id, String title, Time duration, Albums album) {
+  public Track(int id, String title, Time duration, Album album) {
     this.id = id;
     this.title = title;
     this.duration = duration;
@@ -47,11 +47,11 @@ public class Tracks {
     this.duration = duration;
   }
 
-  public Albums getAlbum() {
+  public Album getAlbum() {
     return album;
   }
 
-  public void setAlbum(Albums album) {
+  public void setAlbum(Album album) {
     this.album = album;
   }
 
@@ -60,12 +60,12 @@ public class Tracks {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Tracks)) {
+    if (!(o instanceof Track)) {
       return false;
     }
-    Tracks tracks = (Tracks) o;
-    return getId() == tracks.getId() && getTitle().equals(tracks.getTitle()) && getDuration()
-        .equals(tracks.getDuration()) && getAlbum().equals(tracks.getAlbum());
+    Track track = (Track) o;
+    return getId() == track.getId() && getTitle().equals(track.getTitle()) && getDuration()
+        .equals(track.getDuration()) && getAlbum().equals(track.getAlbum());
   }
 
   @Override
@@ -75,7 +75,7 @@ public class Tracks {
 
   @Override
   public String toString() {
-    return "Tracks{" +
+    return "Track{" +
         "id=" + id +
         ", title='" + title + '\'' +
         ", duration=" + duration +

@@ -6,7 +6,7 @@ DELETE FROM user_profile WHERE (id = 1);
 -- Left Join
 SELECT *
 FROM musicmarketplace.user_profile
-LEFT JOIN playlists ON musicmarketplace.user_profile.id= musicmarketplace.playlists.userid;
+LEFT JOIN playlist ON musicmarketplace.user_profile.id= musicmarketplace.playlist.userid;
 
 -- Self Join
 SELECT *

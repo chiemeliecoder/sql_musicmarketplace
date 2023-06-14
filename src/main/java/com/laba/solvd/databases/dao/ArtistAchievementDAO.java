@@ -2,8 +2,7 @@ package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IArtistAchievement;
-import com.laba.solvd.databases.model.Albums;
-import com.laba.solvd.databases.model.ArtistAchievements;
+import com.laba.solvd.databases.model.ArtistAchievement;
 import com.laba.solvd.databases.model.Artists;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,9 +23,9 @@ public class ArtistAchievementDAO implements IArtistAchievement {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-  public ArtistAchievements getAchievementById(int id) throws SQLException {
+  public ArtistAchievement getAchievementById(int id) throws SQLException {
 
-    ArtistAchievements achievements = new ArtistAchievements();
+    ArtistAchievement achievements = new ArtistAchievement();
     Properties properties = new Properties();
 
     try(InputStream input = new FileInputStream("src/main/resources/db.properties")){
@@ -59,7 +58,7 @@ public class ArtistAchievementDAO implements IArtistAchievement {
   }
 
   @Override
-  public void createArtistAchievement(ArtistAchievements achievement) {
+  public void createArtistAchievement(ArtistAchievement achievement) {
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artist_achievements (id, artistid, title, date) VALUES  (?, ?, ?,?)",
@@ -85,23 +84,23 @@ public class ArtistAchievementDAO implements IArtistAchievement {
 
 
   @Override
-  public List<ArtistAchievements> getAllArtistAchievements() {
-    List<ArtistAchievements> artistAchievements = new ArrayList<>();
+  public List<ArtistAchievement> getAllArtistAchievements() {
+    List<ArtistAchievement> artistAchievements = new ArrayList<>();
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM artist_achievements")){
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()){
-        ArtistAchievements artistAchievements1 = new ArtistAchievements();
-        artistAchievements1.setId(resultSet.getInt("id"));
-        artistAchievements1.setTitle((resultSet.getString("title")));
-        artistAchievements1.setAwardDate(resultSet.getDate("date"));
+        ArtistAchievement artistAchievement1 = new ArtistAchievement();
+        artistAchievement1.setId(resultSet.getInt("id"));
+        artistAchievement1.setTitle((resultSet.getString("title")));
+        artistAchievement1.setAwardDate(resultSet.getDate("date"));
         Artists art = new Artists();
         art.setId(1);
-        artistAchievements1.setArtist(art);
+        artistAchievement1.setArtist(art);
 
 
-        artistAchievements.add(artistAchievements1);
+        artistAchievements.add(artistAchievement1);
       }
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -112,10 +111,10 @@ public class ArtistAchievementDAO implements IArtistAchievement {
   }
 
   public static void main(String args[]) throws SQLException{
-    ArtistAchievements artistAchievements = new ArtistAchievementDAO().getAchievementById(1);
-    System.out.println("Award ID: " + artistAchievements.getId());
-    System.out.println("AwardName: " + artistAchievements.getTitle());
-    System.out.println("AwardDate:" + artistAchievements.getAwardDate());
+    ArtistAchievement artistAchievement = new ArtistAchievementDAO().getAchievementById(1);
+    System.out.println("Award ID: " + artistAchievement.getId());
+    System.out.println("AwardName: " + artistAchievement.getTitle());
+    System.out.println("AwardDate:" + artistAchievement.getAwardDate());
 
   }
 

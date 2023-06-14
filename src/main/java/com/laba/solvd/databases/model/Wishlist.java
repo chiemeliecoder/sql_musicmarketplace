@@ -2,17 +2,17 @@ package com.laba.solvd.databases.model;
 
 import java.util.Objects;
 
-public class Wishlists {
+public class Wishlist {
 
   private int id;
 
   private User user;
-  private Albums album;
+  private Album album;
 
-  public Wishlists() {
+  public Wishlist() {
   }
 
-  public Wishlists(int id, User user, Albums album) {
+  public Wishlist(int id, User user, Album album) {
     this.id = id;
     this.user = user;
     this.album = album;
@@ -34,11 +34,11 @@ public class Wishlists {
     this.user = user;
   }
 
-  public Albums getAlbum() {
+  public Album getAlbum() {
     return album;
   }
 
-  public void setAlbum(Albums album) {
+  public void setAlbum(Album album) {
     this.album = album;
   }
 
@@ -47,12 +47,12 @@ public class Wishlists {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Wishlists)) {
+    if (!(o instanceof Wishlist)) {
       return false;
     }
-    Wishlists wishlists = (Wishlists) o;
-    return getId() == wishlists.getId() && getUser().equals(wishlists.getUser()) && getAlbum()
-        .equals(wishlists.getAlbum());
+    Wishlist wishlist = (Wishlist) o;
+    return getId() == wishlist.getId() && getUser().equals(wishlist.getUser()) && getAlbum()
+        .equals(wishlist.getAlbum());
   }
 
   @Override
@@ -62,7 +62,7 @@ public class Wishlists {
 
   @Override
   public String toString() {
-    return "Wishlists{" +
+    return "Wishlist{" +
         "id=" + id +
         ", user=" + user +
         ", album=" + album +

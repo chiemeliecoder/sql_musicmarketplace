@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Albums {
+public class Album {
 
   private int id;
 
@@ -15,16 +15,16 @@ public class Albums {
 
 
   private Artists artist;
-  private List<Tracks> tracks;
+  private List<Track> tracks;
 
   //constructor
 
 
-  public Albums() {
+  public Album() {
   }
 
-  public Albums(int id, String albumName, Date albumDate,
-      Artists artist, List<Tracks> tracks) {
+  public Album(int id, String albumName, Date albumDate,
+      Artists artist, List<Track> tracks) {
     this.id = id;
     this.albumName = albumName;
     this.albumDate = albumDate;
@@ -72,10 +72,10 @@ public class Albums {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Albums)) {
+    if (!(o instanceof Album)) {
       return false;
     }
-    Albums albums = (Albums) o;
+    Album albums = (Album) o;
     return getId() == albums.getId() && getAlbumName().equals(albums.getAlbumName())
         && getAlbumDate()
         .equals(albums.getAlbumDate()) && artist.equals(albums.artist) && tracks
@@ -89,7 +89,7 @@ public class Albums {
 
   @Override
   public String toString() {
-    return "Albums{" +
+    return "Album{" +
         "id=" + id +
         ", albumName='" + albumName + '\'' +
         ", albumDate=" + albumDate +

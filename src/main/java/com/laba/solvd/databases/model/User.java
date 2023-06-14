@@ -13,10 +13,10 @@ public class User {
   
   private String password;
   
-  private List<Purchases> purchasesList ;
-  private List<Playlists> playlistsList;
-  private List<Reviews> reviewsList;
-  private List<Wishlists> wishlistsList;
+  private List<Purchase> purchaseList;
+  private List<Playlist> playlistList;
+  private List<Review> reviewList;
+  private List<Wishlist> wishlistList;
 
   public User() {
   }
@@ -28,14 +28,14 @@ public class User {
     this.password = password;
   }
 
-  public User(List<Purchases> purchasesList,
-      List<Playlists> playlistsList,
-      List<Reviews> reviewsList,
-      List<Wishlists> wishlistsList) {
-    this.purchasesList = purchasesList;
-    this.playlistsList = playlistsList;
-    this.reviewsList = reviewsList;
-    this.wishlistsList = wishlistsList;
+  public User(List<Purchase> purchaseList,
+      List<Playlist> playlistList,
+      List<Review> reviewList,
+      List<Wishlist> wishlistList) {
+    this.purchaseList = purchaseList;
+    this.playlistList = playlistList;
+    this.reviewList = reviewList;
+    this.wishlistList = wishlistList;
   }
 
   public int getId() {
@@ -70,38 +70,38 @@ public class User {
     this.password = password;
   }
 
-  public List<Purchases> getPurchasesList() {
-    return purchasesList;
+  public List<Purchase> getPurchasesList() {
+    return purchaseList;
   }
 
-  public void setPurchasesList(List<Purchases> purchasesList) {
-    this.purchasesList = purchasesList;
+  public void setPurchasesList(List<Purchase> purchaseList) {
+    this.purchaseList = purchaseList;
   }
 
 
 
-  public List<Playlists> getPlaylistsList() {
-    return playlistsList;
+  public List<Playlist> getPlaylistsList() {
+    return playlistList;
   }
 
-  public void setPlaylistsList(List<Playlists> playlistsList) {
-    this.playlistsList = playlistsList;
+  public void setPlaylistsList(List<Playlist> playlistList) {
+    this.playlistList = playlistList;
   }
 
-  public List<Reviews> getReviewsList() {
-    return reviewsList;
+  public List<Review> getReviewsList() {
+    return reviewList;
   }
 
-  public void setReviewsList(List<Reviews> reviewsList) {
-    this.reviewsList = reviewsList;
+  public void setReviewsList(List<Review> reviewList) {
+    this.reviewList = reviewList;
   }
 
-  public List<Wishlists> getWishlistsList() {
-    return wishlistsList;
+  public List<Wishlist> getWishlistsList() {
+    return wishlistList;
   }
 
-  public void setWishlistsList(List<Wishlists> wishlistsList) {
-    this.wishlistsList = wishlistsList;
+  public void setWishlistsList(List<Wishlist> wishlistList) {
+    this.wishlistList = wishlistList;
   }
 
   @Override
@@ -134,10 +134,10 @@ public class User {
         ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", password='" + password + '\'' +
-        ", purchasesList=" + purchasesList +
-        ", playlistsList=" + playlistsList +
-        ", reviewsList=" + reviewsList +
-        ", wishlistsList=" + wishlistsList +
+        ", purchaseList=" + purchaseList +
+        ", playlistList=" + playlistList +
+        ", reviewList=" + reviewList +
+        ", wishlistList=" + wishlistList +
         '}';
   }
 }

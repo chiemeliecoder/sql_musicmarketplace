@@ -11,13 +11,13 @@ public class PlaylistTrack {
 
   private int id;
 
-  private Playlists playlist;
-  private Tracks track;
+  private Playlist playlist;
+  private Track track;
 
   public PlaylistTrack() {
   }
 
-  public PlaylistTrack(int id, Playlists playlist, Tracks track) {
+  public PlaylistTrack(int id, Playlist playlist, Track track) {
     this.id = id;
     this.playlist = playlist;
     this.track = track;
@@ -31,19 +31,19 @@ public class PlaylistTrack {
     this.id = id;
   }
 
-  public Playlists getPlaylist() {
+  public Playlist getPlaylist() {
     return playlist;
   }
 
-  public void setPlaylist(Playlists playlist) {
+  public void setPlaylist(Playlist playlist) {
     this.playlist = playlist;
   }
 
-  public Tracks getTrack() {
+  public Track getTrack() {
     return track;
   }
 
-  public void setTrack(Tracks track) {
+  public void setTrack(Track track) {
     this.track = track;
   }
 

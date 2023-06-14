@@ -1,11 +1,11 @@
 package com.laba.solvd.databases.interfacedao;
 
-import com.laba.solvd.databases.model.Playlists;
-import com.laba.solvd.databases.model.Tracks;
+import com.laba.solvd.databases.model.Playlist;
+import com.laba.solvd.databases.model.Track;
 import java.util.List;
 
 public interface IPlaylistTrackDAO {
-  void addTrackToPlaylist(Playlists playlist, Tracks track);
-  List<Tracks> getTracksInPlaylist(Playlists playlist);
+  void addTrackToPlaylist(Playlist playlist, Track track);
+  List<Track> getTracksInPlaylist(Playlist playlist);
 
 }

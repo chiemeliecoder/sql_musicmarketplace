@@ -1,12 +1,12 @@
 package com.laba.solvd.databases;
 
-import com.laba.solvd.databases.model.Albums;
+import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.Artists;
-import com.laba.solvd.databases.model.Playlists;
-import com.laba.solvd.databases.model.Purchases;
-import com.laba.solvd.databases.model.Reviews;
+import com.laba.solvd.databases.model.Playlist;
+import com.laba.solvd.databases.model.Purchase;
+import com.laba.solvd.databases.model.Review;
 import com.laba.solvd.databases.model.User;
-import com.laba.solvd.databases.model.Wishlists;
+import com.laba.solvd.databases.model.Wishlist;
 import com.laba.solvd.databases.service.MusicService;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,24 +25,26 @@ public class Main {
     Date date = cal.getTime();
     java.sql.Date d = (java.sql.Date) cal.getTime();
 
-    Albums firstAlbum = new Albums();
+
+
+    Album firstAlbum = new Album();
     firstAlbum.setAlbumName("Lady");
     firstAlbum.setAlbumDate(d);
 
     Artists firstArtist = new Artists();
     firstArtist.setArtistName("Kenshi Yonezu");
 
-    Playlists firstPlaylist = new Playlists();
+    Playlist firstPlaylist = new Playlist();
     firstPlaylist.setPlaylistName("Japan vs Korean");
 
-    Purchases firstPurchase = new Purchases();
+    Purchase firstPurchase = new Purchase();
     firstPurchase.setPurchaseDate(date);
 
-    Reviews  firstReview = new Reviews();
+    Review firstReview = new Review();
     firstReview.setAlbum(firstAlbum);
     firstReview.setComments("Wonderful comeback");
 
-    Wishlists firstWishlist = new Wishlists();
+    Wishlist firstWishlist = new Wishlist();
     firstWishlist.setAlbum(firstAlbum);
 
     MusicService musicService = new MusicService();
