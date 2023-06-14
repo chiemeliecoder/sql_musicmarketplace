@@ -21,7 +21,7 @@ public class GenreDAO implements IGenreDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-  @Override
+
   public void createGenre(Genre genre) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO genre (id, name) VALUES (?, ?)",
@@ -43,6 +43,7 @@ public class GenreDAO implements IGenreDAO {
 
   public Genre getGenreById(int id) throws SQLException {
 
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
     Genre genre = new Genre();
     Properties properties = new Properties();
 
@@ -54,19 +55,15 @@ public class GenreDAO implements IGenreDAO {
       throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager
-        .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
+    PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM GENRE WHERE ID=?");
 
-      PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM GENRE WHERE ID=?");
+    preparedStatement.setInt(1,id);
 
-      preparedStatement.setInt(1,id);
+    ResultSet resultSet = preparedStatement.executeQuery();
 
-      ResultSet resultSet = preparedStatement.executeQuery();
-
-      while (resultSet.next()){
-        genre.setId(resultSet.getInt("id"));
-        genre.setGenreName(resultSet.getString("name"));
-      }
+    while (resultSet.next()){
+      genre.setId(resultSet.getInt("id"));
+      genre.setGenreName(resultSet.getString("name"));
     }
 
     return genre;

@@ -13,8 +13,6 @@ public class Album {
 
   private Date albumDate;
 
-
-  private Artists artist;
   private List<Track> tracks;
 
   //constructor
@@ -23,12 +21,10 @@ public class Album {
   public Album() {
   }
 
-  public Album(int id, String albumName, Date albumDate,
-      Artists artist, List<Track> tracks) {
+  public Album(int id, String albumName, Date albumDate, List<Track> tracks) {
     this.id = id;
     this.albumName = albumName;
     this.albumDate = albumDate;
-    this.artist = artist;
     this.tracks = tracks;
   }
 
@@ -56,13 +52,6 @@ public class Album {
     this.albumDate = albumDate;
   }
 
-  public Artists getArtist() {
-    return artist;
-  }
-
-  public void setArtist(Artists artist) {
-    this.artist = artist;
-  }
 
   //equals and hashcode
 
@@ -75,16 +64,14 @@ public class Album {
     if (!(o instanceof Album)) {
       return false;
     }
-    Album albums = (Album) o;
-    return getId() == albums.getId() && getAlbumName().equals(albums.getAlbumName())
-        && getAlbumDate()
-        .equals(albums.getAlbumDate()) && artist.equals(albums.artist) && tracks
-        .equals(albums.tracks);
+    Album album = (Album) o;
+    return getId() == album.getId() && getAlbumName().equals(album.getAlbumName()) && getAlbumDate()
+        .equals(album.getAlbumDate()) && tracks.equals(album.tracks);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getAlbumName(), getAlbumDate(), artist, tracks);
+    return Objects.hash(getId(), getAlbumName(), getAlbumDate(), tracks);
   }
 
   @Override
@@ -93,7 +80,6 @@ public class Album {
         "id=" + id +
         ", albumName='" + albumName + '\'' +
         ", albumDate=" + albumDate +
-        ", artist=" + artist +
         ", tracks=" + tracks +
         '}';
   }

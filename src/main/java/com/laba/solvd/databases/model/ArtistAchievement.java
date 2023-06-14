@@ -11,17 +11,15 @@ public class ArtistAchievement {
 
   private Date awardDate;
 
-  private Artists artist;
+
 
   public ArtistAchievement() {
   }
 
-  public ArtistAchievement(int id, String title, Date awardDate,
-      Artists artist) {
+  public ArtistAchievement(int id, String title, Date awardDate) {
     this.id = id;
     this.title = title;
     this.awardDate = awardDate;
-    this.artist = artist;
   }
 
   public int getId() {
@@ -48,14 +46,6 @@ public class ArtistAchievement {
     this.awardDate = awardDate;
   }
 
-  public Artists getArtist() {
-    return artist;
-  }
-
-  public void setArtist(Artists artist) {
-    this.artist = artist;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -66,12 +56,12 @@ public class ArtistAchievement {
     }
     ArtistAchievement that = (ArtistAchievement) o;
     return getId() == that.getId() && getTitle().equals(that.getTitle()) && getAwardDate()
-        .equals(that.getAwardDate()) && getArtist().equals(that.getArtist());
+        .equals(that.getAwardDate());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getTitle(), getAwardDate(), getArtist());
+    return Objects.hash(getId(), getTitle(), getAwardDate());
   }
 
   @Override
@@ -80,7 +70,6 @@ public class ArtistAchievement {
         "id=" + id +
         ", title='" + title + '\'' +
         ", awardDate=" + awardDate +
-        ", artist=" + artist +
         '}';
   }
 }

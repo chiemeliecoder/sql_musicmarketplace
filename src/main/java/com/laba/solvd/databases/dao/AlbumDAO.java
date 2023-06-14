@@ -26,6 +26,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
 
   public Album getById(int id) throws SQLException {
 
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
     Album albums = new Album();
     Properties properties = new Properties();
     try(InputStream input = new FileInputStream("src/main/resources/db.properties")){
@@ -36,8 +37,6 @@ public class AlbumDAO implements IGenericDAO<Album> {
       throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager
-        .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
 
       PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ALBUMS WHERE ID=?");
 
@@ -51,7 +50,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
         Date albumDate = resultSet.getDate("date");
         albums.setAlbumDate(albumDate);
       }
-    }
+
 
     return albums;
   }
@@ -60,7 +59,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
   @Override
   public void create(Album album) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into Albums (id, title, date, artistid) VALUES  (?, ?, ?,?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into Albums (id, title, date) VALUES  (?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, album.getId());
       preparedStatement.setString(2, album.getAlbumName());
@@ -69,7 +68,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
       java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
       preparedStatement.setDate(3, sqlDate);
-      preparedStatement.setInt(4, album.getArtist().getId());
+
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
       while (resultSet.next()){}
@@ -81,6 +80,33 @@ public class AlbumDAO implements IGenericDAO<Album> {
     }
 
   }
+
+
+
+  @Override
+  public List<Album> getAll() {
+    List<Album> albums = new ArrayList<>();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ALBUMS")){
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Album albums1 = new Album();
+        albums1.setId(resultSet.getInt("id"));
+        albums1.setAlbumName(resultSet.getString("title"));
+        albums1.setAlbumDate(resultSet.getDate("date"));
+
+
+        albums.add(albums1);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return albums;
+  }
+
 
   /**
    * Retrieve an object that was previously persisted to the database using
@@ -100,33 +126,6 @@ public class AlbumDAO implements IGenericDAO<Album> {
   @Override
   public void delete(int id) {
 
-  }
-
-  @Override
-  public List<Album> getAll() {
-    List<Album> albums = new ArrayList<>();
-
-    Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ALBUMS")){
-      ResultSet resultSet = preparedStatement.executeQuery();
-      while (resultSet.next()){
-        Album albums1 = new Album();
-        albums1.setId(resultSet.getInt("id"));
-        albums1.setAlbumName(resultSet.getString("title"));
-        albums1.setAlbumDate(resultSet.getDate("date"));
-        Artists art = new Artists();
-        art.setId(1);
-        albums1.setArtist(art);
-
-
-        albums.add(albums1);
-      }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    }finally{
-      CONNECTION_POOL.releaseConnectionToPool(connection);
-    }
-    return albums;
   }
 
 
@@ -150,7 +149,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
 
     Artists art = new Artists();
     art.setId(1);
-    newAlbum.setArtist(art);
+    //newAlbum.setArtist(art);
 
 
     albumDAO.create(newAlbum);
@@ -161,7 +160,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
       System.out.println("User ID: " + a.getId());
       System.out.println("Username: " + a.getAlbumName());
       System.out.println("Albumdate: " + a.getAlbumDate());
-      System.out.println("artistid: " + a.getArtist());
+      //System.out.println("artistid: " + a.getArtist());
     }
 
   }

@@ -11,16 +11,16 @@ public class Track {
 
   private Time duration;
 
-  private Album album;
+
 
   public Track() {
   }
 
-  public Track(int id, String title, Time duration, Album album) {
+  public Track(int id, String title, Time duration) {
     this.id = id;
     this.title = title;
     this.duration = duration;
-    this.album = album;
+
   }
 
   public int getId() {
@@ -47,14 +47,6 @@ public class Track {
     this.duration = duration;
   }
 
-  public Album getAlbum() {
-    return album;
-  }
-
-  public void setAlbum(Album album) {
-    this.album = album;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -65,12 +57,12 @@ public class Track {
     }
     Track track = (Track) o;
     return getId() == track.getId() && getTitle().equals(track.getTitle()) && getDuration()
-        .equals(track.getDuration()) && getAlbum().equals(track.getAlbum());
+        .equals(track.getDuration());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getTitle(), getDuration(), getAlbum());
+    return Objects.hash(getId(), getTitle(), getDuration());
   }
 
   @Override
@@ -79,7 +71,6 @@ public class Track {
         "id=" + id +
         ", title='" + title + '\'' +
         ", duration=" + duration +
-        ", album=" + album +
         '}';
   }
 }

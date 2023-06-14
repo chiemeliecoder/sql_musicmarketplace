@@ -9,17 +9,15 @@ public class Playlist {
 
   private String playlistName;
 
-  private User user;
   private List<Track> tracks;
 
   public Playlist() {
   }
 
-  public Playlist(int id, String playlistName, User user,
+  public Playlist(int id, String playlistName,
       List<Track> tracks) {
     this.id = id;
     this.playlistName = playlistName;
-    this.user = user;
     this.tracks = tracks;
   }
 
@@ -39,13 +37,6 @@ public class Playlist {
     this.playlistName = playlistName;
   }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
 
   public List<Track> getTracks() {
     return tracks;
@@ -61,16 +52,12 @@ public class Playlist {
     }
     Playlist playlist = (Playlist) o;
     return getId() == playlist.getId() && getPlaylistName().equals(playlist.getPlaylistName())
-        && getUser().equals(playlist.getUser()) && getTracks().equals(playlist.getTracks());
+        && getTracks().equals(playlist.getTracks());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getPlaylistName(), getUser(), getTracks());
-  }
-
-  public void setTracks(List<Track> tracks) {
-    this.tracks = tracks;
+    return Objects.hash(getId(), getPlaylistName(), getTracks());
   }
 
   @Override
@@ -78,7 +65,6 @@ public class Playlist {
     return "Playlist{" +
         "id=" + id +
         ", playlistName='" + playlistName + '\'' +
-        ", user=" + user +
         ", tracks=" + tracks +
         '}';
   }

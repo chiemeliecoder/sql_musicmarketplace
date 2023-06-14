@@ -25,6 +25,8 @@ public class ArtistAchievementDAO implements IArtistAchievement {
 
   public ArtistAchievement getAchievementById(int id) throws SQLException {
 
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+
     ArtistAchievement achievements = new ArtistAchievement();
     Properties properties = new Properties();
 
@@ -36,8 +38,6 @@ public class ArtistAchievementDAO implements IArtistAchievement {
       throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager
-        .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
 
       PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ARTIST_ACHIEVEMENTS WHERE ID=?");
 
@@ -51,7 +51,7 @@ public class ArtistAchievementDAO implements IArtistAchievement {
         Date awardDate = resultSet.getDate("date");
         achievements.setAwardDate(awardDate);
       }
-    }
+
 
     return achievements;
 
@@ -61,15 +61,14 @@ public class ArtistAchievementDAO implements IArtistAchievement {
   public void createArtistAchievement(ArtistAchievement achievement) {
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artist_achievements (id, artistid, title, date) VALUES  (?, ?, ?,?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artist_achievements (id, title, date) VALUES  (?, ?, ?,?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, achievement.getId());
-      preparedStatement.setInt(2,achievement.getArtist().getId());
-      preparedStatement.setString(3, achievement.getTitle());
+      preparedStatement.setString(2, achievement.getTitle());
       java.util.Date utilDate = new java.util.Date();
       java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-      preparedStatement.setDate(4, sqlDate);
+      preparedStatement.setDate(3, sqlDate);
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -95,9 +94,6 @@ public class ArtistAchievementDAO implements IArtistAchievement {
         artistAchievement1.setId(resultSet.getInt("id"));
         artistAchievement1.setTitle((resultSet.getString("title")));
         artistAchievement1.setAwardDate(resultSet.getDate("date"));
-        Artists art = new Artists();
-        art.setId(1);
-        artistAchievement1.setArtist(art);
 
 
         artistAchievements.add(artistAchievement1);

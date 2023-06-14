@@ -11,19 +11,16 @@ public class Review {
 
   private String comments;
 
-  private User user;
-  private Album album;
+
 
   public Review() {
   }
 
-  public Review(int id, BigDecimal ratings, String comments,
-      User user, Album album) {
+  public Review(int id, BigDecimal ratings, String comments) {
     this.id = id;
     this.ratings = ratings;
     this.comments = comments;
-    this.user = user;
-    this.album = album;
+
   }
 
   public int getId() {
@@ -50,21 +47,6 @@ public class Review {
     this.comments = comments;
   }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Album getAlbum() {
-    return album;
-  }
-
-  public void setAlbum(Album album) {
-    this.album = album;
-  }
 
   @Override
   public boolean equals(Object o) {
@@ -76,13 +58,12 @@ public class Review {
     }
     Review review = (Review) o;
     return getId() == review.getId() && getRatings().equals(review.getRatings()) && getComments()
-        .equals(review.getComments()) && getUser().equals(review.getUser()) && getAlbum()
-        .equals(review.getAlbum());
+        .equals(review.getComments());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getRatings(), getComments(), getUser(), getAlbum());
+    return Objects.hash(getId(), getRatings(), getComments());
   }
 
   @Override
@@ -91,8 +72,6 @@ public class Review {
         "id=" + id +
         ", ratings=" + ratings +
         ", comments='" + comments + '\'' +
-        ", user=" + user +
-        ", album=" + album +
         '}';
   }
 }

@@ -2,6 +2,7 @@ package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.Wishlist;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,6 +23,8 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
   public Wishlist getById(int id) throws SQLException {
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
 
     Wishlist wishlist = new Wishlist();
 
@@ -33,10 +38,9 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
       throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager
-        .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
 
-      PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM WISHLISTS WHERE ID=?");
+
+      PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM wishlists WHERE ID=?");
 
       preparedStatement.setInt(1,id);
 
@@ -44,8 +48,9 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
 
       while (resultSet.next()){
         wishlist.setId(resultSet.getInt("id"));
+        wishlist.setName(resultSet.getString("name"));
       }
-    }
+
 
     return wishlist;
 
@@ -53,7 +58,45 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
 
   @Override
   public void create(Wishlist entity) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into wishlists (id, name) VALUES (?, ?)",
+        Statement.RETURN_GENERATED_KEYS)){
+      preparedStatement.setInt(1, entity.getId());
+      preparedStatement.setString(2, entity.getName());
 
+
+      preparedStatement.executeUpdate();
+      ResultSet resultSet = preparedStatement.getGeneratedKeys();
+      while (resultSet.next()){}
+
+    }catch(SQLException e){
+      throw new RuntimeException("unable to create user", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
+  }
+
+  @Override
+  public List<Wishlist> getAll() {
+    List<Wishlist> wishlists = new ArrayList<>();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM WISHLISTS")){
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Wishlist wishlist = new Wishlist();
+        wishlist.setId(resultSet.getInt("id"));
+        wishlist.setName(resultSet.getString("username"));
+
+        wishlists.add(wishlist);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return wishlists;
   }
 
   /**
@@ -76,10 +119,7 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
 
   }
 
-  @Override
-  public List<Wishlist> getAll() {
-    return null;
-  }
+
 
   public static void main(String args[]) throws SQLException {
     Wishlist wishlist = new WishlistDAO().getById(1);

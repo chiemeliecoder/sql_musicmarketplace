@@ -1,57 +1,73 @@
 package com.laba.solvd.databases.service;
 
-import com.laba.solvd.databases.dao.AlbumDAO;
-import com.laba.solvd.databases.dao.ArtistDAO;
-import com.laba.solvd.databases.dao.PlaylistDAO;
-import com.laba.solvd.databases.dao.UserDAO;
+import com.laba.solvd.databases.interfacedao.IGenreDAO;
+import com.laba.solvd.databases.interfacedao.IPurchaseDAO;
+import com.laba.solvd.databases.interfacedao.IUserDAO;
+import com.laba.solvd.databases.model.Genre;
+import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.User;
+import java.sql.Date;
 import java.util.List;
-import org.apache.log4j.Logger;
+import java.util.stream.Collectors;
 
 public class MusicService implements IMusicService {
 
-  private static final Logger logger = Logger.getLogger(MusicService.class);
-
-  private UserDAO userDAO;
-  private AlbumDAO albumDAO;
-  private ArtistDAO artistDAO;
-  private PlaylistDAO playlistDAO;
+  private IUserDAO userDAO;
+  private IGenreDAO genreDAO;
+  private IPurchaseDAO purchaseDAO;
 
 
 
-  public MusicService() {
-    this.userDAO = new UserDAO();
-    this.albumDAO = new AlbumDAO();
-    this.artistDAO = new ArtistDAO();
-    this.playlistDAO = new PlaylistDAO();
 
+  public MusicService(IUserDAO userDAO, IGenreDAO genreDAO,
+      IPurchaseDAO purchaseDAO) {
+    this.userDAO = userDAO;
+    this.genreDAO = genreDAO;
+    this.purchaseDAO = purchaseDAO;
   }
 
-
-
-
+  public MusicService() {
+  }
 
   @Override
   public void performOperation() {
 
-    logger.info("loading musicmarketplace...");
+    System.out.println("loading musicmarketplace...");
 
   }
 
 
   @Override
   public User create(User user) {
-    user.setId(5);
-    user.setEmail("kate@fun.com");
-    user.setPassword("kate123");
-    user.setName("Kate");
+    user.setId(6);
     userDAO.createUser(user);
+    if(user.getPurchasesList() != null){
+      List<Purchase> purchases = user.getPurchasesList().stream()
+          .map(purchase -> purchaseDAO.getPurchaseById(6))
+          .collect(Collectors.toList());
+      user.setPurchasesList(purchases);
+    }
     return user;
   }
 
+
   @Override
   public List<User> getAllUsers() {
+
     return userDAO.getAllUsers();
+  }
+
+  public List<Genre>getMusicByGenre(){
+    return genreDAO.getAllGenres();
+  }
+
+  public void purchaseMusic(Purchase purchaseUser) {
+    Purchase purchase = new Purchase(purchaseUser.getId(), new Date(System.currentTimeMillis()), purchaseUser.getPrice());
+    purchaseDAO.createPurchase(purchase);
+  }
+
+  public List<Purchase> getUserPurchases() {
+    return purchaseDAO.getAllPurchases();
   }
 }
 

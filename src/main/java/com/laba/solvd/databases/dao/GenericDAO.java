@@ -2,6 +2,7 @@ package com.laba.solvd.databases.dao;
 
 
 import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -9,6 +10,11 @@ public class GenericDAO<T, ID> extends AbstractGenericDAO<T, ID> implements IGen
 
   public GenericDAO(DataSource dataSource) {
     super(dataSource);
+  }
+
+  @Override
+  public T getById(int id) throws SQLException {
+    return null;
   }
 
   @Override

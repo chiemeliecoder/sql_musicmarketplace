@@ -12,18 +12,16 @@ public class UserProfile {
 
   private String location;
 
-  private User user_id;
 
   public UserProfile() {
   }
 
-  public UserProfile(int id, String bio, String profileimage, String location,
-      User user_id) {
+  public UserProfile(int id, String bio, String profileimage, String location){
     this.id = id;
     this.bio = bio;
     this.profileimage = profileimage;
     this.location = location;
-    this.user_id = user_id;
+
   }
 
   public int getId() {
@@ -58,13 +56,6 @@ public class UserProfile {
     this.location = location;
   }
 
-  public User getUser_id() {
-    return user_id;
-  }
-
-  public void setUser_id(User user_id) {
-    this.user_id = user_id;
-  }
 
   @Override
   public boolean equals(Object o) {
@@ -76,13 +67,12 @@ public class UserProfile {
     }
     UserProfile that = (UserProfile) o;
     return getId() == that.getId() && getBio().equals(that.getBio()) && getProfileimage()
-        .equals(that.getProfileimage()) && getLocation().equals(that.getLocation()) && getUser_id()
-        .equals(that.getUser_id());
+        .equals(that.getProfileimage()) && getLocation().equals(that.getLocation());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getBio(), getProfileimage(), getLocation(), getUser_id());
+    return Objects.hash(getId(), getBio(), getProfileimage(), getLocation());
   }
 
   @Override
@@ -92,7 +82,6 @@ public class UserProfile {
         ", bio='" + bio + '\'' +
         ", profileimage='" + profileimage + '\'' +
         ", location='" + location + '\'' +
-        ", user_id=" + user_id +
         '}';
   }
 }

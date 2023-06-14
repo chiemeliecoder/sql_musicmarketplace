@@ -7,6 +7,7 @@ import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.Review;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.Wishlist;
+import com.laba.solvd.databases.service.IMusicService;
 import com.laba.solvd.databases.service.MusicService;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +39,7 @@ public class Main {
     firstPlaylist.setPlaylistName("Japan vs Korean");
 
     Purchase firstPurchase = new Purchase();
-    firstPurchase.setPurchaseDate(date);
+    firstPurchase.setPurchaseDate(d);
 
     Review firstReview = new Review();
     firstReview.setAlbum(firstAlbum);
@@ -47,13 +48,17 @@ public class Main {
     Wishlist firstWishlist = new Wishlist();
     firstWishlist.setAlbum(firstAlbum);
 
-    MusicService musicService = new MusicService();
+    IMusicService musicService = new MusicService();
+
     firstUser = musicService.create(firstUser);
 
 
     List<User> userList = musicService.getAllUsers();
-    System.out.println(userList);
-    System.out.println(firstUser);
+//    System.out.println(userList);
+//    System.out.println(firstUser);
+
+    User createdUser = musicService.create(firstUser);
+    System.out.println("Created user: " + createdUser);
 
 
   }

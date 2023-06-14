@@ -1,7 +1,7 @@
 package com.laba.solvd.databases.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class Purchase {
@@ -12,20 +12,17 @@ public class Purchase {
 
   private BigDecimal price;
 
-  private User user;
-  private Track track;
+
 
   public Purchase() {
   }
 
 
-  public Purchase(int id, Date purchaseDate, BigDecimal price,
-      User user, Track track) {
+  public Purchase(int id, Date purchaseDate, BigDecimal price) {
     this.id = id;
     this.purchaseDate = purchaseDate;
     this.price = price;
-    this.user = user;
-    this.track = track;
+
   }
 
   public int getId() {
@@ -52,21 +49,6 @@ public class Purchase {
     this.price = price;
   }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Track getTrack() {
-    return track;
-  }
-
-  public void setTrack(Track track) {
-    this.track = track;
-  }
 
   @Override
   public boolean equals(Object o) {
@@ -78,13 +60,12 @@ public class Purchase {
     }
     Purchase purchase = (Purchase) o;
     return getId() == purchase.getId() && getPurchaseDate().equals(purchase.getPurchaseDate())
-        && getPrice().equals(purchase.getPrice()) && getUser().equals(purchase.getUser())
-        && getTrack().equals(purchase.getTrack());
+        && getPrice().equals(purchase.getPrice());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getPurchaseDate(), getPrice(), getUser(), getTrack());
+    return Objects.hash(getId(), getPurchaseDate(), getPrice());
   }
 
   @Override
@@ -93,8 +74,6 @@ public class Purchase {
         "id=" + id +
         ", purchaseDate=" + purchaseDate +
         ", price=" + price +
-        ", user=" + user +
-        ", track=" + track +
         '}';
   }
 }

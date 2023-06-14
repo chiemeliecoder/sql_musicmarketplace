@@ -22,6 +22,8 @@ public class UserDAO implements IUserDAO {
 
   public User getUserById(int id) throws SQLException {
 
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+
     User user = new User();
     Properties properties = new Properties();
     //example jdbc:mysql://localhost:3306/w3spoint where 3306 is the port number and w3spoint is the database name.
@@ -35,7 +37,6 @@ public class UserDAO implements IUserDAO {
         throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
 
       PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM USER WHERE ID=?");
 
@@ -47,7 +48,7 @@ public class UserDAO implements IUserDAO {
         user.setId(resultSet.getInt("id"));
         user.setName(resultSet.getString("username"));
       }
-    }
+
 
 
 

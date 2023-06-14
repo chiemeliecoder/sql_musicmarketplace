@@ -31,17 +31,7 @@ public class ConnectionPool {
         .forEach(index -> connectionPool.add(createConnection()));
   }
 
-//  {
-//    initializeConnectionPool();
-//  }
 
-  private void initializeConnectionPool() {
-
-
-//    for (int i = 0; i < Integer.parseInt(Config.POOLSIZE.getValue()); i++) {
-//      connectionPool.add(createConnection());
-//    }
-  }
 
   private Connection createConnection() {
     Connection connection;

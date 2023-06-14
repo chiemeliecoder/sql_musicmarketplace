@@ -6,16 +6,16 @@ public class Wishlist {
 
   private int id;
 
-  private User user;
-  private Album album;
+  private String name;
+
+
 
   public Wishlist() {
   }
 
-  public Wishlist(int id, User user, Album album) {
+  public Wishlist(int id, String name) {
     this.id = id;
-    this.user = user;
-    this.album = album;
+    this.name = name;
   }
 
   public int getId() {
@@ -26,20 +26,12 @@ public class Wishlist {
     this.id = id;
   }
 
-  public User getUser() {
-    return user;
+  public String getName() {
+    return name;
   }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Album getAlbum() {
-    return album;
-  }
-
-  public void setAlbum(Album album) {
-    this.album = album;
+  public void setName(String name) {
+    this.name = name;
   }
 
   @Override
@@ -51,21 +43,19 @@ public class Wishlist {
       return false;
     }
     Wishlist wishlist = (Wishlist) o;
-    return getId() == wishlist.getId() && getUser().equals(wishlist.getUser()) && getAlbum()
-        .equals(wishlist.getAlbum());
+    return getId() == wishlist.getId() && getName().equals(wishlist.getName());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getUser(), getAlbum());
+    return Objects.hash(getId(), getName());
   }
 
   @Override
   public String toString() {
     return "Wishlist{" +
         "id=" + id +
-        ", user=" + user +
-        ", album=" + album +
+        ", name='" + name + '\'' +
         '}';
   }
 }

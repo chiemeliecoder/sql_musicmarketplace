@@ -23,6 +23,8 @@ public class ArtistDAO implements IGenericDAO<Artists> {
 
   public Artists getById(int id) throws SQLException {
 
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+
     Artists artist = new Artists();
     Properties properties = new Properties();
 
@@ -34,8 +36,7 @@ public class ArtistDAO implements IGenericDAO<Artists> {
       throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager
-        .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
+
 
       PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ARTISTS WHERE ID=?");
 
@@ -47,7 +48,6 @@ public class ArtistDAO implements IGenericDAO<Artists> {
         artist.setId(resultSet.getInt("id"));
         artist.setArtistName(resultSet.getString("name"));
       }
-    }
 
     return artist;
 
@@ -73,25 +73,7 @@ public class ArtistDAO implements IGenericDAO<Artists> {
 
   }
 
-  /**
-   * Retrieve an object that was previously persisted to the database using
-   *
-   * @param id
-   */
-  @Override
-  public Artists read(int id) {
-    return null;
-  }
 
-  @Override
-  public void update(Artists entity) {
-
-  }
-
-  @Override
-  public void delete(int id) {
-
-  }
 
   @Override
   public List<Artists> getAll() {
@@ -113,6 +95,26 @@ public class ArtistDAO implements IGenericDAO<Artists> {
       CONNECTION_POOL.releaseConnectionToPool(connection);
     }
     return artists;
+  }
+
+  /**
+   * Retrieve an object that was previously persisted to the database using
+   *
+   * @param id
+   */
+  @Override
+  public Artists read(int id) {
+    return null;
+  }
+
+  @Override
+  public void update(Artists entity) {
+
+  }
+
+  @Override
+  public void delete(int id) {
+
   }
 
   public static void main(String args[]) throws SQLException {

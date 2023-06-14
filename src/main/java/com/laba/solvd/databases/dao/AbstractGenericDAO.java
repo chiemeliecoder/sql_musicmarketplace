@@ -1,6 +1,5 @@
 package com.laba.solvd.databases.dao;
 
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;

@@ -1,7 +1,6 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IUserDAO;
 import com.laba.solvd.databases.interfacedao.IUserProfileDAO;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.UserProfile;
@@ -25,6 +24,7 @@ public class UserProfileDAO implements IUserProfileDAO {
 
   @Override
   public UserProfile getUserProfileById(int userId) throws SQLException {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
     UserProfile user = new UserProfile();
     Properties properties = new Properties();
     //example jdbc:mysql://localhost:3306/w3spoint where 3306 is the port number and w3spoint is the database name.
@@ -38,8 +38,7 @@ public class UserProfileDAO implements IUserProfileDAO {
       throw new RuntimeException(e);
     }
 
-    try(Connection connection = DriverManager
-        .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"), properties.getProperty("db.password"))) {
+
 
       PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM USER WHERE ID=?");
 
@@ -51,7 +50,6 @@ public class UserProfileDAO implements IUserProfileDAO {
         user.setId(resultSet.getInt("id"));
         user.setBio(resultSet.getString("bio"));
       }
-    }
 
 
 
