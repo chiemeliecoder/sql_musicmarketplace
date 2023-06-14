@@ -42,11 +42,10 @@ public class Main {
     firstPurchase.setPurchaseDate(d);
 
     Review firstReview = new Review();
-    firstReview.setAlbum(firstAlbum);
     firstReview.setComments("Wonderful comeback");
 
     Wishlist firstWishlist = new Wishlist();
-    firstWishlist.setAlbum(firstAlbum);
+    firstWishlist.setName("Mieta");
 
     IMusicService musicService = new MusicService();
 
