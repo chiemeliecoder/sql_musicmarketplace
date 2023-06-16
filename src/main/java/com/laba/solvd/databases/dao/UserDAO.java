@@ -91,16 +91,21 @@ public class UserDAO implements IUserDAO {
   @Override
   public void createUser(User user) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into User (id, username, email, password,userprofid) VALUES (?, ?, ?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into User (id, username, email, password) VALUES (?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, user.getId());
       preparedStatement.setString(2, user.getName());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getPassword());
 
-      UserProfile usersProfile = new UserProfile();
-      usersProfile.getId();
-      preparedStatement.setInt(5,usersProfile.getId());
+//      UserProfile usersProfile = user.getUserProfile();
+//      usersProfile.setId(3);
+//      preparedStatement.setInt(5,usersProfile.getId());
+
+      UserProfile usersProfile = user.getUserProfile();
+      preparedStatement.setInt(5, usersProfile.getId());
+
+
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -138,32 +143,37 @@ public class UserDAO implements IUserDAO {
 
 
 
-//  public static void main(String args[]) throws SQLException{
-//    User use = new UserDAO().getUserById(1);
-//    System.out.println("User ID: " + use.getId());
-//    System.out.println("Username: " + use.getName());
-//
-//    UserDAO userDAO = new UserDAO();
-//
-//    User newUser = new User();
-//    newUser.setId(3);
-//    newUser.setName("JaneDoe");
-//    newUser.setEmail("janedoe@example.com");
-//    newUser.setPassword("password123");
-//
-//    userDAO.createUser(newUser);
-//
-//    List<User> users = new UserDAO().getAllUsers();
-//
-//    for (User user : users) {
-//      System.out.println("User ID: " + user.getId());
-//      System.out.println("Username: " + user.getName());
-//    }
+  public static void main(String args[]) throws SQLException{
+    User use = new UserDAO().getUserById(1);
+    System.out.println("User ID: " + use.getId());
+    System.out.println("Username: " + use.getName());
 
 
-//
-//
-//  }
+
+    List<User> users = new UserDAO().getAllUsers();
+
+    for (User user : users) {
+      System.out.println("User ID: " + user.getId());
+      System.out.println("Username: " + user.getName());
+    }
+    UserDAO userDAO = new UserDAO();
+
+    User newUser = new User();
+
+    newUser.setId(3);
+    newUser.setName("JaneDoe");
+    newUser.setEmail("janedoe@example.com");
+    newUser.setPassword("password123");
+
+
+    userDAO.createUser(newUser);
+
+
+
+
+
+
+  }
 
 
 }

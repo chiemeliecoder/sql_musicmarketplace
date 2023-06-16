@@ -21,7 +21,7 @@ public class Main {
   public static void main(String args[]){
     User firstUser = new User();
     firstUser.setName("Sharon");
-    firstUser.setId(4);
+    firstUser.setId(7);
 
 
     Calendar cal = Calendar.getInstance();
@@ -61,12 +61,12 @@ public class Main {
 
     IMusicService musicService = new MusicService(userService,artistService);
 
-    firstUser = musicService.create(firstUser);
+    firstUser = userService.create(firstUser);
 
 
 
     List<User> userList = musicService.getAllUsers();
-    System.out.println(userList);
+    //System.out.println(userList);
     System.out.println(firstUser);
 
     User createdUser = musicService.create(firstUser);

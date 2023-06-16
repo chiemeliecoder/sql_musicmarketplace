@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class UserProfile {
 
-  private int id;
+  private Integer id;
 
   private String bio;
 
@@ -18,7 +18,7 @@ public class UserProfile {
   public UserProfile() {
   }
 
-  public UserProfile(int id, String bio, String profileimage, String location){
+  public UserProfile(Integer id, String bio, String profileimage, String location){
     this.id = id;
     this.bio = bio;
     this.profileimage = profileimage;
@@ -26,7 +26,7 @@ public class UserProfile {
 
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 

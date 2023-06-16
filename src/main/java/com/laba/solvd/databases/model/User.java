@@ -48,7 +48,10 @@ public class User {
     this.userProfile = userProfile;
   }
 
-  public int getId() {
+  public Integer getId() {
+    if (id == null) {
+      return null;
+    }
     return id;
   }
 
