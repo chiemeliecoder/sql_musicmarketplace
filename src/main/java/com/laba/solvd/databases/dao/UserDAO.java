@@ -138,32 +138,32 @@ public class UserDAO implements IUserDAO {
 
 
 
-  public static void main(String args[]) throws SQLException{
-    User use = new UserDAO().getUserById(1);
-    System.out.println("User ID: " + use.getId());
-    System.out.println("Username: " + use.getName());
-
-    UserDAO userDAO = new UserDAO();
-
-    User newUser = new User();
-    newUser.setId(3);
-    newUser.setName("JaneDoe");
-    newUser.setEmail("janedoe@example.com");
-    newUser.setPassword("password123");
-
-    userDAO.createUser(newUser);
-
-    List<User> users = new UserDAO().getAllUsers();
-
-    for (User user : users) {
-      System.out.println("User ID: " + user.getId());
-      System.out.println("Username: " + user.getName());
-    }
-
-
+//  public static void main(String args[]) throws SQLException{
+//    User use = new UserDAO().getUserById(1);
+//    System.out.println("User ID: " + use.getId());
+//    System.out.println("Username: " + use.getName());
+//
+//    UserDAO userDAO = new UserDAO();
+//
+//    User newUser = new User();
+//    newUser.setId(3);
+//    newUser.setName("JaneDoe");
+//    newUser.setEmail("janedoe@example.com");
+//    newUser.setPassword("password123");
+//
+//    userDAO.createUser(newUser);
+//
+//    List<User> users = new UserDAO().getAllUsers();
+//
+//    for (User user : users) {
+//      System.out.println("User ID: " + user.getId());
+//      System.out.println("Username: " + user.getName());
+//    }
 
 
-  }
+//
+//
+//  }
 
 
 }

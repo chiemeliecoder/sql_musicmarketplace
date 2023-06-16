@@ -1,27 +1,26 @@
 package com.laba.solvd.databases.service;
 
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
-import com.laba.solvd.databases.interfacedao.IGenreDAO;
-import com.laba.solvd.databases.interfacedao.IPurchaseDAO;
-import com.laba.solvd.databases.interfacedao.IUserDAO;
-import com.laba.solvd.databases.interfacedao.IUserProfileDAO;
-import com.laba.solvd.databases.model.Genre;
-import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.User;
-import com.laba.solvd.databases.model.UserProfile;
-import java.sql.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MusicService implements IMusicService {
 
-  private IUserDAO userDAO;
-  private IGenericDAO genreDAO;
-  private IPurchaseDAO purchaseDAO;
+  private IMusicService musicService;
+  private UserServiceImpl userService;
+  private ArtistServiceImpl artistService;
 
 
 
+  public MusicService(IMusicService musicService,
+      UserServiceImpl userService, ArtistServiceImpl artistService) {
+    this.musicService = musicService;
+    this.userService = userService;
+    this.artistService = artistService;
+  }
 
+  public MusicService(){
+
+  }
 
 
   @Override
@@ -32,7 +31,7 @@ public class MusicService implements IMusicService {
   }
 
   @Override
-  public User create(User user, int id) {
+  public User create(User user) {
 
     return null;
   }

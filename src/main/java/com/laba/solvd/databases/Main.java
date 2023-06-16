@@ -24,13 +24,13 @@ public class Main {
     Calendar cal = Calendar.getInstance();
     cal.set(2023, Calendar.MARCH, 28);
     Date date = cal.getTime();
-//    java.sql.Date d = (java.sql.Date) cal.getTime();
+    java.sql.Date d = (java.sql.Date) cal.getTime();
 
 
 
     Album firstAlbum = new Album();
     firstAlbum.setAlbumName("Lady");
-    //firstAlbum.setAlbumDate(d);
+    firstAlbum.setAlbumDate(d);
 
     Artists firstArtist = new Artists();
     firstArtist.setArtistName("Kenshi Yonezu");
@@ -49,7 +49,7 @@ public class Main {
 
     IMusicService musicService = new MusicService();
 
-    firstUser = musicService.create(firstUser);
+    firstUser = musicService.create()
 
 
     List<User> userList = musicService.getAllUsers();
