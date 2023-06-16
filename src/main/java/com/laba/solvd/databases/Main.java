@@ -61,16 +61,16 @@ public class Main {
 
     IMusicService musicService = new MusicService(userService,artistService);
 
-    firstUser = userService.create(firstUser);
+    //firstUser = userService.create(firstUser);
 
-
+    System.out.println(userService.getAllUsers());
 
     List<User> userList = musicService.getAllUsers();
     //System.out.println(userList);
-    System.out.println(firstUser);
+    //System.out.println(firstUser);
 
-    User createdUser = musicService.create(firstUser);
-    System.out.println("Created user: " + createdUser);
+//    User createdUser = musicService.create(firstUser);
+//    System.out.println("Created user: " + createdUser);
 
 
   }

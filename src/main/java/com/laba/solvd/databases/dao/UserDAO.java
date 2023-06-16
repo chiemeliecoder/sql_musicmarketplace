@@ -27,8 +27,8 @@ public class UserDAO implements IUserDAO {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement( "SELECT purchases.id, purchases.date, purchases.price " +
         "FROM purchases " +
-        "JOIN user_purchase ON user_purchase.purchase_id = purchases.id " +
-        "JOIN users ON users.id = user_purchase.user_id " +
+        "JOIN users ON users.purchase_id = purchases.id " +
+        "JOIN users ON users.id = purchase.user_id " +
         "WHERE purchases.id = ?")){
       preparedStatement.setInt(1, purchaseID);
       ResultSet resultSet = preparedStatement.executeQuery();
@@ -97,13 +97,7 @@ public class UserDAO implements IUserDAO {
       preparedStatement.setString(2, user.getName());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getPassword());
-
-//      UserProfile usersProfile = user.getUserProfile();
-//      usersProfile.setId(3);
-//      preparedStatement.setInt(5,usersProfile.getId());
-
-      UserProfile usersProfile = user.getUserProfile();
-      preparedStatement.setInt(5, usersProfile.getId());
+      
 
 
 
@@ -166,6 +160,7 @@ public class UserDAO implements IUserDAO {
     newUser.setPassword("password123");
 
 
+    //userDAO.getPurchase(1);
     userDAO.createUser(newUser);
 
 
