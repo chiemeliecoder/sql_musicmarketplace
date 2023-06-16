@@ -1,4 +1,4 @@
-package com.laba.solvd.databases.dao;
+package com.laba.solvd.databases.hiddenfiles;
 
 import java.sql.Connection;
 import java.sql.SQLException;

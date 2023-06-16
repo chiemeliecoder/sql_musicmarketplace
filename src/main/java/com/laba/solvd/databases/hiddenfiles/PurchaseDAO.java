@@ -1,4 +1,4 @@
-package com.laba.solvd.databases.dao;
+package com.laba.solvd.databases.hiddenfiles;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IGenericDAO;

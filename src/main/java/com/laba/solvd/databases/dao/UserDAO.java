@@ -2,6 +2,7 @@ package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IUserDAO;
+import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.User;
 import java.sql.Connection;
 import java.io.FileInputStream;
@@ -19,6 +20,34 @@ import java.util.*;
 public class UserDAO implements IUserDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+
+  public List<Purchase> getPurchase(int purchaseID) {
+    List<Purchase> purchases = new ArrayList<>();
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement( "SELECT purchases.id, purchases.date, purchases.price " +
+        "FROM purchases " +
+        "JOIN user_purchase ON user_purchase.purchase_id = purchases.id " +
+        "JOIN users ON users.id = user_purchase.user_id " +
+        "WHERE purchases.id = ?")){
+      preparedStatement.setInt(1, purchaseID);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Purchase purchase = new Purchase();
+        purchase.setId(resultSet.getInt("id"));
+        purchase.setPurchaseDate(resultSet.getDate("date"));
+        purchase.setPrice(resultSet.getBigDecimal("price"));
+
+        purchases.add(purchase);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
+
+    return purchases;
+  }
 
   public User getUserById(int id) throws SQLException {
 

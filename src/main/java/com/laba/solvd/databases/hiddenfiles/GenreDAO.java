@@ -1,4 +1,4 @@
-package com.laba.solvd.databases.dao;
+package com.laba.solvd.databases.hiddenfiles;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IGenreDAO;
@@ -94,10 +94,10 @@ public class GenreDAO implements IGenreDAO {
     return genre;
   }
 
-  public static void main(String args[]) throws SQLException {
-    Genre genre = new GenreDAO().getGenreById(1);
-    System.out.println("Award ID: " + genre.getId());
-    System.out.println("genreName: " + genre.getGenreName());
-
-  }
+//  public static void main(String args[]) throws SQLException {
+//    Genre genre = new GenreDAO().getGenreById(1);
+//    System.out.println("Award ID: " + genre.getId());
+//    System.out.println("genreName: " + genre.getGenreName());
+//
+//  }
 }

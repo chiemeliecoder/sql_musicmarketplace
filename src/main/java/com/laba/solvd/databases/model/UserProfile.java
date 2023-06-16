@@ -12,7 +12,21 @@ public class UserProfile {
 
   private String location;
 
-
+/**
+ * For example, imagine you have an application where users can create an account and fill out their profile information.
+ * When a user logs in, you can use their user ID to retrieve their profile information from the user_profiles table
+ * and display it on their profile page.
+ * Imagine you are building a social media platform where users can create an account, fill out their profile information,
+ * and connect with other users. When a user creates an account, their information is stored in the users table.
+ * They can then fill out their profile information, which is stored in the user_profiles table.
+ *
+ * By having the user ID as a foreign key in the user_profiles table,
+ * you can easily associate a user with their profile information. For example, when a user logs in to the platform,
+ * you can use their user ID to retrieve their profile information from the user_profiles table and display it on their profile page.
+ *
+ * Additionally, when a user views another user’s profile page, you can use the other user’s ID to retrieve their profile information
+ * from the user_profiles table and display it on their profile page.
+ * */
   public UserProfile() {
   }
 

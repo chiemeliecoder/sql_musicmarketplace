@@ -24,13 +24,13 @@ public class Main {
     Calendar cal = Calendar.getInstance();
     cal.set(2023, Calendar.MARCH, 28);
     Date date = cal.getTime();
-    java.sql.Date d = (java.sql.Date) cal.getTime();
+//    java.sql.Date d = (java.sql.Date) cal.getTime();
 
 
 
     Album firstAlbum = new Album();
     firstAlbum.setAlbumName("Lady");
-    firstAlbum.setAlbumDate(d);
+    //firstAlbum.setAlbumDate(d);
 
     Artists firstArtist = new Artists();
     firstArtist.setArtistName("Kenshi Yonezu");
@@ -39,7 +39,7 @@ public class Main {
     firstPlaylist.setPlaylistName("Japan vs Korean");
 
     Purchase firstPurchase = new Purchase();
-    firstPurchase.setPurchaseDate(d);
+    //firstPurchase.setPurchaseDate(d);
 
     Review firstReview = new Review();
     firstReview.setComments("Wonderful comeback");
@@ -53,7 +53,7 @@ public class Main {
 
 
     List<User> userList = musicService.getAllUsers();
-//    System.out.println(userList);
+    System.out.println(userList);
 //    System.out.println(firstUser);
 
     User createdUser = musicService.create(firstUser);

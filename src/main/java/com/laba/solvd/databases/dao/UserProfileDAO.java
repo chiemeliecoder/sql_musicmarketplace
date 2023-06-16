@@ -22,6 +22,31 @@ public class UserProfileDAO implements IUserProfileDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
+
+  public List<User> getAllUsers(int userId) {
+    List<User> users = new ArrayList<>();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT user.id, user.username, user_profile.bio " +
+        "FROM user " +
+        "JOIN user_profile ON user.id = user_profile.user_id")){
+      preparedStatement.setInt(1,userId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        User user = new User();
+        user.setId(resultSet.getInt("id"));
+        user.setName(resultSet.getString("username"));
+
+        users.add(user);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return users;
+  }
+
   @Override
   public UserProfile getUserProfileById(int userId) throws SQLException {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();

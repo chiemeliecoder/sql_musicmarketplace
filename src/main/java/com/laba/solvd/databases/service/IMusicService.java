@@ -6,7 +6,7 @@ import java.util.List;
 public interface IMusicService {
 
   void performOperation();
-  User create(User user);
+  User create(User user, int id);
   List<User> getAllUsers();
 
 }

@@ -1,4 +1,4 @@
-package com.laba.solvd.databases.dao;
+package com.laba.solvd.databases.hiddenfiles;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IArtistAchievement;
@@ -106,13 +106,13 @@ public class ArtistAchievementDAO implements IArtistAchievement {
     return artistAchievements;
   }
 
-  public static void main(String args[]) throws SQLException{
-    ArtistAchievement artistAchievement = new ArtistAchievementDAO().getAchievementById(1);
-    System.out.println("Award ID: " + artistAchievement.getId());
-    System.out.println("AwardName: " + artistAchievement.getTitle());
-    System.out.println("AwardDate:" + artistAchievement.getAwardDate());
-
-  }
+//  public static void main(String args[]) throws SQLException{
+//    ArtistAchievement artistAchievement = new ArtistAchievementDAO().getAchievementById(1);
+//    System.out.println("Award ID: " + artistAchievement.getId());
+//    System.out.println("AwardName: " + artistAchievement.getTitle());
+//    System.out.println("AwardDate:" + artistAchievement.getAwardDate());
+//
+//  }
 
 
 }

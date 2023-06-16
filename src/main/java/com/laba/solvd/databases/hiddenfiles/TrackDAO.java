@@ -1,7 +1,8 @@
-package com.laba.solvd.databases.dao;
+package com.laba.solvd.databases.hiddenfiles;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.Track;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.Wishlist;
@@ -21,6 +22,35 @@ import java.util.Properties;
 public class TrackDAO implements IGenericDAO<Track> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+
+
+  public List<Purchase> getPurchase(int purchaseID) {
+    List<Purchase> purchases = new ArrayList<>();
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT purchases.id, purchases.date, purchases.price " +
+        "FROM purchases " +
+        "JOIN track_purchase ON track_purchase.purchase_id = purchases.id " +
+        "JOIN tracks ON tracks.id = track_purchase.track_id " +
+        "WHERE purchases.id = ?")){
+      preparedStatement.setInt(1, purchaseID);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Purchase purchase = new Purchase();
+        purchase.setId(resultSet.getInt("id"));
+        purchase.setPurchaseDate(resultSet.getDate("date"));
+        purchase.setPrice(resultSet.getBigDecimal("price"));
+
+        purchases.add(purchase);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
+
+    return purchases;
+  }
 
 
   public Track getById(int id) throws SQLException {

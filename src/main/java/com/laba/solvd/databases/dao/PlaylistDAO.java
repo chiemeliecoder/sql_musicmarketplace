@@ -4,6 +4,7 @@ import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import com.laba.solvd.databases.model.Genre;
 import com.laba.solvd.databases.model.Playlist;
+import com.laba.solvd.databases.model.Track;
 import com.laba.solvd.databases.model.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +22,32 @@ import java.util.Properties;
 public class PlaylistDAO implements IGenericDAO<Playlist> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+
+  public List<Track> getTrack(int trackID) {
+    List<Track> tracks = new ArrayList<>();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT tracks.id, tracks.title " +
+        "FROM tracks " +
+        "JOIN playlist_track ON playlist_track.track_id = tracks.id " +
+        "JOIN playlists ON playlists.id = playlist_track.playlist_id " +
+        "WHERE tracks.id = ?")){
+      preparedStatement.setInt(1, trackID);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Track track = new Track();
+        track.setId(resultSet.getInt("id"));
+        track.setTitle(resultSet.getString("title"));
+
+        tracks.add(track);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return tracks;
+  }
 
   @Override
   public Playlist getById(int id) throws SQLException {
@@ -118,7 +145,7 @@ public class PlaylistDAO implements IGenericDAO<Playlist> {
 
   }
 
-  public static void main(String args[]) throws SQLException {
-
-  }
+//  public static void main(String args[]) throws SQLException {
+//
+//  }
 }

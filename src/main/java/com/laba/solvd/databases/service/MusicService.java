@@ -19,15 +19,7 @@ public class MusicService implements IMusicService {
 
 
 
-  public MusicService(IUserDAO userDAO, IGenreDAO genreDAO,
-      IPurchaseDAO purchaseDAO) {
-    this.userDAO = userDAO;
-    this.genreDAO = genreDAO;
-    this.purchaseDAO = purchaseDAO;
-  }
 
-  public MusicService() {
-  }
 
   @Override
   public void performOperation() {
@@ -36,39 +28,17 @@ public class MusicService implements IMusicService {
 
   }
 
-
   @Override
-  public User create(User user) {
-    user.setId(6);
-    userDAO.createUser(user);
-    if(user.getPurchasesList() != null){
-      List<Purchase> purchases = user.getPurchasesList().stream()
-          .map(purchase -> purchaseDAO.getPurchaseById(6))
-          .collect(Collectors.toList());
-      user.setPurchasesList(purchases);
-    }
-    return user;
+  public User create(User user, int id) {
+    return null;
   }
-
 
   @Override
   public List<User> getAllUsers() {
-
-    return userDAO.getAllUsers();
+    return null;
   }
 
-  public List<Genre>getMusicByGenre(){
-    return genreDAO.getAllGenres();
-  }
 
-  public void purchaseMusic(Purchase purchaseUser) {
-    Purchase purchase = new Purchase(purchaseUser.getId(), new Date(System.currentTimeMillis()), purchaseUser.getPrice());
-    purchaseDAO.createPurchase(purchase);
-  }
-
-  public List<Purchase> getUserPurchases() {
-    return purchaseDAO.getAllPurchases();
-  }
 }
 
 
