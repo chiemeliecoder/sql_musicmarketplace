@@ -16,9 +16,9 @@ public class MusicService implements IMusicService {
     this.artistService = artistService;
   }
 
-  public MusicService(){
-
-  }
+//  public MusicService(){
+//
+//  }
 
 
   @Override

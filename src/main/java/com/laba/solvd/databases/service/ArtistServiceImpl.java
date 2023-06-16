@@ -1,5 +1,6 @@
 package com.laba.solvd.databases.service;
 
+import com.laba.solvd.databases.dao.AlbumDAO;
 import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.Artists;
@@ -14,10 +15,9 @@ public class ArtistServiceImpl implements IArtistService {
  private final IGenericDAO genericDAO;
  private final AlbumServiceImpl albumService;
 
-  public ArtistServiceImpl(IGenericDAO genericDAO,
-      AlbumServiceImpl albumService) {
-    this.genericDAO = genericDAO;
-    this.albumService = albumService;
+  public ArtistServiceImpl() {
+    this.genericDAO = new AlbumDAO();
+    this.albumService = new AlbumServiceImpl();
   }
 
   @Override

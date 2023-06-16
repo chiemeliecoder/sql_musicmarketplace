@@ -7,8 +7,11 @@ import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.Review;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.Wishlist;
+import com.laba.solvd.databases.service.ArtistServiceImpl;
 import com.laba.solvd.databases.service.IMusicService;
 import com.laba.solvd.databases.service.MusicService;
+import com.laba.solvd.databases.service.PlaylistServiceImpl;
+import com.laba.solvd.databases.service.UserServiceImpl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +50,16 @@ public class Main {
     Wishlist firstWishlist = new Wishlist();
     firstWishlist.setName("Mieta");
 
-    IMusicService musicService = new MusicService();
+
+
+
+    UserServiceImpl userService = new UserServiceImpl();
+    userService.create(firstUser);
+
+    ArtistServiceImpl artistService = new ArtistServiceImpl();
+    artistService.create(firstArtist);
+
+    IMusicService musicService = new MusicService(userService,artistService);
 
     firstUser = musicService.create(firstUser);
 

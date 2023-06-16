@@ -8,7 +8,10 @@ import java.util.List;
 public class PlaylistServiceImpl implements IGenericService<Playlist> {
 
 
-  private final PlaylistDAO playlistDAO;
+  private PlaylistDAO playlistDAO;
+
+  public PlaylistServiceImpl() {
+  }
 
   public PlaylistServiceImpl(PlaylistDAO playlistDAO) {
     this.playlistDAO = playlistDAO;

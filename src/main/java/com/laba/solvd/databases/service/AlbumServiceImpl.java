@@ -7,7 +7,10 @@ import java.util.List;
 
 public class AlbumServiceImpl implements IGenericService<Album> {
 
-  private final AlbumDAO albumDAO;
+  private AlbumDAO albumDAO;
+
+  public AlbumServiceImpl() {
+  }
 
   public AlbumServiceImpl(AlbumDAO albumDAO) {
     this.albumDAO = albumDAO;

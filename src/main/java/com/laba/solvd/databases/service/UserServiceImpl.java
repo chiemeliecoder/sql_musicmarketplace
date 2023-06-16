@@ -1,5 +1,6 @@
 package com.laba.solvd.databases.service;
 
+import com.laba.solvd.databases.dao.UserDAO;
 import com.laba.solvd.databases.interfacedao.IUserDAO;
 import com.laba.solvd.databases.interfacedao.IUserProfileDAO;
 import com.laba.solvd.databases.model.Playlist;
@@ -14,11 +15,14 @@ public class UserServiceImpl implements IUserService {
   private final IUserDAO userDAO;
   private final PlaylistServiceImpl playlistService;
 
-  public UserServiceImpl(IUserDAO userDAO,
-      PlaylistServiceImpl playlistService) {
-    this.userDAO = userDAO;
-    this.playlistService = playlistService;
+  public UserServiceImpl() {
+    this.userDAO = new UserDAO();
+    this.playlistService = new PlaylistServiceImpl();
   }
+
+
+
+
 
   @Override
   public User create(User entity) {
