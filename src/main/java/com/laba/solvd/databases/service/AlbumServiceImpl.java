@@ -13,6 +13,7 @@ public class AlbumServiceImpl implements IGenericService<Album> {
     this.albumDAO = albumDAO;
   }
 
+
   @Override
   public Album create(Album entity, int id) {
     return null;
@@ -20,6 +21,6 @@ public class AlbumServiceImpl implements IGenericService<Album> {
 
   @Override
   public List<Album> getAllUsers() {
-    return albumDAO.getAll();
+    return null;
   }
 }

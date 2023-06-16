@@ -10,9 +10,10 @@ public class User {
   private String name;
 
   private String email;
-  
+
   private String password;
-  
+  private UserProfile userProfile;
+
   private List<Purchase> purchaseList;
   private List<Playlist> playlistList;
   private List<Review> reviewList;
@@ -36,6 +37,15 @@ public class User {
     this.playlistList = playlistList;
     this.reviewList = reviewList;
     this.wishlistList = wishlistList;
+  }
+
+  public User(int id, String name, String email, String password,
+      UserProfile userProfile) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.userProfile = userProfile;
   }
 
   public int getId() {
@@ -104,6 +114,14 @@ public class User {
     this.wishlistList = wishlistList;
   }
 
+  public UserProfile getUserProfile() {
+    return userProfile;
+  }
+
+  public void setUserProfile(UserProfile userProfile) {
+    this.userProfile = userProfile;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -114,17 +132,17 @@ public class User {
     }
     User user = (User) o;
     return getId() == user.getId() && getName().equals(user.getName()) && getEmail()
-        .equals(user.getEmail()) && getPassword().equals(user.getPassword()) && getPurchasesList()
-        .equals(user.getPurchasesList()) && getPlaylistsList().equals(user.getPlaylistsList())
-        && getReviewsList().equals(user.getReviewsList()) && getWishlistsList()
-        .equals(user.getWishlistsList());
+        .equals(user.getEmail()) && getPassword().equals(user.getPassword()) && getUserProfile()
+        .equals(user.getUserProfile()) && purchaseList.equals(user.purchaseList) && playlistList
+        .equals(user.playlistList) && reviewList.equals(user.reviewList) && wishlistList
+        .equals(user.wishlistList);
   }
 
   @Override
   public int hashCode() {
     return Objects
-        .hash(getId(), getName(), getEmail(), getPassword(), getPurchasesList(), getPlaylistsList(),
-            getReviewsList(), getWishlistsList());
+        .hash(getId(), getName(), getEmail(), getPassword(), getUserProfile(), purchaseList,
+            playlistList, reviewList, wishlistList);
   }
 
   @Override
@@ -134,6 +152,7 @@ public class User {
         ", name='" + name + '\'' +
         ", email='" + email + '\'' +
         ", password='" + password + '\'' +
+        ", userProfile=" + userProfile +
         ", purchaseList=" + purchaseList +
         ", playlistList=" + playlistList +
         ", reviewList=" + reviewList +

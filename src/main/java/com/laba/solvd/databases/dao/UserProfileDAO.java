@@ -85,15 +85,13 @@ public class UserProfileDAO implements IUserProfileDAO {
   @Override
   public void createUser(UserProfile user) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user_profile (id, bio, profileimage, location, user_id) VALUES (?, ?, ?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user_profile (id, bio, profileimage, location) VALUES (?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, user.getId());
       preparedStatement.setString(2, user.getBio());
       preparedStatement.setString(3, user.getProfileimage());
       preparedStatement.setString(4, user.getLocation());
-      User users = new User();
-      users.getId();
-      preparedStatement.setInt(5,users.getId());
+
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();

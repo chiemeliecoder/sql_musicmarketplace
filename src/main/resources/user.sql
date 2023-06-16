@@ -1,5 +1,5 @@
 SELECT * FROM musicmarketplace.user;
-INSERT INTO user (id, username, email, password) VALUES (3, 'JaneDoe', 'janedoe@example.com', 'password123');
+INSERT INTO user (id, username, email, password,userprofid) VALUES (3, 'JaneDoe', 'janedoe@example.com', 'password123',3);
 UPDATE user SET username = 'JaneDoe' WHERE (id = 3);
 DELETE FROM user WHERE (id = 3);
 ALTER TABLE user ADD COLUMN age INT;
@@ -26,7 +26,7 @@ JOIN musicmarketplace.user u2 ON u1.id = u2.id;
 
 ======================================================================================
 SELECT * FROM musicmarketplace.user_profile;
-INSERT INTO user_profile (id, bio, profileimage, location, user_id) VALUES (1, 'John doe is into pop music', 'https://www.shutterstock.com/image-photo/profile-picture-happy-friendly-young-man-1863570355', 'Oregon',1);
+INSERT INTO user_profile (id, bio, profileimage, location) VALUES (1, 'John doe is into pop music', 'https://www.shutterstock.com/image-photo/profile-picture-happy-friendly-young-man-1863570355', 'Oregon');
 UPDATE user SET location = 'New York' WHERE (id = 2);
 DELETE FROM user_profile WHERE (id = 1);
 

@@ -4,6 +4,7 @@ import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IUserDAO;
 import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.User;
+import com.laba.solvd.databases.model.UserProfile;
 import java.sql.Connection;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -90,12 +91,16 @@ public class UserDAO implements IUserDAO {
   @Override
   public void createUser(User user) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into User (id, username, email, password) VALUES (?, ?, ?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into User (id, username, email, password,userprofid) VALUES (?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, user.getId());
       preparedStatement.setString(2, user.getName());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getPassword());
+
+      UserProfile usersProfile = new UserProfile();
+      usersProfile.getId();
+      preparedStatement.setInt(5,usersProfile.getId());
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
