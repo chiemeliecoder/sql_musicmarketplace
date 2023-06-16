@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class User {
 
-  private int id;
+  private Integer id;
 
   private String name;
 
@@ -22,7 +22,7 @@ public class User {
   public User() {
   }
 
-  public User(int id, String name, String email, String password) {
+  public User(Integer id, String name, String email, String password) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -39,7 +39,7 @@ public class User {
     this.wishlistList = wishlistList;
   }
 
-  public User(int id, String name, String email, String password,
+  public User(Integer id, String name, String email, String password,
       UserProfile userProfile) {
     this.id = id;
     this.name = name;

@@ -5,10 +5,11 @@ import com.laba.solvd.databases.interfacedao.IUserProfileDAO;
 import com.laba.solvd.databases.model.Playlist;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.service.interfaceservice.IGenericService;
+import com.laba.solvd.databases.service.interfaceservice.IUserService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserServiceImpl implements IGenericService<User> {
+public class UserServiceImpl implements IUserService {
 
   private final IUserDAO userDAO;
   private final PlaylistServiceImpl playlistService;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements IGenericService<User> {
   }
 
   @Override
-  public User create(User entity, int id) {
+  public User create(User entity) {
     entity.setId(null);
     userDAO.createUser(entity);
 

@@ -1,19 +1,17 @@
 package com.laba.solvd.databases.service;
 
+import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.User;
 import java.util.List;
 
 public class MusicService implements IMusicService {
 
-  private IMusicService musicService;
   private UserServiceImpl userService;
   private ArtistServiceImpl artistService;
 
 
 
-  public MusicService(IMusicService musicService,
-      UserServiceImpl userService, ArtistServiceImpl artistService) {
-    this.musicService = musicService;
+  public MusicService(UserServiceImpl userService, ArtistServiceImpl artistService) {
     this.userService = userService;
     this.artistService = artistService;
   }
@@ -32,13 +30,29 @@ public class MusicService implements IMusicService {
 
   @Override
   public User create(User user) {
+    user.setId(null);
+    if(userService == null){
+      userService.create(user);
+    }
 
-    return null;
+
+    Artists art = new Artists();
+    art.setId(null);
+    artistService.create(art);
+
+    return user;
   }
 
   @Override
   public List<User> getAllUsers() {
-    return userDAO.getAllUsers();
+
+    return userService.getAllUsers();
+  }
+
+
+  @Override
+  public List<Artists> getAllArtists() {
+    return getAllArtists();
   }
 
 

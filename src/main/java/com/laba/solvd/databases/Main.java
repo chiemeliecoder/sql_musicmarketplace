@@ -24,7 +24,7 @@ public class Main {
     Calendar cal = Calendar.getInstance();
     cal.set(2023, Calendar.MARCH, 28);
     Date date = cal.getTime();
-    java.sql.Date d = (java.sql.Date) cal.getTime();
+    java.sql.Date d = new java.sql.Date(date.getTime());
 
 
 
@@ -39,7 +39,7 @@ public class Main {
     firstPlaylist.setPlaylistName("Japan vs Korean");
 
     Purchase firstPurchase = new Purchase();
-    //firstPurchase.setPurchaseDate(d);
+    firstPurchase.setPurchaseDate(d);
 
     Review firstReview = new Review();
     firstReview.setComments("Wonderful comeback");
@@ -49,12 +49,13 @@ public class Main {
 
     IMusicService musicService = new MusicService();
 
-    firstUser = musicService.create()
+    firstUser = musicService.create(firstUser);
+
 
 
     List<User> userList = musicService.getAllUsers();
     System.out.println(userList);
-//    System.out.println(firstUser);
+    System.out.println(firstUser);
 
     User createdUser = musicService.create(firstUser);
     System.out.println("Created user: " + createdUser);
