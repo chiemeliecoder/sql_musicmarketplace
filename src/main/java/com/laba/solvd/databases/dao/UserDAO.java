@@ -97,7 +97,7 @@ public class UserDAO implements IUserDAO {
       preparedStatement.setString(2, user.getName());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getPassword());
-      
+
 
 
 

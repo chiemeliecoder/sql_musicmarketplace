@@ -1,5 +1,6 @@
 package com.laba.solvd.databases.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Wishlist {
@@ -8,14 +9,17 @@ public class Wishlist {
 
   private String name;
 
+  private List<Album> albumList;
+
 
 
   public Wishlist() {
   }
 
-  public Wishlist(int id, String name) {
+  public Wishlist(int id, String name, List<Album> albumList) {
     this.id = id;
     this.name = name;
+    this.albumList = albumList;
   }
 
   public int getId() {
@@ -34,6 +38,15 @@ public class Wishlist {
     this.name = name;
   }
 
+  public List<Album> getAlbumList() {
+    return albumList;
+  }
+
+  public void setAlbumList(List<Album> albumList) {
+    this.albumList = albumList;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -43,12 +56,13 @@ public class Wishlist {
       return false;
     }
     Wishlist wishlist = (Wishlist) o;
-    return getId() == wishlist.getId() && getName().equals(wishlist.getName());
+    return getId() == wishlist.getId() && getName().equals(wishlist.getName()) && getAlbumList()
+        .equals(wishlist.getAlbumList());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getName());
+    return Objects.hash(getId(), getName(), getAlbumList());
   }
 
   @Override
@@ -56,6 +70,7 @@ public class Wishlist {
     return "Wishlist{" +
         "id=" + id +
         ", name='" + name + '\'' +
+        ", albumList=" + albumList +
         '}';
   }
 }
