@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IArtistService {
 
-  Artists create( Artists entity);
+  Artists createArt( Artists entity);
   List<Artists> getAllUsers();
 
 }

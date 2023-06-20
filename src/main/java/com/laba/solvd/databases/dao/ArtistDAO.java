@@ -167,10 +167,10 @@ public class ArtistDAO implements IGenericDAO<Artists> {
         if (albumId  != null) {
           preparedStatement.setInt(3, albumId); // Set the valid foreign key value
         } else {
-          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
+          throw new IllegalArgumentException("Album ID  cannot be null for the not null foreign key");
         }
       } else {
-        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
+        throw new IllegalArgumentException("Album ID cannot be null for the not null foreign key");
       }
 
       preparedStatement.executeUpdate();
@@ -199,7 +199,7 @@ public class ArtistDAO implements IGenericDAO<Artists> {
       while (resultSet.next()){
         Artists artist1 = new Artists();
         artist1.setId(resultSet.getInt("id"));
-        artist1.setArtistName(resultSet.getString("username"));
+        artist1.setArtistName(resultSet.getString("name"));
 
         artists.add(artist1);
       }

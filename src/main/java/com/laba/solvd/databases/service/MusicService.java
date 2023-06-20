@@ -1,5 +1,6 @@
 package com.laba.solvd.databases.service;
 
+import com.laba.solvd.databases.interfacedao.IUserDAO;
 import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.User;
 import java.util.List;
@@ -11,8 +12,8 @@ public class MusicService implements IMusicService {
 
 
 
-  public MusicService() {
-    this.userService = new UserServiceImpl();
+  public MusicService(PlaylistServiceImpl playlistService) {
+    this.userService = new UserServiceImpl(playlistService);
     this.artistService = new ArtistServiceImpl();
   }
 
@@ -36,7 +37,7 @@ public class MusicService implements IMusicService {
 
     Artists art = new Artists();
     art.setId(null);
-    artistService.create(art);
+    artistService.createArt(art);
 
     return user;
   }

@@ -1,5 +1,7 @@
 package com.laba.solvd.databases;
 
+import com.laba.solvd.databases.dao.UserDAO;
+import com.laba.solvd.databases.interfacedao.IUserDAO;
 import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.Playlist;
@@ -22,29 +24,70 @@ import java.util.UUID;
 public class Main {
 
   public static void main(String args[]){
-    User firstUser = new User();
+    // Create instances of dependencies
+    PlaylistServiceImpl playlistService = new PlaylistServiceImpl();
 
-    UserProfile usep = new UserProfile();
-    usep.setId(1);
+    // Create an instance of UserServiceImpl
+    UserServiceImpl userService = new UserServiceImpl(playlistService);
 
-    firstUser.setId(5);
-    firstUser.setPassword("There1234");
-    firstUser.setEmail("sharon@123.com");
-    firstUser.setUserProfile(usep.getId());
+    ArtistServiceImpl artistService = new ArtistServiceImpl();
+
+    // Create an instance of MusicService
+    MusicService musicService = new MusicService(playlistService);
+
+    // Call the methods of MusicService
+    musicService.performOperation();
+
+    int maxId = userService.getMaxUserId();
+
+    // Create a new user
+    User newUser = new User();
+    newUser.setId(maxId + 1);
+    newUser.setName("hannah Doe");
+    newUser.setEmail("hannah@example.com");
+    newUser.setPassword("password009");
+
+    UserProfile userProfile = new UserProfile();
+    userProfile.setId(2);
+    userProfile.setBio("I like cute anime music");
+    userProfile.setProfileimage("https://cdn.shopify.com/s/files/1/0416/8083/0620/files/ecomm-CHGAL-Core2021_367x353px_07-CN_1000x.png?v=1614324462");
+    userProfile.setLocation("London");
+
+    newUser.setUserProfile(userProfile.getId());
 
 
-//    firstUser.setId(5);
-//    firstUser.setName("Sharon" + UUID.randomUUID());
-//    firstUser.setPassword("There1234" + UUID.randomUUID());
-//    firstUser.setEmail("sharon@123.com" + UUID.randomUUID());
-//    firstUser.setUserProfile(usep.getId());
-//    firstUser.setPlaylistsList();
-//    firstUser.setPurchasesList();
-//    firstUser.setWishlistsList();
-//    firstUser.setReviewsList();
-    IUserService userService = new UserServiceImpl();
-    firstUser = userService.create(firstUser);
-    System.out.println(firstUser);
+
+    // Call the create method
+//    User createdUser = userService.create(newUser);
+//    System.out.println("Created user: " + createdUser);
+
+
+    // Get all users
+    List<User> allUsers = userService.getAllUsers();
+    System.out.println("All users: " + allUsers);
+
+    int maxArtId = artistService.getMaxArtistId();
+    Artists newArtist = new Artists();
+    newArtist.setId(maxArtId + 1);
+    newArtist.setArtistName("E ve");
+
+    Album album = new Album();
+    album.setId(2);
+    newArtist.setAlbum(album.getId());
+
+//    Artists createdArtist = artistService.createArt(newArtist);
+//    System.out.println("Created artist: " + createdArtist);
+
+    List<Artists> allArtists = artistService.getAllUsers();
+    System.out.println("All artists: " + allArtists);
+
+//    List<User> allUser = musicService.getAllUsers();
+//    System.out.println("All users in service: " + allUser);
+//
+//    List<Artists> allArtist = musicService.getAllArtists();
+//    System.out.println("All artists in service: " + allArtist);
+
+
 
 
 
@@ -75,25 +118,6 @@ public class Main {
     firstWishlist.setName("Mieta");
 
 
-
-
-
-
-    ArtistServiceImpl artistService = new ArtistServiceImpl();
-    artistService.create(firstArtist);
-
-    IMusicService musicService = new MusicService();
-
-    //firstUser = userService.create(firstUser);
-
-//    System.out.println(artistService.create(firstArtist));
-
-    List<User> userList = musicService.getAllUsers();
-    //System.out.println(userList);
-    //System.out.println(firstUser);
-
-//    User createdUser = musicService.create(firstUser);
-//    System.out.println("Created user: " + createdUser);
 
 
   }

@@ -34,6 +34,10 @@ public class UserDAO implements IUserDAO {
       "JOIN musicmarketplace.genre ON musicmarketplace.artist_genre.genreid = musicmarketplace.genre.id " +
       "JOIN musicmarketplace.artist_achievements ON musicmarketplace.artists.id = musicmarketplace.artist_achievements.artistid";
 
+  public UserDAO() {
+
+  }
+
   public List<Purchase> getPurchase(int purchaseID) {
     List<Purchase> purchases = new ArrayList<>();
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
