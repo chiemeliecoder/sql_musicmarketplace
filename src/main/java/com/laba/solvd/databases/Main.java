@@ -6,22 +6,46 @@ import com.laba.solvd.databases.model.Playlist;
 import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.Review;
 import com.laba.solvd.databases.model.User;
+import com.laba.solvd.databases.model.UserProfile;
 import com.laba.solvd.databases.model.Wishlist;
 import com.laba.solvd.databases.service.ArtistServiceImpl;
 import com.laba.solvd.databases.service.IMusicService;
 import com.laba.solvd.databases.service.MusicService;
 import com.laba.solvd.databases.service.PlaylistServiceImpl;
 import com.laba.solvd.databases.service.UserServiceImpl;
+import com.laba.solvd.databases.service.interfaceservice.IUserService;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Main {
 
   public static void main(String args[]){
     User firstUser = new User();
-    firstUser.setName("Sharon");
-    firstUser.setId(7);
+
+    UserProfile usep = new UserProfile();
+    usep.setId(1);
+
+    firstUser.setId(5);
+    firstUser.setPassword("There1234");
+    firstUser.setEmail("sharon@123.com");
+    firstUser.setUserProfile(usep.getId());
+
+
+//    firstUser.setId(5);
+//    firstUser.setName("Sharon" + UUID.randomUUID());
+//    firstUser.setPassword("There1234" + UUID.randomUUID());
+//    firstUser.setEmail("sharon@123.com" + UUID.randomUUID());
+//    firstUser.setUserProfile(usep.getId());
+//    firstUser.setPlaylistsList();
+//    firstUser.setPurchasesList();
+//    firstUser.setWishlistsList();
+//    firstUser.setReviewsList();
+    IUserService userService = new UserServiceImpl();
+    firstUser = userService.create(firstUser);
+    System.out.println(firstUser);
+
 
 
     Calendar cal = Calendar.getInstance();
@@ -53,17 +77,16 @@ public class Main {
 
 
 
-    UserServiceImpl userService = new UserServiceImpl();
-    userService.create(firstUser);
+
 
     ArtistServiceImpl artistService = new ArtistServiceImpl();
     artistService.create(firstArtist);
 
-    IMusicService musicService = new MusicService(userService,artistService);
+    IMusicService musicService = new MusicService();
 
     //firstUser = userService.create(firstUser);
 
-    System.out.println(userService.getAllUsers());
+//    System.out.println(artistService.create(firstArtist));
 
     List<User> userList = musicService.getAllUsers();
     //System.out.println(userList);

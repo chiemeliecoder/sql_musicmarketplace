@@ -25,6 +25,11 @@ import java.util.Properties;
 public class ArtistDAO implements IGenericDAO<Artists> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+  private static final String DELETE = "DELETE FROM Artists WHERE id=?";
+  private static final String JOINGENRE = "SELECT *"
+      + "FROM musicmarketplace.artists"
+      + "LEFT OUTER JOIN musicmarketplace.artist_genre ON musicmarketplace.artists.id = musicmarketplace.artist_genre.artistid";
+  private static final String UPDATE = "UPDATE Artists SET name =? WHERE id=?";
 
   public List <ArtistAchievement> getArtistAchievement(int artistID) throws SQLException {
     List<ArtistAchievement> artistAchievements = new ArrayList<>();
@@ -150,17 +155,32 @@ public class ArtistDAO implements IGenericDAO<Artists> {
   @Override
   public void create(Artists entity) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artists (id, name) VALUES VALUES (?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artists (id, name, albumid) VALUES (?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, entity.getId());
       preparedStatement.setString(2, entity.getArtistName());
 
+      Album album = entity.getAlbum();
+      if (album != null) {
+
+        Integer albumId = album.getId();
+        if (albumId  != null) {
+          preparedStatement.setInt(3, albumId); // Set the valid foreign key value
+        } else {
+          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
+        }
+      } else {
+        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
+      }
+
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
-      while (resultSet.next()){}
+      while (resultSet.next()){
+
+      }
 
     }catch(SQLException e){
-      throw new RuntimeException("unable to create user", e);
+      throw new RuntimeException("unable to create artist", e);
     }finally {
       CONNECTION_POOL.releaseConnectionToPool(connection);
     }
@@ -198,25 +218,88 @@ public class ArtistDAO implements IGenericDAO<Artists> {
    */
   @Override
   public Artists read(int id) {
-    return null;
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    Artists art = null;
+    try (PreparedStatement preparedStatement = connection.prepareStatement(JOINGENRE)) {
+      preparedStatement.setInt(1, id);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        art = new Artists();
+        art.setId(resultSet.getInt("id"));
+        art.setArtistName(resultSet.getString("name"));
+
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    } finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return art;
   }
 
   @Override
   public void update(Artists entity) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+
+    if(entity == null){
+      throw new NullPointerException();
+    }
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)){
+      preparedStatement.setInt(1, entity.getId());
+      preparedStatement.setString(2, entity.getArtistName());
+
+
+      Album album = new Album();
+      Integer albumId = album.getId();
+      preparedStatement.setInt(3, albumId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException("unable to update album", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
 
   }
 
   @Override
   public void delete(int id) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    if(id <= 0){
+      throw new IllegalArgumentException("id value is invalid");
+    }
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE)){
+      preparedStatement.setInt(1, id);
+      preparedStatement.executeUpdate();
+    }catch (SQLException e){
+      throw new RuntimeException("unable to delete", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
 
   }
 
-//  public static void main(String args[]) throws SQLException {
+  public static void main(String args[]) throws SQLException {
 //    Artists artist = new ArtistDAO().getById(1);
 //    System.out.println("Artist ID: " + artist.getId());
 //    System.out.println("ArtistName: " + artist.getArtistName());
+
 //
-//  }
+    ArtistDAO artistDAO = new ArtistDAO();
+
+    Album alb = new Album();
+    alb.setId(1);
+
+    Artists newArt = new Artists();
+    newArt.setId(4);
+    newArt.setArtistName("Kenshi");
+    newArt.setAlbum(alb.getId());
+
+
+
+    artistDAO.create(newArt);
+  }
 
 
 }

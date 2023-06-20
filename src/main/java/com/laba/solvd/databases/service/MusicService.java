@@ -11,14 +11,12 @@ public class MusicService implements IMusicService {
 
 
 
-  public MusicService(UserServiceImpl userService, ArtistServiceImpl artistService) {
-    this.userService = userService;
-    this.artistService = artistService;
+  public MusicService() {
+    this.userService = new UserServiceImpl();
+    this.artistService = new ArtistServiceImpl();
   }
 
-//  public MusicService(){
-//
-//  }
+
 
 
   @Override

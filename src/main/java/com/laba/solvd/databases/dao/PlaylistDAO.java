@@ -22,6 +22,7 @@ import java.util.Properties;
 public class PlaylistDAO implements IGenericDAO<Playlist> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+  private static final String DELETE = "DELETE FROM Playlists WHERE id=?";
 
   public List<Track> getTrack(int trackID) {
     List<Track> tracks = new ArrayList<>();
@@ -142,6 +143,19 @@ public class PlaylistDAO implements IGenericDAO<Playlist> {
 
   @Override
   public void delete(int id) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    if(id <= 0){
+      throw new IllegalArgumentException("id value is invalid");
+    }
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE)){
+      preparedStatement.setInt(1, id);
+      preparedStatement.executeUpdate();
+    }catch (SQLException e){
+      throw new RuntimeException("unable to delete", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
 
   }
 

@@ -128,7 +128,4 @@ public class UserProfileDAO implements IUserProfileDAO {
 
   }
 
-//  public static void main(String args[]) throws SQLException{
-//
-//  }
 }

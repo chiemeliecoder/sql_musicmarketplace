@@ -9,5 +9,6 @@ public interface IUserDAO {
   User getUserById(int userId) throws SQLException;
   void createUser(User user);
   List<User> getAllUsers();
+  List<User> findAll();
 
 }

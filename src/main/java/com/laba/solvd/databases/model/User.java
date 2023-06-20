@@ -121,7 +121,21 @@ public class User {
     return userProfile;
   }
 
-  public void setUserProfile(UserProfile userProfile) {
+  public UserProfile retrieveUserProfileById(int userProfileId) {
+    UserProfile userProfile = new UserProfile();
+    userProfile.setId(userProfileId);
+
+    // operations to retrieve other properties of the UserProfile
+    // perform database queries, API calls, or any other operations required to fetch the data
+
+    // Return the retrieved UserProfile
+    return userProfile;
+  }
+
+
+  public void setUserProfile(Integer userProfileId) {
+
+    UserProfile userProfile = retrieveUserProfileById(userProfileId);
     this.userProfile = userProfile;
   }
 

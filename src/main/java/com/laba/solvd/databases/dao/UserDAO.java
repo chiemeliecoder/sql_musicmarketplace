@@ -22,13 +22,24 @@ public class UserDAO implements IUserDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
+  private static final String FIND_ALL_QUERY = "SELECT * FROM musicmarketplace.user " +
+      "JOIN musicmarketplace.playlists ON musicmarketplace.user.id = musicmarketplace.playlists.userid " +
+      "JOIN musicmarketplace.wishlists ON musicmarketplace.user.id = musicmarketplace.wishlists.userid " +
+      "JOIN musicmarketplace.purchases ON musicmarketplace.user.id = musicmarketplace.purchases.userid " +
+      "JOIN musicmarketplace.reviews ON musicmarketplace.user.id = musicmarketplace.reviews.userid " +
+      "JOIN musicmarketplace.tracks ON musicmarketplace.purchases.trackid = musicmarketplace.tracks.id " +
+      "JOIN musicmarketplace.albums ON musicmarketplace.tracks.albumid = musicmarketplace.albums.id " +
+      "JOIN musicmarketplace.artists ON musicmarketplace.albums.artistid = musicmarketplace.artists.id " +
+      "JOIN musicmarketplace.artist_genre ON musicmarketplace.artists.id = musicmarketplace.artist_genre.artistid " +
+      "JOIN musicmarketplace.genre ON musicmarketplace.artist_genre.genreid = musicmarketplace.genre.id " +
+      "JOIN musicmarketplace.artist_achievements ON musicmarketplace.artists.id = musicmarketplace.artist_achievements.artistid";
+
   public List<Purchase> getPurchase(int purchaseID) {
     List<Purchase> purchases = new ArrayList<>();
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement( "SELECT purchases.id, purchases.date, purchases.price " +
         "FROM purchases " +
-        "JOIN users ON users.purchase_id = purchases.id " +
-        "JOIN users ON users.id = purchase.user_id " +
+        "JOIN user ON user.id = purchases.userid " +
         "WHERE purchases.id = ?")){
       preparedStatement.setInt(1, purchaseID);
       ResultSet resultSet = preparedStatement.executeQuery();
@@ -91,7 +102,7 @@ public class UserDAO implements IUserDAO {
   @Override
   public void createUser(User user) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into User (id, username, email, password) VALUES (?, ?, ?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO  User (id, username, email, password,userprofid) VALUES (?, ?, ?, ?,?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, user.getId());
       preparedStatement.setString(2, user.getName());
@@ -99,11 +110,25 @@ public class UserDAO implements IUserDAO {
       preparedStatement.setString(4, user.getPassword());
 
 
+      UserProfile userProfile = user.getUserProfile();
+      if (userProfile != null) {
+        // Check if the UserProfile object has a valid ID
+        Integer userProfileId = userProfile.getId();
+        if (userProfileId != null) {
+          preparedStatement.setInt(5, userProfileId); // Set the valid foreign key value
+        } else {
+          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
+        }
+      } else {
+        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
+      }
 
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
-      while (resultSet.next()){}
+      while (resultSet.next()){
+        user.setId(resultSet.getInt(1));
+      }
 
     }catch(SQLException e){
       throw new RuntimeException("unable to create user", e);
@@ -135,40 +160,81 @@ public class UserDAO implements IUserDAO {
     return users;
   }
 
+  @Override
+  public List<User> findAll() {
+    List<User> users = new ArrayList<>();
 
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try(PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_QUERY)){
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        User user = new User();
+        user.setId(resultSet.getInt("id"));
+        user.setName(resultSet.getString("username"));
 
-  public static void main(String args[]) throws SQLException{
-    User use = new UserDAO().getUserById(1);
-    System.out.println("User ID: " + use.getId());
-    System.out.println("Username: " + use.getName());
-
-
-
-    List<User> users = new UserDAO().getAllUsers();
-
-    for (User user : users) {
-      System.out.println("User ID: " + user.getId());
-      System.out.println("Username: " + user.getName());
+        users.add(user);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
     }
-    UserDAO userDAO = new UserDAO();
-
-    User newUser = new User();
-
-    newUser.setId(3);
-    newUser.setName("JaneDoe");
-    newUser.setEmail("janedoe@example.com");
-    newUser.setPassword("password123");
-
-
-    //userDAO.getPurchase(1);
-    userDAO.createUser(newUser);
-
-
-
-
-
-
+    return users;
   }
+
+//  public static void main(String args[]) throws SQLException{
+//    User use = new UserDAO().getUserById(1);
+//    System.out.println("User ID: " + use.getId());
+//    System.out.println("Username: " + use.getName());
+//
+//
+//
+//    List<User> users = new UserDAO().getAllUsers();
+//
+//    for (User user : users) {
+//      System.out.println("User ID: " + user.getId());
+//      System.out.println("Username: " + user.getName());
+//    }
+//    List<User> userList = new UserDAO().findAll();
+//
+//    for (User user : userList) {
+//      System.out.println("User ID: " + user.getId());
+//      System.out.println("User Name: " + user.getName());
+//      // Retrieve other user properties as needed
+//      System.out.println("-------------------------");
+//    }
+//
+//    int purchaseID = 1;
+//    List<Purchase> purchaseList = new UserDAO().getPurchase(purchaseID);
+//
+//    for (Purchase purchase : purchaseList) {
+//      System.out.println("Purchase ID: " + purchase.getId());
+//      System.out.println("Purchase Date: " + purchase.getPurchaseDate());
+//      System.out.println("Price: " + purchase.getPrice());
+//      // Retrieve other purchase properties as needed
+//      System.out.println("-------------------------");
+//    }
+//
+////    UserDAO userDAO = new UserDAO();
+////
+////    User newUser = new User();
+////    UserProfile usep = new UserProfile();
+////    usep.setId(1);
+////
+////    newUser.setId(3);
+////    newUser.setName("JaneDoe");
+////    newUser.setEmail("janedoe@example.com");
+////    newUser.setPassword("password123");
+////    newUser.setUserProfile(usep.getId());
+////
+////    userDAO.createUser(newUser);
+//
+//
+//
+//
+//
+//
+//  }
 
 
 }

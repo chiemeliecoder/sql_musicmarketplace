@@ -5,6 +5,7 @@ import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.Review;
+import com.laba.solvd.databases.model.UserProfile;
 import com.laba.solvd.databases.model.Wishlist;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +26,14 @@ import java.util.Properties;
 public class AlbumDAO implements IGenericDAO<Album> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+  private static final String UPDATE = "UPDATE Albums SET title =? WHERE id=?";
+  private static final String DELETE = "DELETE FROM Albums WHERE id=?";
+  private static final String RELEASEDONEALBUM= "SELECT musicmarketplace.artists.id, musicmarketplace.artists.name, COUNT(musicmarketplace.albums.id) AS num_albums"
+      + "FROM musicmarketplace.artists"
+      + "JOIN musicmarketplace.albums ON musicmarketplace.artists.id = musicmarketplace.albums.id"
+      + "GROUP BY musicmarketplace.artists.id"
+      + "HAVING COUNT(musicmarketplace.albums.id) == 1";
+
 
   public List<Review> getAllReviews(int reviewID) {
     List<Review> reviews = new ArrayList<>();
@@ -118,7 +127,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
   @Override
   public void create(Album album) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into Albums (id, title, date) VALUES  (?, ?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into Albums (id, title, date, artistid) VALUES  (?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
       preparedStatement.setInt(1, album.getId());
       preparedStatement.setString(2, album.getAlbumName());
@@ -127,6 +136,19 @@ public class AlbumDAO implements IGenericDAO<Album> {
       java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
       preparedStatement.setDate(3, sqlDate);
+
+      Artists art = album.getArtists();
+      if (art != null) {
+        // Check if the UserProfile object has a valid ID
+        Integer artId = art.getId();
+        if (artId != null) {
+          preparedStatement.setInt(4, artId); // Set the valid foreign key value
+        } else {
+          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
+        }
+      } else {
+        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
+      }
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -139,6 +161,8 @@ public class AlbumDAO implements IGenericDAO<Album> {
     }
 
   }
+
+
 
 
 
@@ -174,44 +198,94 @@ public class AlbumDAO implements IGenericDAO<Album> {
    */
   @Override
   public Album read(int id) {
-    return null;
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    Album album = null;
+    try (PreparedStatement preparedStatement = connection.prepareStatement(RELEASEDONEALBUM)) {
+      preparedStatement.setInt(1, id);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        album = new Album();
+        album.setId(resultSet.getInt("id"));
+        album.setAlbumName(resultSet.getString("title"));
+        album.setAlbumDate(resultSet.getDate("date"));
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    } finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return album;
   }
 
   @Override
   public void update(Album entity) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+
+    if(entity == null){
+      throw new NullPointerException();
+    }
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)){
+      preparedStatement.setInt(1, entity.getId());
+      preparedStatement.setString(2, entity.getAlbumName());
+      java.util.Date utilDate = new java.util.Date();
+      java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+      preparedStatement.setDate(3, sqlDate);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException("unable to update album", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
 
   }
 
   @Override
   public void delete(int id) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    if(id <= 0){
+      throw new IllegalArgumentException("id value is invalid");
+    }
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE)){
+      preparedStatement.setInt(1, id);
+      preparedStatement.executeUpdate();
+    }catch (SQLException e){
+      throw new RuntimeException("unable to delete", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
 
   }
 
 
-//  public static void main(String args[]) throws SQLException{
+  public static void main(String args[]) throws SQLException{
 //    Album album = new AlbumDAO().getById(1);
 //    System.out.println("Album ID: " + album.getId());
 //    System.out.println("Albumname: " + album.getAlbumName());
 //    System.out.println("AlbumDate:" + album.getAlbumDate());
 //
-//    Calendar cal = Calendar.getInstance();
-//    cal.set(2023, Calendar.MARCH, 28);
-//    java.util.Date date = cal.getTime();
-//    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+    Calendar cal = Calendar.getInstance();
+    cal.set(2023, Calendar.MARCH, 28);
+    java.util.Date date = cal.getTime();
+    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 //
-//    AlbumDAO albumDAO = new AlbumDAO();
-//
-//    Album newAlbum = new Album();
-//    newAlbum.setId(4);
-//    newAlbum.setAlbumName("Lady");
-//    newAlbum.setAlbumDate(sqlDate);
-//
-//    Artists art = new Artists();
-//    art.setId(1);
-//    //newAlbum.setArtist(art);
-//
-//
-//    albumDAO.create(newAlbum);
+    AlbumDAO albumDAO = new AlbumDAO();
+
+    Artists art = new Artists();
+    art.setId(1);
+
+    Album newAlbum = new Album();
+    newAlbum.setId(4);
+    newAlbum.setAlbumName("Lady");
+    newAlbum.setAlbumDate(sqlDate);
+
+    newAlbum.setArtists(art.getId());
+
+
+    albumDAO.create(newAlbum);
 //
 //    List<Album> albumsList = new AlbumDAO().getAll();
 //
@@ -222,6 +296,6 @@ public class AlbumDAO implements IGenericDAO<Album> {
 //      //System.out.println("artistid: " + a.getArtist());
 //    }
 //
-//  }
+  }
 
 }
