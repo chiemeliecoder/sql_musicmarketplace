@@ -280,26 +280,26 @@ public class ArtistDAO implements IGenericDAO<Artists> {
 
   }
 
-  public static void main(String args[]) throws SQLException {
+  //public static void main(String args[]) throws SQLException {
 //    Artists artist = new ArtistDAO().getById(1);
 //    System.out.println("Artist ID: " + artist.getId());
 //    System.out.println("ArtistName: " + artist.getArtistName());
 
 //
-    ArtistDAO artistDAO = new ArtistDAO();
-
-    Album alb = new Album();
-    alb.setId(1);
-
-    Artists newArt = new Artists();
-    newArt.setId(4);
-    newArt.setArtistName("Kenshi");
-    newArt.setAlbum(alb.getId());
-
-
-
-    artistDAO.create(newArt);
-  }
+//    ArtistDAO artistDAO = new ArtistDAO();
+//
+//    Album alb = new Album();
+//    alb.setId(1);
+//
+//    Artists newArt = new Artists();
+//    newArt.setId(4);
+//    newArt.setArtistName("Kenshi");
+//    newArt.setAlbum(alb.getId());
+//
+//
+//
+//    artistDAO.create(newArt);
+//  }
 
 
 }

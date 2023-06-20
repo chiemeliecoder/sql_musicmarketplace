@@ -261,31 +261,31 @@ public class AlbumDAO implements IGenericDAO<Album> {
   }
 
 
-  public static void main(String args[]) throws SQLException{
+ // public static void main(String args[]) throws SQLException{
 //    Album album = new AlbumDAO().getById(1);
 //    System.out.println("Album ID: " + album.getId());
 //    System.out.println("Albumname: " + album.getAlbumName());
 //    System.out.println("AlbumDate:" + album.getAlbumDate());
 //
-    Calendar cal = Calendar.getInstance();
-    cal.set(2023, Calendar.MARCH, 28);
-    java.util.Date date = cal.getTime();
-    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+//    Calendar cal = Calendar.getInstance();
+//    cal.set(2023, Calendar.MARCH, 28);
+//    java.util.Date date = cal.getTime();
+//    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+////
+//    AlbumDAO albumDAO = new AlbumDAO();
 //
-    AlbumDAO albumDAO = new AlbumDAO();
-
-    Artists art = new Artists();
-    art.setId(1);
-
-    Album newAlbum = new Album();
-    newAlbum.setId(4);
-    newAlbum.setAlbumName("Lady");
-    newAlbum.setAlbumDate(sqlDate);
-
-    newAlbum.setArtists(art.getId());
-
-
-    albumDAO.create(newAlbum);
+//    Artists art = new Artists();
+//    art.setId(1);
+//
+//    Album newAlbum = new Album();
+//    newAlbum.setId(4);
+//    newAlbum.setAlbumName("Lady");
+//    newAlbum.setAlbumDate(sqlDate);
+//
+//    newAlbum.setArtists(art.getId());
+//
+//
+//    albumDAO.create(newAlbum);
 //
 //    List<Album> albumsList = new AlbumDAO().getAll();
 //
@@ -296,6 +296,6 @@ public class AlbumDAO implements IGenericDAO<Album> {
 //      //System.out.println("artistid: " + a.getArtist());
 //    }
 //
-  }
+  //}
 
 }
