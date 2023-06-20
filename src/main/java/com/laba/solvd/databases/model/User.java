@@ -125,15 +125,9 @@ public class User {
     UserProfile userProfile = new UserProfile();
     userProfile.setId(userProfileId);
 
-//    String bio = "Sample bio";
-//    String profileImage = "https://example.com/profile.jpg";
-//    String location = "Sample location";
+
     // operations to retrieve other properties of the UserProfile
     // perform database queries, API calls, or any other operations required to fetch the data
-//    userProfile.setBio(bio);
-//    userProfile.setProfileimage(profileImage);
-//    userProfile.setLocation(location);
-
     // Return the retrieved UserProfile
     return userProfile;
   }
@@ -145,6 +139,9 @@ public class User {
     this.userProfile = userProfile;
   }
 
+  public void setUserProfile(UserProfile userProfileId) {
+    this.userProfile = userProfileId;
+  }
   @Override
   public boolean equals(Object o) {
     if (this == o) {

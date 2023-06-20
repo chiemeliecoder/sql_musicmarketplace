@@ -38,6 +38,7 @@ public class UserDAO implements IUserDAO {
 
   }
 
+  @Override
   public List<Purchase> getPurchase(int purchaseID) {
     List<Purchase> purchases = new ArrayList<>();
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
@@ -157,6 +158,7 @@ public class UserDAO implements IUserDAO {
         user.setPassword(resultSet.getString("password"));
         user.setUserProfile(resultSet.getInt("userprofid"));
 
+
         users.add(user);
       }
     } catch (SQLException throwables) {
@@ -191,6 +193,29 @@ public class UserDAO implements IUserDAO {
     }
     return users;
   }
+
+  @Override
+  public UserProfile retrieveUserProfileById(int userProfileId) {
+    UserProfile userProfile = new UserProfile();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM USER_PROFILE WHERE id = ?")) {
+      preparedStatement.setInt(1, userProfileId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        userProfile.setId(resultSet.getInt("id"));
+        userProfile.setBio(resultSet.getString("bio"));
+        userProfile.setProfileimage(resultSet.getString("profileimage"));
+        userProfile.setLocation(resultSet.getString("location"));
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    } finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+    return userProfile;
+  }
+
 
 //  public static void main(String args[]) throws SQLException{
 //    User use = new UserDAO().getUserById(1);

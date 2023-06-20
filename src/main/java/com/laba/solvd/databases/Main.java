@@ -51,12 +51,20 @@ public class Main {
     newUser.setPassword("password009");
 
     UserProfile userProfile = new UserProfile();
+    UserDAO userDAO = new UserDAO();
+
+    // Call the retrieveUserProfileById method
+    int userProfileId = 2;
+    UserProfile userProfiles = userDAO.retrieveUserProfileById(userProfileId);
+
     userProfile.setId(2);
     userProfile.setBio("I like cute anime music");
     userProfile.setProfileimage("https://cdn.shopify.com/s/files/1/0416/8083/0620/files/ecomm-CHGAL-Core2021_367x353px_07-CN_1000x.png?v=1614324462");
     userProfile.setLocation("London");
+    System.out.println("Retrieved user profile: " + userProfiles);
 
-    newUser.setUserProfile(userProfile.getId());
+    newUser.setUserProfile(userProfiles);
+
 
 
 
@@ -67,6 +75,16 @@ public class Main {
 
     // Get all users
     List<User> allUsers = userService.getAllUsers();
+    for (User user : allUsers) {
+      if (user.getUserProfile() == null) {
+        UserProfile userProf = new UserProfile();
+        userProfile.setId(0); // Set the appropriate ID
+        userProfile.setBio(""); // Set the appropriate bio
+        userProfile.setProfileimage(""); // Set the appropriate profile image
+        userProfile.setLocation(""); // Set the appropriate location
+        user.setUserProfile(userProf);
+      }
+    }
     System.out.println("All users: " + allUsers);
 
     int maxArtId = artistService.getMaxArtistId();
