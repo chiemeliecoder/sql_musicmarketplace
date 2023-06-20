@@ -20,10 +20,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import org.apache.log4j.Logger;
 
 public class Main {
+  private static final Logger logger = Logger.getLogger(Main.class);
 
   public static void main(String args[]){
+
     // Create instances of dependencies
     PlaylistServiceImpl playlistService = new PlaylistServiceImpl();
 
@@ -78,44 +81,43 @@ public class Main {
 //    Artists createdArtist = artistService.createArt(newArtist);
 //    System.out.println("Created artist: " + createdArtist);
 
-    List<Artists> allArtists = artistService.getAllUsers();
+    List<Artists> allArtists = artistService.getAllArtists();
     System.out.println("All artists: " + allArtists);
 
-//    List<User> allUser = musicService.getAllUsers();
-//    System.out.println("All users in service: " + allUser);
+    int userCount = musicService.countUsers();
+    System.out.println("Number of users: " + userCount);
+
+    int artistCount = musicService.countArtists();
+    System.out.println("Total number of artists: " + artistCount);
+
+
+    logger.info("end of information");
+
+//    Calendar cal = Calendar.getInstance();
+//    cal.set(2023, Calendar.MARCH, 28);
+//    Date date = cal.getTime();
+//    java.sql.Date d = new java.sql.Date(date.getTime());
 //
-//    List<Artists> allArtist = musicService.getAllArtists();
-//    System.out.println("All artists in service: " + allArtist);
-
-
-
-
-
-    Calendar cal = Calendar.getInstance();
-    cal.set(2023, Calendar.MARCH, 28);
-    Date date = cal.getTime();
-    java.sql.Date d = new java.sql.Date(date.getTime());
-
-
-
-    Album firstAlbum = new Album();
-    firstAlbum.setAlbumName("Lady");
-    firstAlbum.setAlbumDate(d);
-
-    Artists firstArtist = new Artists();
-    firstArtist.setArtistName("Kenshi Yonezu");
-
-    Playlist firstPlaylist = new Playlist();
-    firstPlaylist.setPlaylistName("Japan vs Korean");
-
-    Purchase firstPurchase = new Purchase();
-    firstPurchase.setPurchaseDate(d);
-
-    Review firstReview = new Review();
-    firstReview.setComments("Wonderful comeback");
-
-    Wishlist firstWishlist = new Wishlist();
-    firstWishlist.setName("Mieta");
+//
+//
+//    Album firstAlbum = new Album();
+//    firstAlbum.setAlbumName("Lady");
+//    firstAlbum.setAlbumDate(d);
+//
+//    Artists firstArtist = new Artists();
+//    firstArtist.setArtistName("Kenshi Yonezu");
+//
+//    Playlist firstPlaylist = new Playlist();
+//    firstPlaylist.setPlaylistName("Japan vs Korean");
+//
+//    Purchase firstPurchase = new Purchase();
+//    firstPurchase.setPurchaseDate(d);
+//
+//    Review firstReview = new Review();
+//    firstReview.setComments("Wonderful comeback");
+//
+//    Wishlist firstWishlist = new Wishlist();
+//    firstWishlist.setName("Mieta");
 
 
 

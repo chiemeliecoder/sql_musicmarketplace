@@ -9,7 +9,7 @@ public interface IMusicService {
 
   void performOperation();
   User create(User user);
-  List<User> getAllUsers();
-  List<Artists> getAllArtists();
+  int countArtists();
+  int countUsers();
 
 }

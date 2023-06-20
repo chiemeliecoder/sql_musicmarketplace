@@ -65,7 +65,7 @@ public class ArtistServiceImpl implements IArtistService {
   }
 
   @Override
-  public List<Artists> getAllUsers() {
+  public List<Artists> getAllArtists() {
     return genericDAO.getAll();
   }
 }

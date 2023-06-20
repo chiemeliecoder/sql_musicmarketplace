@@ -200,6 +200,7 @@ public class ArtistDAO implements IGenericDAO<Artists> {
         Artists artist1 = new Artists();
         artist1.setId(resultSet.getInt("id"));
         artist1.setArtistName(resultSet.getString("name"));
+        artist1.setAlbum(resultSet.getInt("albumid"));
 
         artists.add(artist1);
       }

@@ -42,16 +42,17 @@ public class MusicService implements IMusicService {
     return user;
   }
 
-  @Override
-  public List<User> getAllUsers() {
 
-    return userService.getAllUsers();
+  @Override
+  public int countArtists() {
+    List<Artists> allArtists = artistService.getAllArtists();
+    return allArtists.size();
   }
 
-
   @Override
-  public List<Artists> getAllArtists() {
-    return getAllArtists();
+  public int countUsers() {
+    List<User> allUsers = userService.getAllUsers();
+    return allUsers.size();
   }
 
 

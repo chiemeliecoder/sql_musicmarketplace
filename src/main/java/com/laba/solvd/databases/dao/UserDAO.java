@@ -153,6 +153,9 @@ public class UserDAO implements IUserDAO {
         User user = new User();
         user.setId(resultSet.getInt("id"));
         user.setName(resultSet.getString("username"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPassword(resultSet.getString("password"));
+        user.setUserProfile(resultSet.getInt("userprofid"));
 
         users.add(user);
       }
@@ -175,6 +178,9 @@ public class UserDAO implements IUserDAO {
         User user = new User();
         user.setId(resultSet.getInt("id"));
         user.setName(resultSet.getString("username"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPassword(resultSet.getString("password"));
+        user.setUserProfile(resultSet.getInt("userprofid"));
 
         users.add(user);
       }
