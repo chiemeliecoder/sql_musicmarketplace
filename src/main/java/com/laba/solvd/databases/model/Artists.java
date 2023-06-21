@@ -9,8 +9,6 @@ public class Artists {
 
   private String artistName;
 
-  private Album album;
-
   private List<Album> albums;
   private List<Genre> genres;
   private List<ArtistAchievement> achievements;
@@ -18,12 +16,11 @@ public class Artists {
   public Artists() {
   }
 
-  public Artists(int id, String artistName, Album album,
+  public Artists(int id, String artistName,
       List<Album> albums, List<Genre> genres,
       List<ArtistAchievement> achievements) {
     this.id = id;
     this.artistName = artistName;
-    this.album = album;
     this.albums = albums;
     this.genres = genres;
     this.achievements = achievements;
@@ -43,21 +40,6 @@ public class Artists {
 
   public void setArtistName(String artistName) {
     this.artistName = artistName;
-  }
-
-  public Album retrieveAlbumById(int albumId) {
-    Album album = new Album();
-    album.setId(albumId);
-    return album;
-  }
-
-  public Album getAlbum() {
-    return album;
-  }
-
-  public void setAlbum(Integer albumID) {
-    Album album = retrieveAlbumById(albumID);
-    this.album = album;
   }
 
   public List<Album> getAlbums() {
@@ -95,15 +77,13 @@ public class Artists {
     }
     Artists artists = (Artists) o;
     return getId() == artists.getId() && getArtistName().equals(artists.getArtistName())
-        && getAlbum()
-        .equals(artists.getAlbum()) && getAlbums().equals(artists.getAlbums()) && getGenres()
-        .equals(artists.getGenres()) && getAchievements().equals(artists.getAchievements());
+        && getAlbums().equals(artists.getAlbums()) && getGenres().equals(artists.getGenres())
+        && getAchievements().equals(artists.getAchievements());
   }
 
   @Override
   public int hashCode() {
-    return Objects
-        .hash(getId(), getArtistName(), getAlbum(), getAlbums(), getGenres(), getAchievements());
+    return Objects.hash(getId(), getArtistName(), getAlbums(), getGenres(), getAchievements());
   }
 
   @Override
@@ -111,7 +91,6 @@ public class Artists {
     return "Artists{" +
         "id=" + id +
         ", artistName='" + artistName + '\'' +
-        ", album=" + album +
         ", albums=" + albums +
         ", genres=" + genres +
         ", achievements=" + achievements +
