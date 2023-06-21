@@ -281,6 +281,25 @@ public class ArtistDAO implements IGenericDAO<Artists> {
 
   }
 
+
+  public int getMaxArtistId() {
+    // Add the necessary logic to retrieve the maximum user ID from the database
+    int maxId = 0;
+
+    // Retrieve the maximum ID using a database query
+    try (Connection connection = CONNECTION_POOL.getConnectionFromPool();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT MAX(id) FROM Artists")) {
+      if (resultSet.next()) {
+        maxId = resultSet.getInt(1);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Unable to get the maximum user ID", e);
+    }
+
+    return maxId;
+  }
+
   //public static void main(String args[]) throws SQLException {
 //    Artists artist = new ArtistDAO().getById(1);
 //    System.out.println("Artist ID: " + artist.getId());

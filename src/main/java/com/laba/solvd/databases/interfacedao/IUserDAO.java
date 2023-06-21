@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserDAO {
-
-  List<Purchase> getPurchase(int purchaseID);
   User getUserById(int userId) throws SQLException;
   void createUser(User user);
   List<User> getAllUsers();

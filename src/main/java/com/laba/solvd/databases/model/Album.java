@@ -66,9 +66,15 @@ public class Album {
     this.tracks = tracks;
   }
 
+  public List<Review> getReviews() {
+    return reviews;
+  }
 
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
 
-  //equals and hashcode
+//equals and hashcode
 
 
   @Override

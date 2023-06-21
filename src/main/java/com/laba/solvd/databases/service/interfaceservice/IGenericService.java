@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface IGenericService<T> {
   T create( T entity, int id);
-  List<T> getAllUsers();
+  List<T> getAll();
 
 }

@@ -37,34 +37,34 @@ public class UserDAO implements IUserDAO {
   public UserDAO() {
 
   }
-
-  @Override
-  public List<Purchase> getPurchase(int purchaseID) {
-    List<Purchase> purchases = new ArrayList<>();
-    Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement( "SELECT purchases.id, purchases.date, purchases.price " +
-        "FROM purchases " +
-        "JOIN user ON user.id = purchases.userid " +
-        "WHERE purchases.id = ?")){
-      preparedStatement.setInt(1, purchaseID);
-      ResultSet resultSet = preparedStatement.executeQuery();
-      while (resultSet.next()){
-        Purchase purchase = new Purchase();
-        purchase.setId(resultSet.getInt("id"));
-        purchase.setPurchaseDate(resultSet.getDate("date"));
-        purchase.setPrice(resultSet.getBigDecimal("price"));
-
-        purchases.add(purchase);
-      }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    }finally{
-      CONNECTION_POOL.releaseConnectionToPool(connection);
-    }
-
-
-    return purchases;
-  }
+//
+//  @Override
+//  public List<Purchase> getPurchase(int purchaseID) {
+//    List<Purchase> purchases = new ArrayList<>();
+//    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+//    try(PreparedStatement preparedStatement = connection.prepareStatement( "SELECT purchases.id, purchases.date, purchases.price " +
+//        "FROM purchases " +
+//        "JOIN user ON user.id = purchases.userid " +
+//        "WHERE purchases.id = ?")){
+//      preparedStatement.setInt(1, purchaseID);
+//      ResultSet resultSet = preparedStatement.executeQuery();
+//      while (resultSet.next()){
+//        Purchase purchase = new Purchase();
+//        purchase.setId(resultSet.getInt("id"));
+//        purchase.setPurchaseDate(resultSet.getDate("date"));
+//        purchase.setPrice(resultSet.getBigDecimal("price"));
+//
+//        purchases.add(purchase);
+//      }
+//    } catch (SQLException throwables) {
+//      throwables.printStackTrace();
+//    }finally{
+//      CONNECTION_POOL.releaseConnectionToPool(connection);
+//    }
+//
+//
+//    return purchases;
+//  }
 
   public User getUserById(int id) throws SQLException {
 
@@ -156,7 +156,6 @@ public class UserDAO implements IUserDAO {
         user.setName(resultSet.getString("username"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
-        user.setUserProfile(resultSet.getInt("userprofid"));
 
 
         users.add(user);
@@ -182,7 +181,6 @@ public class UserDAO implements IUserDAO {
         user.setName(resultSet.getString("username"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
-        user.setUserProfile(resultSet.getInt("userprofid"));
 
         users.add(user);
       }
@@ -216,6 +214,24 @@ public class UserDAO implements IUserDAO {
     return userProfile;
   }
 
+
+  public int getMaxUserId() {
+    // Add the necessary logic to retrieve the maximum user ID from the database
+    int maxId = 0;
+
+    // Retrieve the maximum ID using a database query
+    try (Connection connection = CONNECTION_POOL.getConnectionFromPool();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT MAX(id) FROM User")) {
+      if (resultSet.next()) {
+        maxId = resultSet.getInt(1);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Unable to get the maximum user ID", e);
+    }
+
+    return maxId;
+  }
 
 //  public static void main(String args[]) throws SQLException{
 //    User use = new UserDAO().getUserById(1);

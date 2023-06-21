@@ -24,7 +24,7 @@ public class PlaylistServiceImpl implements IGenericService<Playlist> {
   }
 
   @Override
-  public List<Playlist> getAllUsers() {
+  public List<Playlist> getAll() {
     return null;
   }
 }

@@ -1,6 +1,7 @@
 package com.laba.solvd.databases.model;
 
 import java.sql.Time;
+import java.util.List;
 import java.util.Objects;
 
 public class Track {
@@ -11,16 +12,19 @@ public class Track {
 
   private Time duration;
 
+  private List<Purchase> purchase;
+
 
 
   public Track() {
   }
 
-  public Track(int id, String title, Time duration) {
+  public Track(int id, String title, Time duration,
+      List<Purchase> purchase) {
     this.id = id;
     this.title = title;
     this.duration = duration;
-
+    this.purchase = purchase;
   }
 
   public int getId() {
@@ -47,6 +51,14 @@ public class Track {
     this.duration = duration;
   }
 
+  public List<Purchase> getPurchase() {
+    return purchase;
+  }
+
+  public void setPurchase(List<Purchase> purchase) {
+    this.purchase = purchase;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -57,12 +69,12 @@ public class Track {
     }
     Track track = (Track) o;
     return getId() == track.getId() && getTitle().equals(track.getTitle()) && getDuration()
-        .equals(track.getDuration());
+        .equals(track.getDuration()) && purchase.equals(track.purchase);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getTitle(), getDuration());
+    return Objects.hash(getId(), getTitle(), getDuration(), purchase);
   }
 
   @Override
@@ -71,6 +83,7 @@ public class Track {
         "id=" + id +
         ", title='" + title + '\'' +
         ", duration=" + duration +
+        ", purchase=" + purchase +
         '}';
   }
 }

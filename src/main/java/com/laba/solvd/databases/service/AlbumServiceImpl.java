@@ -23,7 +23,7 @@ public class AlbumServiceImpl implements IGenericService<Album> {
   }
 
   @Override
-  public List<Album> getAllUsers() {
+  public List<Album> getAll() {
     return null;
   }
 }
