@@ -10,5 +10,9 @@ public interface IMusicService {
   void performOperation();
   int countArtists();
   int countUsers();
+  int countAlbums();
+  int countPlaylists();
+  int countTracks();
+  int countWishlists();
 
 }

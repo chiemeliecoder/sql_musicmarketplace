@@ -234,6 +234,19 @@ public class Main {
     int artistCount = musicService.countArtists();
     System.out.println("Total number of artists: " + artistCount);
 
+    int albumCount = musicService.countAlbums();
+    System.out.println("Total number of albums: " + albumCount);
+
+    int playlistCount = musicService.countPlaylists();
+    System.out.println("Total number of playlists: " + playlistCount);
+
+    int trackCount = musicService.countTracks();
+    System.out.println("Total number of tracks: " + trackCount);
+
+    int wishlistCount = musicService.countWishlists();
+    System.out.println("Total number of wishlists: " + wishlistCount);
+
+
 
 
 //    Purchase firstPurchase = new Purchase();
