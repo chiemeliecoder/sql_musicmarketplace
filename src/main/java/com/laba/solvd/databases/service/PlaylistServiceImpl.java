@@ -1,30 +1,50 @@
 package com.laba.solvd.databases.service;
 
 import com.laba.solvd.databases.dao.PlaylistDAO;
+import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import com.laba.solvd.databases.model.Playlist;
-import com.laba.solvd.databases.service.interfaceservice.IGenericService;
+import com.laba.solvd.databases.model.Track;
+import com.laba.solvd.databases.service.interfaceservice.IPlaylistService;
+import com.laba.solvd.databases.service.interfaceservice.ITrackService;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class PlaylistServiceImpl implements IGenericService<Playlist> {
+public class PlaylistServiceImpl implements IPlaylistService {
 
 
-  private PlaylistDAO playlistDAO;
+  private IGenericDAO playlistDAO;
+  private ITrackService trackService;
+
 
   public PlaylistServiceImpl() {
-  }
 
-  public PlaylistServiceImpl(PlaylistDAO playlistDAO) {
-    this.playlistDAO = playlistDAO;
+    this.playlistDAO = new PlaylistDAO();
+    this.trackService = new TrackImpl();
   }
 
 
   @Override
-  public Playlist create(Playlist entity, int id) {
-    return null;
+  public Playlist create(Playlist entity) {
+
+    if (entity == null) {
+      throw new IllegalArgumentException("Playlist entity cannot be null");
+    }
+
+    //    entity.setId(null);
+    playlistDAO.create(entity);
+
+    if(entity.getTracks() != null){
+      List<Track> tracks = entity.getTracks().stream()
+          .map(track -> trackService.create(track)).collect(
+              Collectors.toList());
+      entity.setTracks(tracks);
+    }
+    return entity;
   }
 
   @Override
   public List<Playlist> getAll() {
-    return null;
+
+    return playlistDAO.getAll();
   }
 }

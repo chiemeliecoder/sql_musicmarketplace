@@ -8,7 +8,6 @@ import java.util.List;
 public interface IMusicService {
 
   void performOperation();
-  User create(User user);
   int countArtists();
   int countUsers();
 

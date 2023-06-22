@@ -64,33 +64,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
   }
 
 
-  public List<Wishlist> getWishlist(int wishlistId) {
 
-    List<Wishlist> wishlists = new ArrayList<>();
-
-    Connection connection = CONNECTION_POOL.getConnectionFromPool();
-
-    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT wishlists.id, wishlists.username " +
-        "FROM wishlists " +
-        "JOIN albums_wishlists ON albums_wishlists.wishlist_id = wishlists.id " +
-        "WHERE wishlists.id = ?")){
-      preparedStatement.setInt(1,wishlistId);
-      ResultSet resultSet = preparedStatement.executeQuery();
-      while (resultSet.next()){
-        Wishlist wishlist = new Wishlist();
-        wishlist.setId(resultSet.getInt("id"));
-        wishlist.setName(resultSet.getString("username"));
-
-        wishlists.add(wishlist);
-      }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    }finally{
-      CONNECTION_POOL.releaseConnectionToPool(connection);
-    }
-
-    return wishlists;
-  }
 
   public Album getById(int id) throws SQLException {
 
@@ -137,18 +111,18 @@ public class AlbumDAO implements IGenericDAO<Album> {
 
       preparedStatement.setDate(3, sqlDate);
 
-      Artists art = album.getArtists();
-      if (art != null) {
-        // Check if the UserProfile object has a valid ID
-        Integer artId = art.getId();
-        if (artId != null) {
-          preparedStatement.setInt(4, artId); // Set the valid foreign key value
-        } else {
-          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
-        }
-      } else {
-        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
-      }
+//      Artists art = album.getArtists();
+//      if (art != null) {
+//        // Check if the UserProfile object has a valid ID
+//        Integer artId = art.getId();
+//        if (artId != null) {
+//          preparedStatement.setInt(4, artId); // Set the valid foreign key value
+//        } else {
+//          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
+//        }
+//      } else {
+//        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
+//      }
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();

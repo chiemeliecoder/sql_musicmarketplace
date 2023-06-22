@@ -42,6 +42,10 @@ public class Playlist {
     return tracks;
   }
 
+  public void setTracks(List<Track> tracks) {
+    this.tracks = tracks;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

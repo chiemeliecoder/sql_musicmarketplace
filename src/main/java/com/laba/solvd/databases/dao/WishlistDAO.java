@@ -19,6 +19,7 @@ import java.util.Properties;
 public class WishlistDAO implements IGenericDAO<Wishlist> {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+  private static final String DELETE = "DELETE FROM Wishlists WHERE id=?";
 
   public Wishlist getById(int id) throws SQLException {
 
@@ -97,6 +98,34 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
     return wishlists;
   }
 
+  public List<Wishlist> getWishlist(int wishlistId) {
+
+    List<Wishlist> wishlists = new ArrayList<>();
+
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT wishlists.id, wishlists.username " +
+        "FROM wishlists " +
+        "JOIN albums_wishlists ON albums_wishlists.wishlist_id = wishlists.id " +
+        "WHERE wishlists.id = ?")){
+      preparedStatement.setInt(1,wishlistId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()){
+        Wishlist wishlist = new Wishlist();
+        wishlist.setId(resultSet.getInt("id"));
+        wishlist.setName(resultSet.getString("username"));
+
+        wishlists.add(wishlist);
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }finally{
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
+    return wishlists;
+  }
+
   /**
    * Retrieve an object that was previously persisted to the database using
    *
@@ -104,6 +133,7 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
    */
   @Override
   public Wishlist read(int id) {
+
     return null;
   }
 
@@ -114,6 +144,19 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
 
   @Override
   public void delete(int id) {
+    Connection connection = CONNECTION_POOL.getConnectionFromPool();
+    if(id <= 0){
+      throw new IllegalArgumentException("id value is invalid");
+    }
+
+    try(PreparedStatement preparedStatement = connection.prepareStatement(DELETE)){
+      preparedStatement.setInt(1, id);
+      preparedStatement.executeUpdate();
+    }catch (SQLException e){
+      throw new RuntimeException("unable to delete", e);
+    }finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
 
   }
 

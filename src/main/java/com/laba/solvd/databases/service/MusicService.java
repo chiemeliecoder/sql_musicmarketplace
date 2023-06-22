@@ -12,8 +12,8 @@ public class MusicService implements IMusicService {
 
 
 
-  public MusicService(PlaylistServiceImpl playlistService) {
-    this.userService = new UserServiceImpl(playlistService);
+  public MusicService() {
+    this.userService = new UserServiceImpl();
     this.artistService = new ArtistServiceImpl();
   }
 
@@ -25,21 +25,6 @@ public class MusicService implements IMusicService {
 
     System.out.println("loading musicmarketplace...");
 
-  }
-
-  @Override
-  public User create(User user) {
-    user.setId(null);
-    if(userService == null){
-      userService.create(user);
-    }
-
-
-    Artists art = new Artists();
-    art.setId(null);
-    artistService.createArt(art);
-
-    return user;
   }
 
 
