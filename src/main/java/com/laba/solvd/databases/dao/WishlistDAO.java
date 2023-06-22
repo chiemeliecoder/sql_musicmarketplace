@@ -113,7 +113,7 @@ public class WishlistDAO implements IGenericDAO<Wishlist> {
       while (resultSet.next()){
         Wishlist wishlist = new Wishlist();
         wishlist.setId(resultSet.getInt("id"));
-        wishlist.setName(resultSet.getString("username"));
+        wishlist.setName(resultSet.getString("name"));
 
         wishlists.add(wishlist);
       }
