@@ -156,6 +156,11 @@ public class UserDAO implements IUserDAO {
         user.setName(resultSet.getString("username"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
+        user.setUserProfile(new UserProfile());
+        user.setPlaylistsList(new ArrayList<>());
+        user.setPurchasesList(new ArrayList<>());
+        user.setWishlistsList(new ArrayList<>());
+        user.setReviewsList(new ArrayList<>());
 
 
         users.add(user);

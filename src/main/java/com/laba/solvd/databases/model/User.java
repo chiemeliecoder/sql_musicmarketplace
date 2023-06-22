@@ -22,30 +22,19 @@ public class User {
   public User() {
   }
 
-  public User(Integer id, String name, String email, String password) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-  }
-
-  public User(List<Purchase> purchaseList,
-      List<Playlist> playlistList,
-      List<Review> reviewList,
-      List<Wishlist> wishlistList) {
-    this.purchaseList = purchaseList;
-    this.playlistList = playlistList;
-    this.reviewList = reviewList;
-    this.wishlistList = wishlistList;
-  }
-
   public User(Integer id, String name, String email, String password,
-      UserProfile userProfile) {
+      UserProfile userProfile, List<Purchase> purchaseList,
+      List<Playlist> playlistList, List<Review> reviewList,
+      List<Wishlist> wishlistList) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.userProfile = userProfile;
+    this.purchaseList = purchaseList;
+    this.playlistList = playlistList;
+    this.reviewList = reviewList;
+    this.wishlistList = wishlistList;
   }
 
   public Integer getId() {
