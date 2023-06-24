@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Artists {
 
-  private int id;
+  private Integer id;
 
   private String artistName;
 
@@ -16,7 +16,7 @@ public class Artists {
   public Artists() {
   }
 
-  public Artists(int id, String artistName,
+  public Artists(Integer id, String artistName,
       List<Album> albums, List<Genre> genres,
       List<ArtistAchievement> achievements) {
     this.id = id;
@@ -26,7 +26,7 @@ public class Artists {
     this.achievements = achievements;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 

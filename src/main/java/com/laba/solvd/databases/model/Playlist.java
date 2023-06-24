@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Playlist {
 
-  private int id;
+  private Integer id;
 
   private String playlistName;
 
@@ -14,18 +14,18 @@ public class Playlist {
   public Playlist() {
   }
 
-  public Playlist(int id, String playlistName,
+  public Playlist(Integer id, String playlistName,
       List<Track> tracks) {
     this.id = id;
     this.playlistName = playlistName;
     this.tracks = tracks;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

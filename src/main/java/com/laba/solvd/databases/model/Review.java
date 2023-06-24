@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Review {
 
-  private int id;
+  private Integer id;
 
   private BigDecimal ratings;
 
@@ -16,18 +16,18 @@ public class Review {
   public Review() {
   }
 
-  public Review(int id, BigDecimal ratings, String comments) {
+  public Review(Integer id, BigDecimal ratings, String comments) {
     this.id = id;
     this.ratings = ratings;
     this.comments = comments;
 
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

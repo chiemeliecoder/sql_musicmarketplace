@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Album {
 
-  private int id;
+  private Integer id;
 
   private String albumName;
 
@@ -25,7 +25,9 @@ public class Album {
   public Album() {
   }
 
-  public Album(int id, String albumName, Date albumDate,
+
+
+  public Album(Integer id, String albumName, Date albumDate,
       List<Track> tracks, List<Review> reviews) {
     this.id = id;
     this.albumName = albumName;
@@ -34,11 +36,11 @@ public class Album {
     this.reviews = reviews;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

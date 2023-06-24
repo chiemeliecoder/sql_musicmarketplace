@@ -30,7 +30,7 @@ public class UserProfile {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -68,7 +68,7 @@ public class UserProfile {
       return false;
     }
     UserProfile that = (UserProfile) o;
-    return getId() == that.getId() && getBio().equals(that.getBio()) && getProfileimage()
+    return getId().equals(that.getId()) && getBio().equals(that.getBio()) && getProfileimage()
         .equals(that.getProfileimage()) && getLocation().equals(that.getLocation());
   }
 

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Purchase {
 
-  private int id;
+  private Integer id;
 
   private Date purchaseDate;
 
@@ -18,18 +18,18 @@ public class Purchase {
   }
 
 
-  public Purchase(int id, Date purchaseDate, BigDecimal price) {
+  public Purchase(Integer id, Date purchaseDate, BigDecimal price) {
     this.id = id;
     this.purchaseDate = purchaseDate;
     this.price = price;
 
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

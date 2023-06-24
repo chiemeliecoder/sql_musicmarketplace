@@ -4,23 +4,23 @@ import java.util.Objects;
 
 public class Genre {
 
-  private int id;
+  private Integer id;
 
   private String genreName;
 
   public Genre() {
   }
 
-  public Genre(int id, String genreName) {
+  public Genre(Integer id, String genreName) {
     this.id = id;
     this.genreName = genreName;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

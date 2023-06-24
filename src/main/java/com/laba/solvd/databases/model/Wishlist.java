@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Wishlist {
 
-  private int id;
+  private Integer id;
 
   private String name;
 
@@ -16,17 +16,17 @@ public class Wishlist {
   public Wishlist() {
   }
 
-  public Wishlist(int id, String name, List<Album> albumList) {
+  public Wishlist(Integer id, String name, List<Album> albumList) {
     this.id = id;
     this.name = name;
     this.albumList = albumList;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

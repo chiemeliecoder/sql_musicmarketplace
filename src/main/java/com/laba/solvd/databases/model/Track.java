@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Track {
 
-  private int id;
+  private Integer id;
 
   private String title;
 
@@ -19,7 +19,7 @@ public class Track {
   public Track() {
   }
 
-  public Track(int id, String title, Time duration,
+  public Track(Integer id, String title, Time duration,
       List<Purchase> purchase) {
     this.id = id;
     this.title = title;
@@ -27,11 +27,11 @@ public class Track {
     this.purchase = purchase;
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
