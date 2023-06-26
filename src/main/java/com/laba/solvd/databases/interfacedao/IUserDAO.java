@@ -12,5 +12,6 @@ public interface IUserDAO {
   List<User> getAllUsers();
   List<User> findAll();
   UserProfile retrieveUserProfileById(int userProfileId);
+  User getUserByIdSQL(int userId);
 
 }

@@ -1,28 +1,25 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.interfacedao.IArtistDAO;
 import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.ArtistAchievement;
 import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.Genre;
-import com.laba.solvd.databases.model.Track;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-public class ArtistDAO implements IGenericDAO<Artists> {
+public class ArtistDAO implements IArtistDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
   private static final String DELETE = "DELETE FROM Artists WHERE id=?";
@@ -153,12 +150,13 @@ public class ArtistDAO implements IGenericDAO<Artists> {
   }
 
   @Override
-  public void create(Artists entity) {
+  public void create(Artists entity, Integer id) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO artists (id, name, albumid) VALUES (?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
-      preparedStatement.setInt(1, entity.getId());
+      //preparedStatement.setInt(1, entity.getId());
       preparedStatement.setString(2, entity.getArtistName());
+      preparedStatement.setInt(3, id);
 
 //      Album album = entity.getAlbum();
 //      if (album != null) {
@@ -176,7 +174,7 @@ public class ArtistDAO implements IGenericDAO<Artists> {
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
       while (resultSet.next()){
-
+        entity.setId(resultSet.getInt(1));
       }
 
     }catch(SQLException e){

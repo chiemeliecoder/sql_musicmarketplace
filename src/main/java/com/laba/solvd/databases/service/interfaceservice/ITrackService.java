@@ -4,7 +4,7 @@ import com.laba.solvd.databases.model.Track;
 import java.util.List;
 
 public interface ITrackService {
-  Track create( Track entity);
+  Track create( Track entity, Integer id);
   List<Track> getAll();
 
 }

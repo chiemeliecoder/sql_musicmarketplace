@@ -1,11 +1,9 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
-import com.laba.solvd.databases.model.Genre;
+import com.laba.solvd.databases.interfacedao.IPlaylistDAO;
 import com.laba.solvd.databases.model.Playlist;
 import com.laba.solvd.databases.model.Track;
-import com.laba.solvd.databases.model.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class PlaylistDAO implements IGenericDAO<Playlist> {
+public class PlaylistDAO implements IPlaylistDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
   private static final String DELETE = "DELETE FROM Playlists WHERE id=?";
@@ -80,17 +78,19 @@ public class PlaylistDAO implements IGenericDAO<Playlist> {
   }
 
   @Override
-  public void create(Playlist entity) {
+  public void create(Playlist entity, Integer id) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into playlists (id, name) VALUES (?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
-      preparedStatement.setInt(1, entity.getId());
+      //preparedStatement.setInt(1, id);
       preparedStatement.setString(2, entity.getPlaylistName());
 
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
-      while (resultSet.next()){}
+      while (resultSet.next()){
+        entity.setId(resultSet.getInt(1));
+      }
 
     }catch(SQLException e){
       throw new RuntimeException("unable to create user", e);

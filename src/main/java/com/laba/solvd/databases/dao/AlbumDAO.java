@@ -1,29 +1,24 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.interfacedao.IAlbumDAO;
 import com.laba.solvd.databases.model.Album;
-import com.laba.solvd.databases.model.Artists;
 import com.laba.solvd.databases.model.Review;
-import com.laba.solvd.databases.model.UserProfile;
-import com.laba.solvd.databases.model.Wishlist;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
-public class AlbumDAO implements IGenericDAO<Album> {
+public class AlbumDAO implements IAlbumDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
   private static final String UPDATE = "UPDATE Albums SET title =? WHERE id=?";
@@ -65,7 +60,7 @@ public class AlbumDAO implements IGenericDAO<Album> {
 
 
 
-
+ @Override
   public Album getById(int id) throws SQLException {
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
@@ -99,17 +94,18 @@ public class AlbumDAO implements IGenericDAO<Album> {
 
 
   @Override
-  public void create(Album album) {
+  public void create(Album album, Integer id) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into Albums (id, title, date, artistid) VALUES  (?, ?, ?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
-      preparedStatement.setInt(1, album.getId());
+      //preparedStatement.setInt(1, album.getId());
       preparedStatement.setString(2, album.getAlbumName());
       //preparedStatement.setDate(3, (Date) album.getAlbumDate());
       java.util.Date utilDate = new java.util.Date();
       java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
       preparedStatement.setDate(3, sqlDate);
+      preparedStatement.setInt(4, id);
 
 //      Artists art = album.getArtists();
 //      if (art != null) {
@@ -126,7 +122,9 @@ public class AlbumDAO implements IGenericDAO<Album> {
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
-      while (resultSet.next()){}
+      while (resultSet.next()){
+        album.setId(resultSet.getInt(1));
+      }
 
     }catch(SQLException e){
       throw new RuntimeException("unable to create album", e);

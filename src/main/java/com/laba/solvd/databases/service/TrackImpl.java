@@ -1,13 +1,13 @@
 package com.laba.solvd.databases.service;
 
 import com.laba.solvd.databases.dao.TrackDAO;
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.interfacedao.ITrackDAO;
 import com.laba.solvd.databases.model.Track;
 import com.laba.solvd.databases.service.interfaceservice.ITrackService;
 import java.util.List;
 
 public class TrackImpl implements ITrackService {
-  private final IGenericDAO trackDAO;
+  private final ITrackDAO trackDAO;
 
   public TrackImpl() {
     this.trackDAO = new TrackDAO();
@@ -15,8 +15,8 @@ public class TrackImpl implements ITrackService {
 
 
   @Override
-  public Track create(Track entity) {
-    trackDAO.create(entity);
+  public Track create(Track entity, Integer id) {
+    trackDAO.create(entity,id);
     return entity;
   }
 

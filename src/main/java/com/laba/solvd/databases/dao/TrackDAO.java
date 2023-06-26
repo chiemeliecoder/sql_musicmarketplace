@@ -1,11 +1,9 @@
 package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
+import com.laba.solvd.databases.interfacedao.ITrackDAO;
 import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.Track;
-import com.laba.solvd.databases.model.User;
-import com.laba.solvd.databases.model.Wishlist;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class TrackDAO implements IGenericDAO<Track> {
+public class TrackDAO implements ITrackDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
@@ -86,17 +84,19 @@ public class TrackDAO implements IGenericDAO<Track> {
   }
 
   @Override
-  public void create(Track entity) {
+  public void create(Track entity, Integer id) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into tracks(id, title) VALUES (?, ?)",
         Statement.RETURN_GENERATED_KEYS)){
-      preparedStatement.setInt(1, entity.getId());
+      //preparedStatement.setInt(1, entity.getId());
       preparedStatement.setString(2, entity.getTitle());
 
 
       preparedStatement.executeUpdate();
       ResultSet resultSet = preparedStatement.getGeneratedKeys();
-      while (resultSet.next()){}
+      while (resultSet.next()){
+        entity.setId(resultSet.getInt(1));
+      }
 
     }catch(SQLException e){
       throw new RuntimeException("unable to create user", e);
@@ -154,7 +154,7 @@ public class TrackDAO implements IGenericDAO<Track> {
 
 
 
-  public static void main(String args[]) throws SQLException {
-
-  }
+//  public static void main(String args[]) throws SQLException {
+//
+//  }
 }

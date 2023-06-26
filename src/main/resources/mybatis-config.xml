@@ -1,0 +1,19 @@
+<!-- mybatis-config.xml -->
+<configuration>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC" />
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/musicmarketplace" />
+        <property name="username" value="root" />
+        <property name="password" value="MEzeokeke2" />
+      </dataSource>
+    </environment>
+  </environments>
+
+  <mappers>
+    <!-- Specify the mapper XML files or mapper interfaces here -->
+    <mapper resource="src/main/resources/userMapper.xml" />
+  </mappers>
+</configuration>

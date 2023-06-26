@@ -17,27 +17,36 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.*;
+import org.apache.ibatis.session.SqlSession;
 
 public class UserDAO implements IUserDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+  private SqlSession sqlSession;
 
   private static final String FIND_ALL_QUERY = "SELECT * FROM musicmarketplace.user " +
       "JOIN musicmarketplace.playlists ON musicmarketplace.user.id = musicmarketplace.playlists.userid " +
       "JOIN musicmarketplace.wishlists ON musicmarketplace.user.id = musicmarketplace.wishlists.userid " +
-      "JOIN musicmarketplace.purchases ON musicmarketplace.user.id = musicmarketplace.purchases.userid " +
-      "JOIN musicmarketplace.reviews ON musicmarketplace.user.id = musicmarketplace.reviews.userid " +
       "JOIN musicmarketplace.tracks ON musicmarketplace.purchases.trackid = musicmarketplace.tracks.id " +
       "JOIN musicmarketplace.albums ON musicmarketplace.tracks.albumid = musicmarketplace.albums.id " +
       "JOIN musicmarketplace.artists ON musicmarketplace.albums.artistid = musicmarketplace.artists.id " +
-      "JOIN musicmarketplace.artist_genre ON musicmarketplace.artists.id = musicmarketplace.artist_genre.artistid " +
-      "JOIN musicmarketplace.genre ON musicmarketplace.artist_genre.genreid = musicmarketplace.genre.id " +
-      "JOIN musicmarketplace.artist_achievements ON musicmarketplace.artists.id = musicmarketplace.artist_achievements.artistid";
+      "JOIN musicmarketplace.userprofile ON musicmarketplace.userprofid = musicmarketplace.userprofile.id";
+
+  private static final String FIND_QUERY = "SELECT *"
+      + "FROM musicmarketplace.user AS u"
+      + "JOIN musicmarketplace.playlists AS p ON u.id = p.userid"
+      + "JOIN musicmarketplace.wishlists AS w ON u.id = w.userid"
+      + "JOIN musicmarketplace.userprofile AS up ON u.userprofid = up.id";
+
+//  public UserDAO() {
+//
+//  }
 
   public UserDAO() {
-
+    this.sqlSession = sqlSession;
   }
-//
+
+  //
 //  @Override
 //  public List<Purchase> getPurchase(int purchaseID) {
 //    List<Purchase> purchases = new ArrayList<>();
@@ -109,24 +118,29 @@ public class UserDAO implements IUserDAO {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
     try(PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO  User (id, username, email, password,userprofid) VALUES (?, ?, ?, ?,?)",
         Statement.RETURN_GENERATED_KEYS)){
-      preparedStatement.setInt(1, user.getId());
+      Integer userId = user.getId();
+      if (userId == null) {
+        throw new IllegalArgumentException("User ID cannot be null");
+      }
+      //preparedStatement.setInt(1, user.getId());
       preparedStatement.setString(2, user.getName());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getPassword());
+      preparedStatement.setInt(5, user.getUserProfile().getId());
 
 
-      UserProfile userProfile = user.getUserProfile();
-      if (userProfile != null) {
-        // Check if the UserProfile object has a valid ID
-        Integer userProfileId = userProfile.getId();
-        if (userProfileId != null) {
-          preparedStatement.setInt(5, userProfileId); // Set the valid foreign key value
-        } else {
-          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
-        }
-      } else {
-        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
-      }
+//      UserProfile userProfile = user.getUserProfile();
+//      if (userProfile != null) {
+//        // Check if the UserProfile object has a valid ID
+//        Integer userProfileId = userProfile.getId();
+//        if (userProfileId != null) {
+//          preparedStatement.setInt(5, userProfileId); // Set the valid foreign key value
+//        } else {
+//          throw new IllegalArgumentException("UserProfile ID cannot be null for the not null foreign key");
+//        }
+//      } else {
+//        throw new IllegalArgumentException("UserProfile cannot be null for the not null foreign key");
+//      }
 
 
       preparedStatement.executeUpdate();
@@ -178,7 +192,7 @@ public class UserDAO implements IUserDAO {
     List<User> users = new ArrayList<>();
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_QUERY)){
+    try(PreparedStatement preparedStatement = connection.prepareStatement(FIND_QUERY)){
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()){
         User user = new User();
@@ -217,6 +231,11 @@ public class UserDAO implements IUserDAO {
       CONNECTION_POOL.releaseConnectionToPool(connection);
     }
     return userProfile;
+  }
+
+  @Override
+  public User getUserByIdSQL(int userId) {
+    return sqlSession.selectOne("com.laba.solvd.databases.dao.UserDAO.getUserById", userId);
   }
 
 

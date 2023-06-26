@@ -5,7 +5,7 @@ import com.laba.solvd.databases.model.UserProfile;
 import java.util.List;
 
 public interface IPlaylistService {
-  Playlist create(Playlist entity);
+  Playlist create(Playlist entity, Integer id);
   List<Playlist> getAll();
 
 }

@@ -4,16 +4,16 @@ import com.laba.solvd.databases.model.Album;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IGenericDAO<T>  {
+public interface IAlbumDAO {
 
-  T getById(int id) throws SQLException;
-  void create(T entity);
+  Album getById(int id) throws SQLException;
+  void create(Album entity, Integer id);
 
   /** Retrieve an object that was previously persisted to the database using
    */
-  T read(int id);
-  void update(T entity);
+  Album read(int id);
+  void update(Album entity);
   void delete(int id);
-  List<T> getAll();
+  List<Album> getAll();
 
 }

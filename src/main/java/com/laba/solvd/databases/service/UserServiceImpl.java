@@ -1,9 +1,7 @@
 package com.laba.solvd.databases.service;
 
 import com.laba.solvd.databases.dao.UserDAO;
-import com.laba.solvd.databases.interfacedao.IGenericDAO;
 import com.laba.solvd.databases.interfacedao.IUserDAO;
-import com.laba.solvd.databases.interfacedao.IUserProfileDAO;
 import com.laba.solvd.databases.model.Playlist;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.UserProfile;
@@ -45,7 +43,7 @@ public class UserServiceImpl implements IUserService {
 
     if(entity.getPlaylistsList() != null){
       List<Playlist> playlists = entity.getPlaylistsList().stream()
-          .map(playlist -> playlistService.create(playlist)).collect(
+          .map(playlist -> playlistService.create(playlist, entity.getId())).collect(
           Collectors.toList());
       entity.setPlaylistsList(playlists);
     }
@@ -64,6 +62,6 @@ public class UserServiceImpl implements IUserService {
   @Override
   public List<User> getAllUsers() {
 
-    return userDAO.getAllUsers();
+    return userDAO.findAll();
   }
 }
