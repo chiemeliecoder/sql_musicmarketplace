@@ -1,6 +1,6 @@
 <mapper namespace="com.laba.solvd.databases.dao.UserDao">
   <!-- Select User by ID -->
-  <select id="getUserById" parameterType="int" resultType="com.laba.solvd.databases..model.User">
+  <select id="getUserById" parameterType="int" resultType="com.laba.solvd.databases.interfacedao.IUserDAO">
     SELECT *
     FROM musicmarketplace.user AS u
     JOIN musicmarketplace.playlists AS p ON u.id = p.userid
@@ -10,19 +10,19 @@
   </select>
 
   <!-- Insert User -->
-  <insert id="createUser" parameterType="com.laba.solvd.databases.model.User">
+  <insert id="createUser" parameterType="com.laba.solvd.databases.interfacedao.IUserDAO">
     INSERT INTO musicmarketplace.user (id, username, email, password, userprofid)
     VALUES (#{id}, #{name}, #{email}, #{password}, #{userProfile.id})
   </insert>
 
   <!-- Select all Users -->
-  <select id="getAllUsers" resultType="com.laba.solvd.databases.model.User">
+  <select id="getAllUsers" resultType="com.laba.solvd.databases.interfacedao.IUserDAO">
     SELECT *
     FROM musicmarketplace.user
   </select>
 
   <!-- Select all Users with related data -->
-  <select id="findAll" resultType="com.laba.solvd.databases.model.User">
+  <select id="findAll" resultType="com.laba.solvd.databases.interfacedao.IUserDAO">
     SELECT *
     FROM musicmarketplace.user AS u
     JOIN musicmarketplace.playlists AS p ON u.id = p.userid
