@@ -32,11 +32,9 @@ public class UserDAO implements IUserDAO {
       "JOIN musicmarketplace.artists ON musicmarketplace.albums.artistid = musicmarketplace.artists.id " +
       "JOIN musicmarketplace.userprofile ON musicmarketplace.userprofid = musicmarketplace.userprofile.id";
 
-  private static final String FIND_QUERY = "SELECT *"
-      + "FROM musicmarketplace.user AS u"
-      + "JOIN musicmarketplace.playlists AS p ON u.id = p.userid"
-      + "JOIN musicmarketplace.wishlists AS w ON u.id = w.userid"
-      + "JOIN musicmarketplace.userprofile AS up ON u.userprofid = up.id";
+  private static final String FIND_QUERY = "SELECT * FROM musicmarketplace.user AS u " +
+      "JOIN musicmarketplace.playlists AS p ON u.id = p.userid " +
+      "JOIN musicmarketplace.wishlists AS w ON u.id = w.userid";
 
 //  public UserDAO() {
 //
