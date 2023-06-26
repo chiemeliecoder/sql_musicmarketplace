@@ -13,6 +13,7 @@ import com.laba.solvd.databases.model.Track;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.UserProfile;
 import com.laba.solvd.databases.model.Wishlist;
+import com.laba.solvd.databases.myBatis.MyBatisObject;
 import com.laba.solvd.databases.service.AlbumServiceImpl;
 import com.laba.solvd.databases.service.ArtistServiceImpl;
 import com.laba.solvd.databases.service.IMusicService;
@@ -38,6 +39,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 
 public class Main {
@@ -246,6 +249,45 @@ public class Main {
     int wishlistCount = musicService.countWishlists();
     System.out.println("Total number of wishlists: " + wishlistCount);
 
+    // Obtain the SqlSessionFactory instance
+    SqlSessionFactory sqlSessionFactory = MyBatisObject.getSqlSessionFactory();
+
+    // Use the SqlSessionFactory to create a SqlSession
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+
+    try {
+      // Use the sqlSession to execute database operations
+
+      // Create an instance of the UserDao interface
+      UserDAO userDao = sqlSession.getMapper(UserDAO.class);
+
+      // Example: Get a user by ID
+      int userId = 1;
+      User user = userDao.getUserById(userId);
+      System.out.println("User: " + user);
+
+      // Example: Create a new user
+      User newUser = new User();
+      newUser.setId(2);
+      newUser.setName("John");
+      newUser.setEmail("john@example.com");
+      newUser.setPassword("password123");
+      userDao.createUser(newUser);
+      System.out.println("New user created!");
+
+      // Example: Get all users
+      List<User> users = userDao.getAllUsers();
+      System.out.println("All users: " + users);
+
+      // ...
+
+      // Commit the changes and close the SqlSession
+      sqlSession.commit();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      sqlSession.close();
+    }
 
 
 

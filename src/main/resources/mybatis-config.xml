@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- mybatis-config.xml -->
 <configuration>
   <environments default="development">
@@ -14,6 +15,6 @@
 
   <mappers>
     <!-- Specify the mapper XML files or mapper interfaces here -->
-    <mapper resource="src/main/resources/userMapper.xml" />
+    <mapper resource="userMapper.xml" />
   </mappers>
 </configuration>

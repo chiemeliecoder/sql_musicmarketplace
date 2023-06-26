@@ -13,7 +13,7 @@ public class MyBatisObject {
     if (sqlSessionFactory == null) {
       try {
         // Specify the path to your MyBatis configuration file
-        String resource = "mybatis-config.xml";
+        String resource = "src/main/resources/mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
 
         // Create the SqlSessionFactory
