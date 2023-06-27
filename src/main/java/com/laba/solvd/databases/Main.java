@@ -1,7 +1,15 @@
 package com.laba.solvd.databases;
 
+import com.laba.solvd.databases.dao.TrackDAO;
 import com.laba.solvd.databases.dao.UserDAO;
+import com.laba.solvd.databases.dao.UserProfileDAO;
+import com.laba.solvd.databases.dao.WishlistDAO;
+import com.laba.solvd.databases.dao.mapperImpl.TrackMapper;
+import com.laba.solvd.databases.dao.mapperImpl.UserMapper;
+import com.laba.solvd.databases.interfacedao.ITrackDAO;
 import com.laba.solvd.databases.interfacedao.IUserDAO;
+import com.laba.solvd.databases.interfacedao.IUserProfileDAO;
+import com.laba.solvd.databases.interfacedao.IWishlistDAO;
 import com.laba.solvd.databases.model.Album;
 import com.laba.solvd.databases.model.ArtistAchievement;
 import com.laba.solvd.databases.model.Artists;
@@ -70,6 +78,12 @@ public class Main {
     UserProfile userProfile = new UserProfile();
 
     UserDAO userDAO = new UserDAO();
+
+    UserProfileDAO userProfileDao = new UserProfileDAO();
+
+    TrackDAO trackDao = new TrackDAO();
+
+    WishlistDAO wishDao = new WishlistDAO();
 
     Calendar cal = Calendar.getInstance();
     cal.set(2023, Calendar.MARCH, 28);
@@ -283,6 +297,117 @@ public class Main {
       newUser.setEmail("john@example.com");
       newUser.setPassword("password123");
       newUser.setUserProfile(2);
+
+      userDao.createUser(newUser);
+      System.out.println("New user created!");
+
+      // Example: Get all users
+      List<User> users = userDao.getAllUsers();
+      System.out.println("All users: " + users);
+
+
+      IUserProfileDAO userProfileDAO = sqlSession.getMapper(IUserProfileDAO.class);
+
+      // Example usage of the UserProfile mapper methods
+      int userpId = 1;
+      UserProfile userProfiles = userProfileDAO.getUserProfileById(userpId);
+      System.out.println(userProfiles);
+
+      int userProfileid = userProfileDao.getMaxUserProfId();
+
+      List<UserProfile> allUserProfiles = userProfileDAO.getAllUsersProfiles();
+      System.out.println(allUserProfiles);
+
+      UserProfile newUserProfile = new UserProfile(userProfileid + 1, "Bio", "image.png", "Location");
+      userProfileDAO.createUser(newUserProfile);
+      System.out.println("Created user profile with ID: " + newUserProfile.getId());
+
+
+
+      ITrackDAO trackDAO = sqlSession.getMapper(ITrackDAO.class);
+      // Example usage of the Track mapper methods
+      int trackId = 1;
+      Track track1 = trackDAO.getById(trackId);
+      System.out.println(track1);
+
+      int trackNum = trackDao.getMaxTrackId();
+
+      List<Track> allTracks = trackDAO.findAll();
+      System.out.println(allTracks);
+
+      // Create a new Track object
+      Track tracks = new Track();
+      tracks.setId(trackNum + 1);
+      tracks.setTitle("soramimi");
+      Time time2 = Time.valueOf(LocalTime.of(03,33,00));
+      tracks.setDuration(time2);
+      tracks.setAlbum(1);
+      trackDAO.createNoID(tracks);
+      System.out.println("Created Tracks with ID: " + tracks.getId());
+
+
+
+      IWishlistDAO wishlistDAO = sqlSession.getMapper(IWishlistDAO.class);
+
+      // Example usage of the Wishlist mapper methods
+      int wishlistid = 1;
+      Wishlist wishlist1 = wishlistDAO.getById(wishlistid);
+      System.out.println(wishlist1);
+
+      int wishNum = wishDao.getMaxWishlistId();
+      List<Wishlist> allWish = wishlistDAO.getAll();
+      System.out.println(allWish);
+
+      Wishlist wishlist2 = new Wishlist();
+      wishlist2.setId(wishNum + 1);
+      wishlist2.setName("Songs I love");
+      wishlist2.setAlbumList(albumList);
+      wishlist2.setUser(1);
+
+      wishlistDAO.create(wishlist2);
+      System.out.println("New wishlist created!");
+
+
+
+
+
+      // Commit the changes and close the SqlSession
+      sqlSession.commit();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    //SqlSession sqlSession = MyBatisObject.getSqlSession()
+//    try  {
+//      // Create an instance of TrackMapper and pass the sqlSession
+//      TrackMapper trackMapper = new TrackMapper();
+//
+//      // Create a new Track object
+//      Track tracks = new Track();
+//      tracks.setTitle("New Track");
+//      trackMapper.create(tracks, 1); // Call the create method
+//
+//      // Retrieve all tracks using the findAll method
+//      List<Track> tracksl = trackMapper.findAll();
+//      // Process the returned list of tracks
+//      for (Track t : tracksl) {
+//        System.out.println("Track ID: " + t.getId());
+//        System.out.println("Track Title: " + t.getTitle());
+//        // Access the associated purchase if needed
+//        List<Purchase> purchasel = t.getPurchase();
+//        if (purchase != null) {
+//          System.out.println("Purchase ID: " + purchase.getId());
+//          System.out.println("Purchase Date: " + purchase.getPurchaseDate());
+//          System.out.println("Purchase Price: " + purchase.getPrice());
+//        }
+//        System.out.println("-------------------");
+//      }
+//    }catch (Exception e) {
+//      e.printStackTrace();
+//    } finally {
+//      sqlSession.close();
+//    }
+
 //      if (!userProfileList.isEmpty()) {
 //        UserProfile userProfiles = userProfileList.get(0);
 //        if (userProfiles != null && userProfiles.getId() != null) {
@@ -297,22 +422,6 @@ public class Main {
 //        System.out.println("User profile list is empty. Cannot create a new user without a profile.");
 //        return;
 //      }
-      userDao.createUser(newUser);
-      System.out.println("New user created!");
-
-      // Example: Get all users
-      List<User> users = userDao.getAllUsers();
-      System.out.println("All users: " + users);
-
-      // Commit the changes and close the SqlSession
-      sqlSession.commit();
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      sqlSession.close();
-    }
-
-
 
 //    Purchase firstPurchase = new Purchase();
 //    firstPurchase.setPurchaseDate(d);
@@ -346,7 +455,12 @@ public class Main {
 //
 //
 //
-//
+////      Time time2 = Time.valueOf(LocalTime.of(03,33,00));
+////
+////      Track track2 = new Track(trackNum + 1,"soramimi", time2,purchaseList);
+////      Integer tid = track2.getId();
+////      trackDAO.create(track2,tid);
+////      System.out.println("Created user profile with ID: " + track2.getId());
 //
 //
 //    // Get all users

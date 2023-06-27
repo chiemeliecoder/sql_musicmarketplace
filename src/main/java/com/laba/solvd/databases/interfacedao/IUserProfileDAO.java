@@ -10,5 +10,6 @@ public interface IUserProfileDAO {
   UserProfile getUserProfileById(int userId) throws SQLException;
   void createUser(UserProfile user);
   List<UserProfile> getAllUsersProfiles();
+  List<UserProfile> getUsersWithBioContaining(String keyword);
 
 }

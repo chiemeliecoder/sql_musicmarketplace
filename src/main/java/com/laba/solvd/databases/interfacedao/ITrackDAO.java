@@ -8,6 +8,7 @@ public interface ITrackDAO {
 
   Track getById(int id) throws SQLException;
   void create(Track entity, Integer id);
+  void createNoID(Track entity);
 
   /** Retrieve an object that was previously persisted to the database using
    */
@@ -16,4 +17,5 @@ public interface ITrackDAO {
   void delete(int id);
   List<Track> getAll();
 
+  List<Track> findAll();
 }

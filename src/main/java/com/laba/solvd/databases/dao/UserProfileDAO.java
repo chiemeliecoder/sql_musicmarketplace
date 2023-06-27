@@ -112,7 +112,9 @@ public class UserProfileDAO implements IUserProfileDAO {
     List<UserProfile> userProfiles = new ArrayList<>();
 
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_profile")){
+    try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT user.id, user.username, user_profile.bio " +
+        "FROM user " +
+        "JOIN user_profile ON user.userprofid = user_profile.id")){
       ResultSet resultSet = preparedStatement.executeQuery();
       while (resultSet.next()){
         UserProfile user = new UserProfile();
@@ -128,6 +130,29 @@ public class UserProfileDAO implements IUserProfileDAO {
     }
     return userProfiles;
 
+  }
+
+  @Override
+  public List<UserProfile> getUsersWithBioContaining(String keyword) {
+    return null;
+  }
+
+  public int getMaxUserProfId() {
+    // Add the necessary logic to retrieve the maximum user ID from the database
+    int maxId = 0;
+
+    // Retrieve the maximum ID using a database query
+    try (Connection connection = CONNECTION_POOL.getConnectionFromPool();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT MAX(id) FROM user_profile")) {
+      if (resultSet.next()) {
+        maxId = resultSet.getInt(1);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Unable to get the maximum user profile ID", e);
+    }
+
+    return maxId;
   }
 
 }

@@ -58,10 +58,15 @@ public class WishlistDAO implements IWishlistDAO {
   @Override
   public void create(Wishlist entity) {
     Connection connection = CONNECTION_POOL.getConnectionFromPool();
-    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into wishlists (id, name) VALUES (?, ?)",
+    try(PreparedStatement preparedStatement = connection.prepareStatement("Insert into wishlists (id, name,userid) VALUES (?, ?,?)",
         Statement.RETURN_GENERATED_KEYS)){
+      Integer wishlistId = entity.getId();
+      if (wishlistId  == null) {
+        throw new IllegalArgumentException("wishlistId  cannot be null");
+      }
       //preparedStatement.setInt(1, entity.getId());
       preparedStatement.setString(2, entity.getName());
+      preparedStatement.setInt(3,entity.getId());
 
 
       preparedStatement.executeUpdate();
@@ -160,6 +165,24 @@ public class WishlistDAO implements IWishlistDAO {
       CONNECTION_POOL.releaseConnectionToPool(connection);
     }
 
+  }
+
+  public int getMaxWishlistId() {
+    // Add the necessary logic to retrieve the maximum user ID from the database
+    int maxId = 0;
+
+    // Retrieve the maximum ID using a database query
+    try (Connection connection = CONNECTION_POOL.getConnectionFromPool();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT MAX(id) FROM WISHLISTS")) {
+      if (resultSet.next()) {
+        maxId = resultSet.getInt(1);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Unable to get the maximum user profile ID", e);
+    }
+
+    return maxId;
   }
 
 
