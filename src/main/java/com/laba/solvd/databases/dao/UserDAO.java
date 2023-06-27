@@ -2,6 +2,7 @@ package com.laba.solvd.databases.dao;
 
 import com.laba.solvd.databases.configurations.ConnectionPool;
 import com.laba.solvd.databases.interfacedao.IUserDAO;
+import com.laba.solvd.databases.model.Playlist;
 import com.laba.solvd.databases.model.Purchase;
 import com.laba.solvd.databases.model.User;
 import com.laba.solvd.databases.model.UserProfile;
@@ -17,12 +18,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.*;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 
 public class UserDAO implements IUserDAO {
 
   private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
-  private SqlSession sqlSession;
+
 
   private static final String FIND_ALL_QUERY = "SELECT * FROM musicmarketplace.user " +
       "JOIN musicmarketplace.playlists ON musicmarketplace.user.id = musicmarketplace.playlists.userid " +
@@ -40,9 +42,7 @@ public class UserDAO implements IUserDAO {
 //
 //  }
 
-  public UserDAO() {
-    this.sqlSession = sqlSession;
-  }
+
 
   //
 //  @Override
@@ -231,9 +231,48 @@ public class UserDAO implements IUserDAO {
     return userProfile;
   }
 
+//  @Override
+//  public User getUserByIdSQL(int userId) {
+//    return sqlSession.selectOne("com.laba.solvd.databases.dao.UserDAO.getUserById", userId);
+//  }
+
   @Override
-  public User getUserByIdSQL(int userId) {
-    return sqlSession.selectOne("com.laba.solvd.databases.dao.UserDAO.getUserById", userId);
+  public void setPlaylistsList(Playlist playlists, User user) {
+
+    Connection connection = null;
+    try {
+      connection = CONNECTION_POOL.getConnectionFromPool();
+      PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO playlists (id, userid) VALUES (?, ?)");
+      preparedStatement.setInt(1, playlists.getId());
+      preparedStatement.setInt(2, user.getId());
+      preparedStatement.executeUpdate();
+      preparedStatement.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
+  }
+
+  @Override
+  public void setUserProfile(UserProfile userProfile, User user) {
+    Connection connection = null;
+    try {
+      connection = CONNECTION_POOL.getConnectionFromPool();
+      PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user_profile (id, userid) VALUES (?, ?)");
+      preparedStatement.setInt(1, userProfile.getId());
+      preparedStatement.setInt(2, user.getId());
+      preparedStatement.executeUpdate();
+      preparedStatement.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      CONNECTION_POOL.releaseConnectionToPool(connection);
+    }
+
+
+
   }
 
 
@@ -254,6 +293,9 @@ public class UserDAO implements IUserDAO {
 
     return maxId;
   }
+
+
+
 
 //  public static void main(String args[]) throws SQLException{
 //    User use = new UserDAO().getUserById(1);

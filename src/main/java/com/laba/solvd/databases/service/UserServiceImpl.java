@@ -26,7 +26,7 @@ public class UserServiceImpl implements IUserService {
 
 
   @Override
-  public User create(User entity) {
+  public User create(User entity, Integer id) {
     if (entity == null) {
       throw new IllegalArgumentException("User entity cannot be null");
     }
@@ -45,12 +45,15 @@ public class UserServiceImpl implements IUserService {
       List<Playlist> playlists = entity.getPlaylistsList().stream()
           .map(playlist -> playlistService.create(playlist, entity.getId())).collect(
           Collectors.toList());
-      entity.setPlaylistsList(playlists);
+      for (Playlist playlist: playlists) {
+        userDAO.setPlaylistsList(playlist,entity);
+      }
+
     }
 
     if(entity.getUserProfile() != null){
       UserProfile userProfile = userProfileService.create(entity.getUserProfile());
-      entity.setUserProfile(userProfile);
+      userDAO.setUserProfile(userProfile,entity);
     }
 
     return entity;

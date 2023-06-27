@@ -132,6 +132,14 @@ public class Main {
     wishlist.setName("final fantasy");
     wishlist.setAlbumList(albumList);
     wishlistList.add(wishlist);
+    //===============================================================
+    List<UserProfile> userProfileList = new ArrayList<>();
+    UserProfile userProfile1 = new UserProfile();
+    userProfile1.setBio("I like video games");
+    userProfile1.setProfileimage("https://cdn.shopify.com/s/files/1/0416/8083/0620/files/ecomm-CHGAL-Core2021_367x353px_07-CN_1000x.png?v=1614324462");
+    userProfile1.setLocation("Belarus");
+    userProfileList.add(userProfile1);
+
 
 
     // Call the methods of MusicService
@@ -259,7 +267,7 @@ public class Main {
       // Use the sqlSession to execute database operations
 
       // Create an instance of the UserDao interface
-      UserDAO userDao = sqlSession.getMapper(UserDAO.class);
+      IUserDAO userDao = sqlSession.getMapper(IUserDAO.class);
 
       // Example: Get a user by ID
       int userId = 1;
@@ -267,19 +275,33 @@ public class Main {
       System.out.println("User: " + user);
 
       // Example: Create a new user
+      //UserProfile userProfiles = userProfileList.get(0);
       User newUser = new User();
-      newUser.setId(2);
+      newUser.setId(4);
       newUser.setName("John");
       newUser.setEmail("john@example.com");
       newUser.setPassword("password123");
+      //newUser.setUserProfile(userProfiles);
+      if (!userProfileList.isEmpty()) {
+        UserProfile userProfiles = userProfileList.get(0);
+        if (userProfiles != null && userProfiles.getId() != null) {
+          newUser.setUserProfile(userProfiles);
+        } else {
+          // Handle the case when the userProfile is null or has invalid data
+          System.out.println("Invalid UserProfile object. Cannot create a new user without a valid profile.");
+          return;
+        }
+      } else {
+        // Handle the case when the userProfileList is empty
+        System.out.println("User profile list is empty. Cannot create a new user without a profile.");
+        return;
+      }
       userDao.createUser(newUser);
       System.out.println("New user created!");
 
       // Example: Get all users
       List<User> users = userDao.getAllUsers();
       System.out.println("All users: " + users);
-
-      // ...
 
       // Commit the changes and close the SqlSession
       sqlSession.commit();
