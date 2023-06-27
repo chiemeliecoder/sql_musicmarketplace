@@ -2,6 +2,7 @@ package com.laba.solvd.databases.model;
 
 import java.util.List;
 import java.util.Objects;
+import org.apache.ibatis.javassist.NotFoundException;
 
 public class User {
 
@@ -110,16 +111,18 @@ public class User {
     return userProfile;
   }
 
-//  public UserProfile retrieveUserProfileById(int userProfileId) {
-//    UserProfile userProfile = new UserProfile();
-//    userProfile.setId(userProfileId);
-//
-//
-//    // operations to retrieve other properties of the UserProfile
-//    // perform database queries, API calls, or any other operations required to fetch the data
-//    // Return the retrieved UserProfile
-//    return userProfile;
-//  }
+  public UserProfile retrieveUserProfileById(int userProfileId) throws NotFoundException {
+    UserProfile userProfile = new UserProfile();
+    userProfile.setId(userProfileId);
+
+
+    if (userProfile == null) {
+      // Handle the case when the UserProfile with the specified ID is not found
+      throw new NotFoundException("UserProfile not found for ID: " + userProfileId);
+    }
+    // Return the retrieved UserProfile
+    return userProfile;
+  }
 //
 //
 //  public void setUserProfile(Integer userProfileId) {
@@ -130,6 +133,11 @@ public class User {
 
   public void setUserProfile(UserProfile userProfileId) {
     this.userProfile = userProfileId;
+  }
+
+  public void setUserProfile(Integer userProfileId) throws NotFoundException {
+    UserProfile userProfile = retrieveUserProfileById(userProfileId);
+    this.userProfile = userProfile;
   }
   @Override
   public boolean equals(Object o) {

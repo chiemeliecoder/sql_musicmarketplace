@@ -270,32 +270,33 @@ public class Main {
       IUserDAO userDao = sqlSession.getMapper(IUserDAO.class);
 
       // Example: Get a user by ID
-      int userId = 1;
+      int userId = 2;
       User user = userDao.getUserById(userId);
       System.out.println("User: " + user);
 
       // Example: Create a new user
       //UserProfile userProfiles = userProfileList.get(0);
+      int newUserInt = userDAO.getMaxUserId();
       User newUser = new User();
-      newUser.setId(4);
+      newUser.setId(newUserInt + 1);
       newUser.setName("John");
       newUser.setEmail("john@example.com");
       newUser.setPassword("password123");
-      //newUser.setUserProfile(userProfiles);
-      if (!userProfileList.isEmpty()) {
-        UserProfile userProfiles = userProfileList.get(0);
-        if (userProfiles != null && userProfiles.getId() != null) {
-          newUser.setUserProfile(userProfiles);
-        } else {
-          // Handle the case when the userProfile is null or has invalid data
-          System.out.println("Invalid UserProfile object. Cannot create a new user without a valid profile.");
-          return;
-        }
-      } else {
-        // Handle the case when the userProfileList is empty
-        System.out.println("User profile list is empty. Cannot create a new user without a profile.");
-        return;
-      }
+      newUser.setUserProfile(2);
+//      if (!userProfileList.isEmpty()) {
+//        UserProfile userProfiles = userProfileList.get(0);
+//        if (userProfiles != null && userProfiles.getId() != null) {
+//          newUser.setUserProfile(userProfiles);
+//        } else {
+//          // Handle the case when the userProfile is null or has invalid data
+//          System.out.println("Invalid UserProfile object. Cannot create a new user without a valid profile.");
+//          return;
+//        }
+//      } else {
+//        // Handle the case when the userProfileList is empty
+//        System.out.println("User profile list is empty. Cannot create a new user without a profile.");
+//        return;
+//      }
       userDao.createUser(newUser);
       System.out.println("New user created!");
 
